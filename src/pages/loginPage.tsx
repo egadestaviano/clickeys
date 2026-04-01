@@ -35,7 +35,7 @@ export default function LoginPage() {
         
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">Welcome Back</h1>
-          <p className="text-muted-foreground">Sign in to your CLICKEYS account</p>
+          <p className="text-muted-foreground">Sign in to your NeoKeys account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">

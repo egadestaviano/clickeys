@@ -175,7 +175,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search CLICKEYS..."
+            placeholder="Search  CLICKEYS..."
             className="flex-1 px-6 py-6 text-xl bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
             value={searchQuery}
             onChange={(e) => dispatch(setQuery(e.target.value))}
