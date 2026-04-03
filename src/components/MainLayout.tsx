@@ -21,11 +21,11 @@ export default function MainLayout() {
     }
     window.scrollTo(0, 0);
   }, [location.pathname, location.search, location.hash]);
-  
+
   // Routes that should NOT have a footer
   const noFooterRoutes = ["/admin", "/auth"];
   const protectedRoutes = ["/cart", "/checkout", "/bookmarks"];
-  
+
   const isNoFooterPath = noFooterRoutes.some(path => location.pathname.startsWith(path));
   const isProtectedAndNotAuth = protectedRoutes.includes(location.pathname) && !isAuthenticated;
 

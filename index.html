@@ -1,20 +1,36 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CLICKEYS</title>
-    <script>
-      if (localStorage.theme === 'dark' || (!('theme' in localStorage))) {
-        document.documentElement.classList.add('dark')
-      } else {
-        document.documentElement.classList.remove('dark')
-      }
-    </script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CLICKEYS — Premium Mechanical Keyboard Store</title>
+  <meta name="description"
+    content="Toko keyboard mekanikal premium. Temukan switches, keycaps, barebone kits, dan aksesori enthusiast terbaik di CLICKEYS." />
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+
+  <!-- Preconnect to Unsplash CDN for hero images -->
+  <link rel="preconnect" href="https://images.unsplash.com" />
+
+  <!-- Preload LCP hero image (slide 1) — WebP, q=60, max 1440px -->
+  <link rel="preload" as="image"
+    href="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?fm=webp&q=60&w=1024&fit=crop&auto=format"
+    imagesrcset="https://images.unsplash.com/photo-1593640408182-31c70c8268f5?fm=webp&q=60&w=640&fit=crop&auto=format 640w, https://images.unsplash.com/photo-1593640408182-31c70c8268f5?fm=webp&q=60&w=1024&fit=crop&auto=format 1024w, https://images.unsplash.com/photo-1593640408182-31c70c8268f5?fm=webp&q=60&w=1440&fit=crop&auto=format 1440w"
+    imagesizes="(max-width: 640px) 640px, (max-width: 1440px) 1024px, 1440px" fetchpriority="high" />
+
+  <!-- Inline theme script (must stay blocking to prevent FOUC) -->
+  <script>
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage))) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

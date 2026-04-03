@@ -221,9 +221,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     key={item + "-" + idx}
                     role="option"
                     aria-selected={isHighlighted}
-                    className={`text-base p-4 cursor-pointer rounded-xl transition-all duration-200 flex items-center gap-3 ${
-                      isHighlighted ? "bg-primary/10 text-primary border border-primary/20" : "hover:bg-muted text-foreground border border-transparent"
-                    }`}
+                    className={`text-base p-4 cursor-pointer rounded-xl transition-all duration-200 flex items-center gap-3 ${isHighlighted ? "bg-primary/10 text-primary border border-primary/20" : "hover:bg-muted text-foreground border border-transparent"
+                      }`}
                     onMouseEnter={() => setHighlightedIndex(idx)}
                     onMouseLeave={() => setHighlightedIndex(-1)}
                     onMouseDown={(e) => {

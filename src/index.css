@@ -1,5 +1,48 @@
 @import "tailwindcss";
-@import "tw-animate-css";
+
+/* Minimal enter animation — replaces tw-animate-css entirely.
+   Only the 5 utilities actually used in this project are defined.
+   tw-animate-css ships as a raw CSS file and is NOT tree-shaken by Tailwind,
+   so removing saves its full bundle weight from every page load. */
+@keyframes enter {
+  from {
+    opacity: var(--tw-enter-opacity, 1);
+    transform:
+      translate3d(var(--tw-enter-translate-x, 0), var(--tw-enter-translate-y, 0), 0) scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), var(--tw-enter-scale, 1));
+  }
+}
+
+@layer utilities {
+  .animate-in {
+    animation-name: enter;
+    animation-duration: 300ms;
+    animation-fill-mode: both;
+  }
+
+  .animate-in.duration-500 {
+    animation-duration: 500ms;
+  }
+
+  .animate-in.duration-700 {
+    animation-duration: 700ms;
+  }
+
+  .fade-in {
+    --tw-enter-opacity: 0;
+  }
+
+  .zoom-in {
+    --tw-enter-scale: 0.95;
+  }
+
+  .slide-in-from-bottom-4 {
+    --tw-enter-translate-y: 1rem;
+  }
+
+  .slide-in-from-bottom-6 {
+    --tw-enter-translate-y: 1.5rem;
+  }
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -65,7 +108,9 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-inter);
+  /* System font stack — zero network request, no FOUT, Inter installed on most modern systems */
+  --font-sans: ui-sans-serif, system-ui, "Inter", sans-serif;
+  --font-inter: ui-sans-serif, system-ui, "Inter", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -85,11 +130,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -103,28 +143,18 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --animate-float: float 10s infinite ease-in-out;
-  --animate-float-delayed: float 12s infinite ease-in-out -5s;
-  --animate-slow-zoom: slow-zoom 20s infinite alternate ease-in-out;
+  /* Only gradient-x is still in use (brand name in header) */
   --animate-gradient-x: gradient-x 3s ease infinite;
 }
 
-@keyframes float {
-  0% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-30px) scale(1.05); }
-  100% { transform: translateY(0px) scale(1); }
-}
-
-@keyframes slow-zoom {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.15); }
-}
-
 @keyframes gradient-x {
-  0%, 100% {
+
+  0%,
+  100% {
     background-size: 200% 200%;
     background-position: left center;
   }
+
   50% {
     background-size: 200% 200%;
     background-position: right center;
@@ -135,10 +165,27 @@
   * {
     @apply border-border outline-ring/50;
   }
-  html {
-    scroll-behavior: smooth;
-  }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Smooth scroll only when user hasn't requested reduced motion */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  /* Disable all animations for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }

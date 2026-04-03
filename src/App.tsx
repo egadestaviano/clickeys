@@ -6,21 +6,17 @@ import { useEffect } from "react";
 import { fetchCurrentUserThunk } from "@/features/auth/authThunks";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import Cookies from "js-cookie";
-import { fetchProducts } from "./features/product/productThunks";
 import { lookupCart } from "./features/cart/cartThunks";
 import { loadBookmarksFromStorage } from "./features/bookmark/bookmarkSlice";
 
 function AppContent() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.product.items);
 
   useEffect(() => {
-    if (products.length === 0) {
-      dispatch(fetchProducts({ page: 1, per_page: 12 }));
-    }
-    
+    // Only load bookmarks from localStorage (sync, no network)
+    // Products are fetched by HomePage's own useEffect to avoid redundant calls
     dispatch(loadBookmarksFromStorage());
-  }, [dispatch, products.length]);
+  }, [dispatch]);
 
   const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
   

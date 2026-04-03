@@ -6,17 +6,30 @@ import path from "path";
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    allowedHosts: true, 
+    allowedHosts: true,
     host: true
   },
   plugins: [
     react(),
-    tailwindcss()
+    tailwindcss(),
   ],
   base: "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  build: {
+    cssCodeSplit: true,
+    target: 'es2020',
+    chunkSizeWarningLimit: 500,
+    rollupOptions: {
+      output: {
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+      },
+    },
+    minify: 'esbuild',
   },
 })

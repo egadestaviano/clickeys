@@ -42,7 +42,7 @@ export default function CartPage() {
           <p className="text-muted-foreground">
             Looks like you haven't added anything to your cart yet.
           </p>
-          <Button 
+          <Button
             onClick={() => navigate("/")}
             className="w-full h-12 rounded-full font-semibold"
           >
@@ -62,7 +62,7 @@ export default function CartPage() {
             <h1 className="text-3xl font-bold tracking-tight mb-2">Shopping Cart</h1>
             <p className="text-muted-foreground">You have {totalItems} items in your bag</p>
           </div>
-          <button 
+          <button
             onClick={handleClearCart}
             className="text-sm font-medium text-muted-foreground hover:text-destructive flex items-center gap-2 transition-colors"
           >
@@ -74,8 +74,8 @@ export default function CartPage() {
           {/* Items List */}
           <div className="lg:col-span-8 space-y-8">
             {items.map((item) => (
-              <div 
-                key={item.id} 
+              <div
+                key={item.id}
                 className="flex flex-col sm:flex-row gap-6 pb-8 border-b last:border-0 group"
               >
                 {/* Product Image */}
@@ -144,7 +144,7 @@ export default function CartPage() {
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
-                    
+
                     <p className="text-xl font-bold">
                       USD {(item.product.price * item.quantity).toLocaleString()}
                     </p>
@@ -154,8 +154,8 @@ export default function CartPage() {
             ))}
 
             <div className="pt-4">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" /> Continue Shopping
@@ -167,7 +167,7 @@ export default function CartPage() {
           <div className="lg:col-span-4 lg:sticky lg:top-24 h-fit">
             <div className="bg-card border rounded-2xl p-8 space-y-6 shadow-sm">
               <h2 className="text-xl font-bold">Order Summary</h2>
-              
+
               <div className="space-y-4 text-sm font-medium">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal ({totalItems} items)</span>
@@ -195,7 +195,7 @@ export default function CartPage() {
               </Link>
 
               <div className="pt-4 flex items-center justify-center gap-6 text-muted-foreground opacity-60">
-                 {/* Optional secure badges can go here */}
+                {/* Optional secure badges can go here */}
               </div>
             </div>
           </div>

@@ -16,7 +16,7 @@ export function CategoryNav() {
   return (
     <section className="py-16 border-b border-border bg-background/50 backdrop-blur-sm relative overflow-hidden">
       <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 blur-[100px] -z-10 pointer-events-none"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-10">
           <div className="text-center sm:text-left w-full sm:w-auto">
@@ -38,7 +38,7 @@ export function CategoryNav() {
               <div className="w-16 h-16 rounded-2xl bg-primary/5 border border-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/10 group-hover:border-primary/20 transition-all duration-500 ease-out">
                 <category.icon className="w-8 h-8 text-primary transition-transform duration-500 group-hover:rotate-12" />
               </div>
-              
+
               <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
                 {category.name}
               </span>
