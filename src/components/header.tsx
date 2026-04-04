@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu, Search, User, ShoppingBag, LogOut, Plus, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavigationSidebar } from "@/components/navigationSidebar";
@@ -12,6 +12,7 @@ import { logoutThunk } from "@/features/auth/authThunks";
 import { selectSearchQuery } from "@/features/search/searchSlice";
 
 export function Header() {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -43,9 +44,10 @@ export function Header() {
 
   const handleUserClick = () => {
     if (isAuthenticated) {
-      dispatch(logoutThunk());
+      void dispatch(logoutThunk());
+      navigate("/");
     } else {
-      window.location.href = "/auth/login";
+      navigate("/auth/login");
     }
   };
 
@@ -116,6 +118,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
+                aria-label="Add a new product"
                 className="text-foreground cursor-pointer hover:bg-accent hover:text-accent-foreground px-1 sm:px-3 flex items-center justify-center"
               >
                 <Plus aria-hidden="true" />
@@ -125,6 +128,7 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="sm"
+                aria-label={`Open cart with ${cartItemCount} item${cartItemCount === 1 ? "" : "s"}`}
                 className="text-foreground cursor-pointer hover:bg-accent hover:text-accent-foreground px-1 sm:px-3 relative"
               >
                 <ShoppingBag className="w-4 h-4" aria-hidden="true" />

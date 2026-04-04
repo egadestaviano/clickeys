@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import { GET, POST } from "@/lib/api";
 import Cookies from "js-cookie";
 import type { StandardResponse } from "@/types/api";
@@ -24,6 +25,22 @@ interface AuthResponse {
   token_type: string;
 }
 
+const getErrorMessage = (error: unknown, fallback: string) => {
+  if (axios.isAxiosError<StandardResponse<unknown>>(error)) {
+    if (error.response?.status === 401) {
+      Cookies.remove("access_token", { path: "/" });
+    }
+
+    return error.response?.data?.message ?? error.message ?? fallback;
+  }
+
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  return fallback;
+};
+
 // REGISTER
 export const registerThunk = createAsyncThunk<
   User,
@@ -35,8 +52,8 @@ export const registerThunk = createAsyncThunk<
 
     if (res.status !== "success") return rejectWithValue(res.message);
     return res.data;
-  } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to register");
+  } catch (error) {
+    return rejectWithValue(getErrorMessage(error, "Failed to register"));
   }
 });
 
@@ -54,8 +71,8 @@ export const loginThunk = createAsyncThunk<
     Cookies.set("access_token", res.data.access_token, { path: "/" });
 
     return res.data;
-  } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to login");
+  } catch (error) {
+    return rejectWithValue(getErrorMessage(error, "Failed to login"));
   }
 });
 
@@ -71,8 +88,8 @@ export const fetchCurrentUserThunk = createAsyncThunk<
     if (res.status !== "success") return rejectWithValue(res.message);
 
     return res.data;
-  } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to fetch user");
+  } catch (error) {
+    return rejectWithValue(getErrorMessage(error, "Failed to fetch user"));
   }
 });
 
@@ -94,8 +111,8 @@ export const requestPasswordResetThunk = createAsyncThunk<
     const res = await POST<StandardResponse<string>>("auth/forgot-password", payload);
     if (res.status !== "success") return rejectWithValue(res.message);
     return res.message;
-  } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to request password reset");
+  } catch (error) {
+    return rejectWithValue(getErrorMessage(error, "Failed to request password reset"));
   }
 });
 
@@ -108,8 +125,8 @@ export const verifyOtpThunk = createAsyncThunk<
     const res = await POST<StandardResponse<string>>("auth/verify-otp", payload);
     if (res.status !== "success") return rejectWithValue(res.message);
     return res.message;
-  } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to verify OTP");
+  } catch (error) {
+    return rejectWithValue(getErrorMessage(error, "Failed to verify OTP"));
   }
 });
 
@@ -122,8 +139,8 @@ export const resetPasswordThunk = createAsyncThunk<
     const res = await POST<StandardResponse<string>>("auth/reset-password", payload);
     if (res.status !== "success") return rejectWithValue(res.message);
     return res.message;
-  } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to reset password");
+  } catch (error) {
+    return rejectWithValue(getErrorMessage(error, "Failed to reset password"));
   }
 });
 
@@ -136,7 +153,7 @@ export const changePasswordThunk = createAsyncThunk<
     const res = await POST<StandardResponse<string>>("auth/change-password", payload);
     if (res.status !== "success") return rejectWithValue(res.message);
     return res.message;
-  } catch (err: any) {
-    return rejectWithValue(err.message || "Failed to change password");
+  } catch (error) {
+    return rejectWithValue(getErrorMessage(error, "Failed to change password"));
   }
 });

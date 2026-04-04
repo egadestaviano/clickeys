@@ -29,9 +29,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       Cookies.remove("access_token", { path: "/" });
-      if (window.location.pathname !== "/auth/login") {
-        window.location.href = "/auth/login";
-      }
+      window.dispatchEvent(new CustomEvent("auth:unauthorized"));
     }
     return Promise.reject(error);
   }

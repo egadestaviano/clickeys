@@ -2,48 +2,75 @@ import { Provider } from "react-redux";
 import { RouterProvider } from "react-router-dom";
 import { store } from "@/app/store";
 import { router } from "./routes/route";
-import { useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { fetchCurrentUserThunk } from "@/features/auth/authThunks";
 import { useAppDispatch, useAppSelector } from "./app/hooks";
-import Cookies from "js-cookie";
 import { lookupCart } from "./features/cart/cartThunks";
 import { loadBookmarksFromStorage } from "./features/bookmark/bookmarkSlice";
+import {
+  clearSession,
+  markAuthResolved,
+  selectAuthResolved,
+  selectHasToken,
+  selectIsAuthenticated,
+} from "./features/auth/authSlice";
+import { HelmetProvider } from "react-helmet-async";
 
 function AppContent() {
   const dispatch = useAppDispatch();
+  const { hasToken, isAuthenticated, authResolved } = useAppSelector(
+    (state) => ({
+      hasToken: selectHasToken(state),
+      isAuthenticated: selectIsAuthenticated(state),
+      authResolved: selectAuthResolved(state),
+    }),
+  );
+  const cartLoadedRef = useRef(false);
 
   useEffect(() => {
-    // Only load bookmarks from localStorage (sync, no network)
-    // Products are fetched by HomePage's own useEffect to avoid redundant calls
     dispatch(loadBookmarksFromStorage());
   }, [dispatch]);
 
-  const isAuthenticated = useAppSelector((state) => state.auth.isAuthenticated);
-  
   useEffect(() => {
-    const initializeUser = async () => {
-      const token = Cookies.get("access_token");
-      if (token && isAuthenticated) {
-        await dispatch(fetchCurrentUserThunk());
-        dispatch(lookupCart({}));
-      }
-    };
+    if (authResolved) return;
 
-    initializeUser();
-  }, [dispatch, isAuthenticated]);
+    if (!hasToken) {
+      dispatch(markAuthResolved());
+    } else {
+      dispatch(fetchCurrentUserThunk());
+    }
+  }, [authResolved, hasToken]);
 
+  useEffect(() => {
+    if (!isAuthenticated || cartLoadedRef.current) return;
+
+    cartLoadedRef.current = true;
+    dispatch(lookupCart({}));
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    const handler = () => dispatch(clearSession());
+
+    window.addEventListener("auth:unauthorized", handler);
+    return () => window.removeEventListener("auth:unauthorized", handler);
+  }, []);
+  
   return (
-    <RouterProvider router={router} />
+    <Suspense fallback={null}>
+      <RouterProvider router={router} />
+    </Suspense>
   );
 }
 
 function App() {
   return (
-    <Provider store={store}>
-      <div className="font-sans antialiased">
-        <AppContent />
-      </div>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <div className="font-sans antialiased">
+          <AppContent />
+        </div>
+      </Provider>
+    </HelmetProvider>
   );
 }
 

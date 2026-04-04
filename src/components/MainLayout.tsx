@@ -34,7 +34,7 @@ export default function MainLayout() {
   return (
     <div className="min-h-screen bg-background flex flex-col transition-colors duration-300">
       <Header />
-      <main className="flex-grow">
+      <main id="content" className="flex-grow" tabIndex={-1}>
         <Outlet />
       </main>
       {!hideFooter && <Footer />}

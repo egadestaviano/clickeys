@@ -19,74 +19,118 @@ export default function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryFilter = searchParams.get("category") || "";
 
+  const loaderRef = useRef<HTMLDivElement | null>(null);
+  const requestLockRef = useRef(false);
+
+  useEffect(() => {
+    document.title = categoryFilter
+      ? `Clickeys ${categoryFilter} Collection`
+      : "Clickeys | Mechanical Keyboards, Switches, Keycaps, and Accessories";
+  }, [categoryFilter]);
+
   useEffect(() => {
     dispatch(fetchProducts({ page: 1, per_page: 12, search: categoryFilter }));
-  }, [categoryFilter, dispatch]);
+  }, [dispatch, categoryFilter]);
 
-  const loaderRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    if (!loaderRef.current) return;
+    if (!loading) {
+      requestLockRef.current = false;
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    const node = loaderRef.current;
+    if (!node || !pagination?.has_next) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        const target = entries[0];
-        if (target.isIntersecting && !loading && pagination?.has_next) {
-          dispatch(fetchProducts({ page: pagination.page + 1, per_page: 12, search: categoryFilter }));
-        }
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        if (loading || requestLockRef.current) return;
+
+        requestLockRef.current = true;
+        void dispatch(
+          fetchProducts({
+            page: (pagination?.page ?? 1) + 1,
+            per_page: 12,
+            search: categoryFilter,
+          }),
+        );
       },
-      { threshold: 1 }
+      {
+        rootMargin: "200px 0px",
+        threshold: 0,
+      },
     );
 
-    if (pagination?.has_next) {
-      observer.observe(loaderRef.current);
-    } else {
-      observer.unobserve(loaderRef.current);
-    }
+    observer.observe(node);
 
-    return () => {
-      observer.disconnect();
-    };
-  }, [dispatch, loading, pagination, categoryFilter]);
+    return () => observer.disconnect();
+  }, [
+    dispatch,
+    loading,
+    pagination?.has_next,
+    pagination?.page,
+    categoryFilter,
+  ]);
 
   return (
-    <main>
+    <>
       <HeroBanner />
       <CategoryNav />
-      
-      <div id="popular" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-24">
-        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-          <h2 className="text-3xl font-bold text-foreground capitalize text-center sm:text-left">
-            {categoryFilter ? `${categoryFilter} Collection` : "Popular Products"}
+
+      <section
+        id="popular"
+        aria-labelledby="popular-heading"
+        className="mx-auto max-w-7xl scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8"
+      >
+        <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <h2
+            id="popular-heading"
+            className="text-center text-3xl font-bold text-foreground capitalize sm:text-left"
+          >
+            {categoryFilter
+              ? `${categoryFilter} Collection`
+              : "Popular Products"}
           </h2>
+
           {categoryFilter ? (
-            <button 
-              onClick={() => setSearchParams({})}
-              className="text-sm font-medium text-red-500 hover:text-red-400 transition-colors"
+            <button
+              type="button"
+              onClick={() => setSearchParams({}, { replace: true })}
+              className="text-sm font-medium text-red-500 transition-colors hover:text-red-400"
             >
               Clear Filter
             </button>
           ) : (
-            <button className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
-              View All
-            </button>
+            <p className="text-sm font-medium text-muted-foreground">
+              {products.length} curated picks on display
+            </p>
           )}
         </div>
-        
-        {error && <p className="text-red-500">Failed to load products: {error}</p>}
+
+        {error && (
+          <p className="text-red-500" role="alert">
+            Failed to load products: {error}
+          </p>
+        )}
 
         <ProductContainer loading={loading && products.length === 0}>
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </ProductContainer>
-      </div>
+      </section>
 
-      <div ref={loaderRef} className="flex justify-center p-4">
-        {loading && <p className="text-gray-500">Loading more...</p>}
+      <div
+        ref={loaderRef}
+        className="flex justify-center p-4"
+        aria-live="polite"
+      >
+        {loading && <p className="text-gray-500">Loading more products...</p>}
         {!loading && !pagination?.has_next && (
           <p className="text-gray-400">All products have been displayed.</p>
         )}
       </div>
-    </main>
+    </>
   );
 }
