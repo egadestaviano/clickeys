@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Heart, ChevronRight, Plus, ShoppingBag, Minus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
@@ -17,6 +17,7 @@ import {
   lookupCart,
 } from "@/features/cart/cartThunks";
 import { Helmet } from "react-helmet-async"
+import { getDetailProduct } from "../productThunks";
 
 export function ProductDetail() {
   const dispatch = useAppDispatch();
@@ -49,6 +50,14 @@ export function ProductDetail() {
     },
     [expandedSection],
   );
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (!product && id) {
+      dispatch(getDetailProduct(id));
+    }
+  }, [dispatch, id, product]);
 
   if (!product) return <p>Loading...</p>;
 
