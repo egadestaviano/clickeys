@@ -51,16 +51,6 @@ export function ProductDetail() {
     [expandedSection],
   );
 
-  const { id } = useParams();
-
-  useEffect(() => {
-    if (!product && id) {
-      dispatch(getDetailProduct(id));
-    }
-  }, [dispatch, id, product]);
-
-  if (!product) return <p>Loading...</p>;
-
   const handleAddToCart = useCallback(async () => {
     if (!product) return;
 
@@ -100,6 +90,22 @@ export function ProductDetail() {
       console.error("Add cart error:", err);
     }
   }, [dispatch, cart?.id, cartLoading, isAuthenticated, navigate, product]);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getDetailProduct(id));
+    }
+  }, [dispatch, id]);
+
+  if (!product) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+      </div>
+    );
+  }
 
   return (
     <>
