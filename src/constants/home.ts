@@ -3,8 +3,7 @@ import { Keyboard, Cpu, Layers, SwitchCamera, Palette, Hammer, Cable, Wrench } f
 export const HERO_SLIDES = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?q=80&w=2042&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1519162721257-18cd195350c2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     badge: "Restocked: Holy Pandas",
     title: "Build Your",
     highlight: "Endgame Keyboard",
@@ -13,8 +12,7 @@ export const HERO_SLIDES = [
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=2000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1595044426077-d36d9236d54a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     badge: "New Arrival: GMK Sets",
     title: "Premium",
     highlight: "Keycap Sets",
@@ -23,8 +21,7 @@ export const HERO_SLIDES = [
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?q=80&w=2000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1589578228447-e1a4e481c6c8?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     badge: "Group Buy Live",
     title: "Custom",
     highlight: "Artisan Switches",
