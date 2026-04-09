@@ -1,74 +1,86 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Menu, Search, User, ShoppingBag, LogOut, Plus, Moon, Sun } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { NavigationSidebar } from "@/components/navigationSidebar";
-import { SearchModal } from "@/components/searchModal";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { selectBookmarkCount } from "@/features/bookmark/bookmarkSlice";
-import { selectCartItems } from "@/features/cart/cartSlice";
-import { selectIsAuthenticated, selectUser } from "@/features/auth/authSlice";
-import { logoutThunk } from "@/features/auth/authThunks";
-import { selectSearchQuery } from "@/features/search/searchSlice";
+import { memo, useState, useEffect, useCallback } from "react"
+import { Link } from "react-router-dom"
+import { Menu, Search, User, ShoppingBag, LogOut, Plus, Moon, Sun } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { NavigationSidebar } from "@/components/navigationSidebar"
+import { SearchModal } from "@/components/searchModal"
+import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import { selectBookmarkCount } from "@/features/bookmark/bookmarkSlice"
+import { selectCartItemCount } from "@/features/cart/cartSlice"
+import { selectIsAuthenticated, selectUser } from "@/features/auth/authSlice"
+import { logoutThunk } from "@/features/auth/authThunks"
+import { selectSearchQuery } from "@/features/search/searchSlice"
+
+const SearchButtonLabel = memo(function SearchButtonLabel() {
+  const searchQuery = useAppSelector(selectSearchQuery)
+
+  if (!searchQuery.trim()) {
+    return <span className="text-sm hidden sm:inline">Search</span>
+  }
+
+  return (
+    <span className="text-sm hidden sm:inline">
+      {searchQuery.length > 20 ? `${searchQuery.slice(0, 20)}...` : searchQuery}
+    </span>
+  )
+})
 
 export function Header() {
-  const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem("theme") !== "light";
-  });
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(
+    () => localStorage.getItem("theme") !== "light"
+  )
 
   useEffect(() => {
     if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
+      document.documentElement.classList.add("dark")
+      localStorage.setItem("theme", "dark")
     } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
+      document.documentElement.classList.remove("dark")
+      localStorage.setItem("theme", "light")
     }
-  }, [isDarkMode]);
+  }, [isDarkMode])
 
-  const toggleDarkMode = () => {
-    setIsDarkMode((prev) => !prev);
-  };
+  const toggleDarkMode = useCallback(() => setIsDarkMode((prev) => !prev), [])
+  const openMenu = useCallback(() => setIsMenuOpen(true), [])
+  const closeMenu = useCallback(() => setIsMenuOpen(false), [])
+  const openSearch = useCallback(() => setIsSearchOpen(true), [])
+  const closeSearch = useCallback(() => setIsSearchOpen(false), [])
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
+  const bookmarkCount = useAppSelector(selectBookmarkCount)
+  const cartItemCount = useAppSelector(selectCartItemCount)
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
+  const user = useAppSelector(selectUser)
 
-  const bookmarkCount = useAppSelector(selectBookmarkCount);
-  const cartItems = useAppSelector(selectCartItems);
-  const cartItemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  const user = useAppSelector(selectUser);
-  const searchQuery = useAppSelector(selectSearchQuery);
-
-  const handleUserClick = () => {
+  const handleUserClick = useCallback(() => {
     if (isAuthenticated) {
-      void dispatch(logoutThunk());
-      navigate("/");
+      dispatch(logoutThunk())
     } else {
-      navigate("/auth/login");
+      window.location.href = "/auth/login"
     }
-  };
-
-  const searchLabel =
-    searchQuery.trim() !== ""
-      ? searchQuery.length > 20
-        ? searchQuery.slice(0, 20) + "..."
-        : searchQuery
-      : "Search";
+  }, [isAuthenticated, dispatch])
 
   return (
     <>
-      <header className="bg-background border-b border-border sticky top-0 z-50" role="banner">
+      <header className="bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-50">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50 text-sm font-medium"
+        >
+          Skip to content
+        </a>
+
         <div className="flex items-center justify-between px-2 sm:px-6 md:px-8 py-4 max-w-7xl mx-auto h-20">
           <div className="flex-1 flex items-center gap-1 sm:gap-4">
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsMenuOpen(true)}
-              aria-label={bookmarkCount > 0 ? `Open menu (${bookmarkCount} bookmarks)` : "Open menu"}
+              onClick={openMenu}
+              aria-label="Open navigation menu"
               aria-expanded={isMenuOpen}
+              aria-controls="navigation-sidebar"
               className="flex items-center gap-1 sm:gap-2 text-foreground hover:bg-accent hover:text-accent-foreground px-1 sm:px-3 cursor-pointer relative"
             >
               <Menu className="w-4 h-4" aria-hidden="true" />
@@ -76,28 +88,31 @@ export function Header() {
               {bookmarkCount > 0 && (
                 <span
                   className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
-                  aria-hidden="true"
+                  aria-label={`${bookmarkCount} bookmarks`}
                 >
                   {bookmarkCount}
                 </span>
               )}
             </Button>
+
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setIsSearchOpen(true)}
+              onClick={openSearch}
               aria-label="Open search"
-              aria-expanded={isSearchOpen}
               className="flex items-center gap-1 sm:gap-2 text-foreground hover:bg-accent hover:text-accent-foreground px-1 sm:px-3 cursor-pointer"
             >
               <Search className="w-4 h-4" aria-hidden="true" />
-              <span className="text-sm hidden sm:inline">{searchLabel}</span>
+              <SearchButtonLabel />
             </Button>
           </div>
 
-          {/* Brand — use span/div, not h1 (h1 is in each page content) */}
           <div className="flex-shrink-0">
-            <Link to="/" className="cursor-pointer hover:opacity-80 transition-opacity" aria-label="CLICKEYS — Home">
+            <Link
+              to="/"
+              aria-label="Clickeys Home"
+              className="cursor-pointer hover:opacity-80 transition-opacity"
+            >
               <span className="text-lg sm:text-2xl font-bold tracking-tighter sm:tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-400 to-primary animate-gradient-x">
                 CLICKEYS
               </span>
@@ -108,33 +123,36 @@ export function Header() {
             <Button
               variant="ghost"
               size="sm"
-              className="text-foreground cursor-pointer hover:bg-accent hover:text-accent-foreground px-1 sm:px-3 flex items-center justify-center"
+              className="text-foreground cursor-pointer hover:bg-accent hover:text-accent-foreground px-1 sm:px-3"
               onClick={toggleDarkMode}
               aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
-              {isDarkMode ? <Sun className="w-4 h-4" aria-hidden="true" /> : <Moon className="w-4 h-4" aria-hidden="true" />}
+              {isDarkMode
+                ? <Sun className="w-4 h-4" aria-hidden="true" />
+                : <Moon className="w-4 h-4" aria-hidden="true" />
+              }
             </Button>
-            <Link to="/admin/product/create" aria-label="Add new product" className="flex">
+
+            <Link to="/admin/product/create" aria-label="Add new product">
               <Button
                 variant="ghost"
                 size="sm"
-                aria-label="Add a new product"
-                className="text-foreground cursor-pointer hover:bg-accent hover:text-accent-foreground px-1 sm:px-3 flex items-center justify-center"
+                className="text-foreground cursor-pointer hover:bg-accent hover:text-accent-foreground px-1 sm:px-3"
               >
-                <Plus aria-hidden="true" />
+                <Plus className="w-4 h-4" aria-hidden="true" />
               </Button>
             </Link>
-            <Link to="/cart" aria-label={cartItemCount > 0 ? `Shopping cart (${cartItemCount} items)` : "Shopping cart"}>
+
+            <Link to="/cart" aria-label={`Shopping cart, ${cartItemCount} items`}>
               <Button
                 variant="ghost"
                 size="sm"
-                aria-label={`Open cart with ${cartItemCount} item${cartItemCount === 1 ? "" : "s"}`}
                 className="text-foreground cursor-pointer hover:bg-accent hover:text-accent-foreground px-1 sm:px-3 relative"
               >
                 <ShoppingBag className="w-4 h-4" aria-hidden="true" />
                 {cartItemCount > 0 && (
                   <span
-                    className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+                    className="absolute -top-1 -right-1 bg-black dark:bg-white dark:text-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
                     aria-hidden="true"
                   >
                     {cartItemCount}
@@ -142,24 +160,28 @@ export function Header() {
                 )}
               </Button>
             </Link>
+
             <Button
               variant="ghost"
               size="sm"
               className="text-foreground cursor-pointer hover:bg-accent hover:text-accent-foreground px-1 sm:px-3 flex items-center gap-1"
               onClick={handleUserClick}
-              aria-label={isAuthenticated ? `Logout (logged in as ${user?.name})` : "Login"}
+              aria-label={isAuthenticated ? `Logout ${user?.name ?? ""}` : "Login"}
             >
-              {isAuthenticated ? <LogOut className="w-4 h-4" aria-hidden="true" /> : <User className="w-4 h-4" aria-hidden="true" />}
-              <span className="text-xs hidden sm:inline">
-                {isAuthenticated ? user?.name : "Login"}
+              {isAuthenticated
+                ? <LogOut className="w-4 h-4" aria-hidden="true" />
+                : <User className="w-4 h-4" aria-hidden="true" />
+              }
+              <span className="text-xs font-semibold sm:inline">
+                {isAuthenticated ? (user?.name || "User") : "Login"}
               </span>
             </Button>
           </div>
         </div>
       </header>
 
-      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
-      <NavigationSidebar isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <SearchModal isOpen={isSearchOpen} onClose={closeSearch} />
+      <NavigationSidebar isOpen={isMenuOpen} onClose={closeMenu} />
     </>
-  );
+  )
 }
