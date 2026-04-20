@@ -100,7 +100,7 @@ const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
   }, [isAuthenticated, productCartItemCount, cartLoading, cart?.id, navigate, dispatch, product.id]);
 
   return (
-    <Link to={`/product/${product.id}`} className="bg-card group block border border-border rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/20 animate-in fade-in zoom-in duration-500 relative">
+    <Link to={`/product/${product.id}`} className="bg-card group block border border-border rounded-xl overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/20 animate-in fade-in zoom-in duration-500 relative cursor-pointer">
       <div className="relative aspect-square bg-muted overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-primary/10 opacity-0 transition-opacity duration-700 group-hover:opacity-100 z-10" />
         <img
@@ -139,11 +139,11 @@ const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
           <p className="text-foreground font-semibold">
             {priceFormatter.format(product.price)}
           </p>
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300">
+          <div className="opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 duration-300">
             <Button
               size="icon"
               variant="secondary"
-              className="h-8 w-8 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 relative"
+              className="h-8 w-8 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-110 hover:shadow-md hover:shadow-primary/30 active:scale-95 transition-all relative cursor-pointer"
               onClick={handleCartClick}
             >
               <ShoppingCart className="w-4 h-4" />

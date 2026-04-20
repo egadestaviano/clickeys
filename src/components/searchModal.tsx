@@ -7,9 +7,10 @@ import {
   selectSearchQuery,
   selectSearchResults,
   selectSearchLoading,
+  clearQuery,
 } from "@/features/search/searchSlice";
 import { fetchSearchSuggestions } from "@/features/search/searchThunks";
-import { fetchProducts } from "@/features/product/productThunks";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -24,21 +25,31 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const debounceRef = useRef<number | null>(null);
+  const navigate = useNavigate();
 
   const limitedSuggestions = useMemo(
     () => suggestions.slice(0, 8),
-    [suggestions]
+    [suggestions],
   );
 
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 0);
+      requestAnimationFrame(() => inputRef.current?.focus());
     }
   }, [isOpen]);
 
   useEffect(() => {
     setHighlightedIndex(-1);
   }, [limitedSuggestions]);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => { document.body.style.overflow = "" }
+  }, [isOpen])
 
   useEffect(() => {
     if (debounceRef.current) {
@@ -63,16 +74,14 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   const runMainSearchAndClose = useCallback(
     (q: string) => {
-      dispatch(
-        fetchProducts({
-          page: 1,
-          per_page: 12,
-          ...(q.trim() ? { search: q } : {}),
-        })
-      );
+      if (q.trim()) {
+        navigate(`/products?search=${encodeURIComponent(q.trim())}`);
+      } else {
+        navigate('/products');
+      }
       onClose();
     },
-    [dispatch, onClose]
+    [navigate, onClose],
   );
 
   const handleKeyDown = useCallback(
@@ -128,7 +137,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       runMainSearchAndClose,
       searchQuery,
       onClose,
-    ]
+    ],
   );
 
   const handleClickSuggestion = useCallback(
@@ -138,7 +147,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
       dispatch(setQuery(chosen));
       runMainSearchAndClose(chosen);
     },
-    [limitedSuggestions, dispatch, runMainSearchAndClose]
+    [limitedSuggestions, dispatch, runMainSearchAndClose],
   );
 
   const handleBackdropMouseDown = useCallback(
@@ -148,14 +157,17 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         runMainSearchAndClose(searchQuery);
       }
     },
-    [onClose, searchQuery, runMainSearchAndClose]
+    [onClose, searchQuery, runMainSearchAndClose],
   );
 
-  const handleClearAndClose = useCallback(() => {
-    dispatch(setQuery(""));
-    runMainSearchAndClose("");
-    onClose();
-  }, [dispatch, onClose, runMainSearchAndClose]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleClearSearch = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    dispatch(clearQuery());
+    searchParams.delete('search');
+    setSearchParams(searchParams);
+  };
 
   if (!isOpen) return null;
 
@@ -175,7 +187,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search  CLICKEYS..."
+            placeholder="Search  Keysthetix..."
             className="flex-1 px-6 py-6 text-xl bg-transparent outline-none text-foreground placeholder:text-muted-foreground"
             value={searchQuery}
             onChange={(e) => dispatch(setQuery(e.target.value))}
@@ -188,15 +200,17 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                 : undefined
             }
           />
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleClearAndClose}
-            className="mr-3 hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer rounded-full h-10 w-10 p-0 flex items-center justify-center transition-colors"
-            aria-label="Clear search"
-          >
-            <X className="w-5 h-5" />
-          </Button>
+          {searchQuery.trim() !== "" && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleClearSearch}
+              className="mr-3 hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer rounded-full h-10 w-10 p-0 flex items-center justify-center transition-colors"
+              aria-label="Clear search"
+            >
+              <X className="w-5 h-5" />
+            </Button>
+          )}
         </div>
 
         <div className="p-4 bg-card">
@@ -221,7 +235,9 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     key={item + "-" + idx}
                     role="option"
                     aria-selected={isHighlighted}
-                    className={`text-base p-4 cursor-pointer rounded-xl transition-all duration-200 flex items-center gap-3 ${isHighlighted ? "bg-primary/10 text-primary border border-primary/20" : "hover:bg-muted text-foreground border border-transparent"
+                    className={`text-base p-4 cursor-pointer rounded-xl transition-all duration-200 flex items-center gap-3 ${isHighlighted
+                      ? "bg-primary/10 text-primary border border-primary/20"
+                      : "hover:bg-muted text-foreground border border-transparent"
                       }`}
                     onMouseEnter={() => setHighlightedIndex(idx)}
                     onMouseLeave={() => setHighlightedIndex(-1)}
@@ -230,7 +246,9 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       handleClickSuggestion(idx);
                     }}
                   >
-                    <Search className={`w-4 h-4 ${isHighlighted ? 'text-primary' : 'text-muted-foreground'}`} />
+                    <Search
+                      className={`w-4 h-4 ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}
+                    />
                     {item}
                   </div>
                 );

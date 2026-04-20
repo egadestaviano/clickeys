@@ -1,136 +1,108 @@
-import { useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { memo, useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { HeroBanner } from "@/components/heroBanner";
 import { CategoryNav } from "@/components/categoryNav";
+import SEO from "@/components/SEO";
 import ProductCard from "@/features/product/components/productCard";
 import ProductContainer from "@/features/product/components/productContainer";
+import {
+  selectHomeListLoading,
+  selectHomeProductError,
+  selectHomeProducts,
+} from "@/features/product/productSlice";
 import { fetchProducts } from "@/features/product/productThunks";
+import type { Product } from "@/features/product/types/product";
+
+const ProductGrid = memo(function ProductGrid({
+  products,
+}: {
+  products: Product[];
+}) {
+  return (
+    <>
+      {products.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))}
+    </>
+  );
+});
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
-  const {
-    items: products,
-    loading,
-    error,
-    pagination,
-  } = useAppSelector((state) => state.product);
+  const products = useAppSelector(selectHomeProducts);
+  const loading = useAppSelector(selectHomeListLoading);
+  const error = useAppSelector(selectHomeProductError);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryFilter = searchParams.get("category") || "";
 
-  const loaderRef = useRef<HTMLDivElement | null>(null);
-  const requestLockRef = useRef(false);
-
   useEffect(() => {
-    document.title = categoryFilter
-      ? `Clickeys ${categoryFilter} Collection`
-      : "Clickeys | Mechanical Keyboards, Switches, Keycaps, and Accessories";
-  }, [categoryFilter]);
+    dispatch(fetchProducts({ page: 1, per_page: 8, search: categoryFilter }));
+  }, [categoryFilter, dispatch]);
 
-  useEffect(() => {
-    dispatch(fetchProducts({ page: 1, per_page: 12, search: categoryFilter }));
-  }, [dispatch, categoryFilter]);
+  const visibleProducts = products.slice(0, 8);
 
-  useEffect(() => {
-    if (!loading) {
-      requestLockRef.current = false;
-    }
-  }, [loading]);
-
-  useEffect(() => {
-    const node = loaderRef.current;
-    if (!node || !pagination?.has_next) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        if (loading || requestLockRef.current) return;
-
-        requestLockRef.current = true;
-        void dispatch(
-          fetchProducts({
-            page: (pagination?.page ?? 1) + 1,
-            per_page: 12,
-            search: categoryFilter,
-          }),
-        );
-      },
-      {
-        rootMargin: "200px 0px",
-        threshold: 0,
-      },
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, [
-    dispatch,
-    loading,
-    pagination?.has_next,
-    pagination?.page,
-    categoryFilter,
-  ]);
+  const seoTitle = categoryFilter ? `${categoryFilter} Collection` : undefined;
+  const seoDesc = categoryFilter
+    ? `Browse our premium ${categoryFilter} collection - mechanical keyboards, keycaps & accessories at Keysthetix.`
+    : undefined;
 
   return (
-    <>
+    <main>
+      <SEO
+        url={categoryFilter ? `/?category=${categoryFilter}` : "/"}
+        title={seoTitle}
+        description={seoDesc}
+        breadcrumbs={
+          categoryFilter
+            ? [{ name: categoryFilter, url: `/?category=${categoryFilter}` }]
+            : undefined
+        }
+      />
+
       <HeroBanner />
       <CategoryNav />
 
-      <section
+      <div
         id="popular"
-        aria-labelledby="popular-heading"
-        className="mx-auto max-w-7xl scroll-mt-24 px-4 py-16 sm:px-6 lg:px-8"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-24"
       >
-        <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <h2
-            id="popular-heading"
-            className="text-center text-3xl font-bold text-foreground capitalize sm:text-left"
-          >
-            {categoryFilter
-              ? `${categoryFilter} Collection`
-              : "Popular Products"}
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
+          <h2 className="text-3xl font-bold text-foreground capitalize text-center sm:text-left">
+            {categoryFilter ? `${categoryFilter} Collection` : "Popular Products"}
           </h2>
-
           {categoryFilter ? (
-            <button
-              type="button"
-              onClick={() => setSearchParams({}, { replace: true })}
-              className="text-sm font-medium text-red-500 transition-colors hover:text-red-400"
-            >
-              Clear Filter
-            </button>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setSearchParams({})}
+                className="text-sm font-medium text-red-500 hover:text-red-400 transition-colors"
+              >
+                Clear Filter
+              </button>
+              <Link
+                to={`/products?category=${categoryFilter}`}
+                className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+              >
+                View All {categoryFilter}
+              </Link>
+            </div>
           ) : (
-            <p className="text-sm font-medium text-muted-foreground">
-              {products.length} curated picks on display
-            </p>
+            <Link
+              to="/products"
+              className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              View All
+            </Link>
           )}
         </div>
 
-        {error && (
-          <p className="text-red-500" role="alert">
-            Failed to load products: {error}
-          </p>
-        )}
+        {error && <p className="text-red-500">Failed to load products: {error}</p>}
 
         <ProductContainer loading={loading && products.length === 0}>
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          <ProductGrid products={visibleProducts} />
         </ProductContainer>
-      </section>
-
-      <div
-        ref={loaderRef}
-        className="flex justify-center p-4"
-        aria-live="polite"
-      >
-        {loading && <p className="text-gray-500">Loading more products...</p>}
-        {!loading && !pagination?.has_next && (
-          <p className="text-gray-400">All products have been displayed.</p>
-        )}
       </div>
-    </>
+    </main>
   );
 }

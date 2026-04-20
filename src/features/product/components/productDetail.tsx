@@ -241,7 +241,7 @@ export function ProductDetail() {
               <div className="border-t border-gray-200 pt-6">
                 <button
                   onClick={() => toggleSection("instore")}
-                  className="flex items-center justify-between w-full text-left"
+                  className="flex items-center justify-between w-full text-left cursor-pointer"
                 >
                   <span className="text-foreground">In-Store Services</span>
                   {expandedSection === "instore" ? (
@@ -268,7 +268,7 @@ export function ProductDetail() {
               <div className="border-t border-gray-200 pt-6">
                 <button
                   onClick={() => toggleSection("delivery")}
-                  className="flex items-center justify-between w-full text-left"
+                  className="flex items-center justify-between w-full text-left cursor-pointer"
                 >
                   <span className="text-foreground">Delivery & Returns</span>
                   {expandedSection === "delivery" ? (
@@ -296,7 +296,7 @@ export function ProductDetail() {
               <div className="border-t border-gray-200 pt-6">
                 <button
                   onClick={() => toggleSection("gifting")}
-                  className="flex items-center justify-between w-full text-left"
+                  className="flex items-center justify-between w-full text-left cursor-pointer"
                 >
                   <span className="text-foreground">Gifting</span>
                   {expandedSection === "gifting" ? (

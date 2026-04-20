@@ -109,4 +109,9 @@ const productSlice = createSlice({
 
 export const { clearSelectedProduct, clearError } = productSlice.actions;
 
+export const selectHomeProducts = (state: { product: ProductState }) => state.product.items;
+export const selectHomeListLoading = (state: { product: ProductState }) => state.product.loading;
+export const selectHomeProductError = (state: { product: ProductState }) => state.product.error;
+export const selectHomePagination = (state: { product: ProductState }) => state.product.pagination;
+
 export default productSlice.reducer;

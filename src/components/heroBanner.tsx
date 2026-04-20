@@ -70,7 +70,7 @@ export function HeroBanner() {
         <button
           onClick={goToPreviousSlide}
           aria-label="Previous slide"
-          className="group pointer-events-auto absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-black/30 border border-white/20 hover:bg-emerald-400/90 hover:border-emerald-300 transition-all duration-300"
+          className="group cursor-pointer pointer-events-auto absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-black/30 border border-white/20 hover:bg-emerald-400/90 hover:border-emerald-300 transition-all duration-300"
         >
           <ChevronLeft className="h-6 w-6 text-white transition-transform duration-200 group-hover:-translate-x-0.5" />
         </button>
@@ -78,7 +78,7 @@ export function HeroBanner() {
         <button
           onClick={goToNextSlide}
           aria-label="Next slide"
-          className="group pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-black/30 border border-white/20 hover:bg-emerald-400/90 hover:border-emerald-300 transition-all duration-300"
+          className="group cursor-pointer pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-black/30 border border-white/20 hover:bg-emerald-400/90 hover:border-emerald-300 transition-all duration-300"
         >
           <ChevronRight className="h-6 w-6 text-white transition-transform duration-200 group-hover:translate-x-0.5" />
         </button>
@@ -132,7 +132,7 @@ export function HeroBanner() {
               aria-selected={currentSlide === index}
               aria-label={`Go to slide ${index + 1}: ${HERO_SLIDES[index].highlight}`}
               onClick={() => setCurrentSlide(index)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${currentSlide === index
+              className={`h-1.5 rounded-full cursor-pointer transition-all duration-300 ${currentSlide === index
                 ? "w-8 bg-primary"
                 : "w-4 bg-muted hover:bg-muted-foreground"
                 }`}

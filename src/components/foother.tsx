@@ -5,13 +5,13 @@ export function Footer() {
   return (
     <footer className="bg-background border-t-2 border-foreground/10 pt-16 pb-8 relative overflow-hidden">
       {/* Structural Background Pattern (Bukan Default GLow) */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-24 mb-12">
-          
+
           {/* Posisi 1: Shop (Moved here) */}
           <div className="space-y-6 order-2 md:order-1">
             <h4 className="text-xs font-black uppercase tracking-[0.3em] text-primary/80 border-b border-primary/20 pb-2 inline-block">
@@ -26,8 +26,8 @@ export function Footer() {
                 { name: "Desk Mats", to: "/?category=deskmat#popular" }
               ].map((item) => (
                 <li key={item.name}>
-                  <Link 
-                    to={item.to} 
+                  <Link
+                    to={item.to}
                     className="text-sm font-medium text-muted-foreground hover:text-foreground hover:translate-x-1 transition-all duration-200 flex items-center gap-2 group"
                   >
                     <div className="w-1 h-1 bg-primary scale-0 group-hover:scale-100 transition-transform rounded-full" />
@@ -48,7 +48,7 @@ export function Footer() {
                 Mechanical Excellence
               </p>
             </div>
-            
+
             <p className="text-sm leading-relaxed text-muted-foreground max-w-xs">
               Crafting the ultimate typing experience. Premium enthusiast tools for those who demand excellence.
             </p>
@@ -79,12 +79,12 @@ export function Footer() {
                 { name: "Order Tracking", to: "#" }
               ].map((item) => (
                 <li key={item.name}>
-                  <Link 
-                    to={item.to} 
+                  <Link
+                    to={item.to}
                     className="text-sm font-medium text-muted-foreground hover:text-foreground hover:-translate-x-1 transition-all duration-200 flex items-center justify-start md:justify-end gap-2 group text-right"
                   >
-                    {item.name}
                     <div className="w-1 h-1 bg-primary scale-0 group-hover:scale-100 transition-transform rounded-full" />
+                    {item.name}
                   </Link>
                 </li>
               ))}
