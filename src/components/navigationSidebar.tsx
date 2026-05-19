@@ -9,21 +9,21 @@ interface NavigationSidebarProps {
   onClose: () => void;
 }
 
+const menuItems = [
+  { name: "Custom Keyboards", category: "custom keyboards" },
+  { name: "Switches", category: "switches" },
+  { name: "Keycaps", category: "keycaps" },
+  { name: "Desk Mats", category: "desk mats" },
+  { name: "Tools & Lubes", category: "tools" },
+  { name: "PCBs & Plates", category: "pcbs" },
+  { name: "Group Buys", category: "group buys" },
+  { name: "In-Stock Items", category: "in-stock" },
+  { name: "Guides & Tutorials", category: "guides" },
+  { name: "Contact Support", category: "contact" },
+];
+
 export function NavigationSidebar({ isOpen, onClose }: NavigationSidebarProps) {
   const bookmarkCount = useAppSelector(selectBookmarkCount);
-
-  const menuItems = [
-    "Custom Keyboards",
-    "Switches",
-    "Keycaps",
-    "Desk Mats",
-    "Tools & Lubes",
-    "PCBs & Plates",
-    "Group Buys",
-    "In-Stock Items",
-    "Guides & Tutorials",
-    "Contact Support",
-  ];
 
   if (!isOpen) return null;
 
@@ -62,11 +62,15 @@ export function NavigationSidebar({ isOpen, onClose }: NavigationSidebarProps) {
           </div>
 
           <nav className="space-y-6">
-            {menuItems.map((item, index) => (
-              <div key={index}>
-                <button className="text-left text-foreground hover:text-gray-600 transition-colors text-base cursor-pointer">
-                  {item}
-                </button>
+            {menuItems.map((item) => (
+              <div key={item.name}>
+                <Link
+                  to={`/products?category=${encodeURIComponent(item.category)}`}
+                  onClick={onClose}
+                  className="text-left text-foreground hover:text-gray-600 transition-colors text-base cursor-pointer"
+                >
+                  {item.name}
+                </Link>
               </div>
             ))}
           </nav>
@@ -83,3 +87,4 @@ export function NavigationSidebar({ isOpen, onClose }: NavigationSidebarProps) {
     </div>
   );
 }
+

@@ -23,13 +23,13 @@ export default function ProductsPage() {
   const searchQuery = searchParams.get("search") || "";
 
   useEffect(() => {
-    // Reset page and fetch with new filters
+    // searchQuery takes priority over categoryFilter
+    const activeSearch = searchQuery || categoryFilter || undefined;
     dispatch(
       fetchProducts({
         page: 1,
         per_page: 12,
-        ...(categoryFilter ? { search: categoryFilter } : {}),
-        ...(searchQuery ? { search: searchQuery } : {}),
+        ...(activeSearch ? { search: activeSearch } : {}),
       })
     );
     // Scroll to top when filters change
