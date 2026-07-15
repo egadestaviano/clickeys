@@ -559,10 +559,10 @@ export default function AdminProductsPage() {
           <div className="flex flex-wrap gap-2">
             <Button
               onClick={openCreateDialog}
-              className="rounded-full bg-[#00A9AA] text-slate-950 hover:bg-[#00b8b9]"
+              className="  text-slate-950 "
             >
               <Plus className="h-4 w-4" />
-              Add product
+              Create product
             </Button>
           </div>
         </div>
@@ -797,7 +797,7 @@ export default function AdminProductsPage() {
                               className={cn(
                                 "border-slate-700 bg-transparent text-white hover:bg-white/5",
                                 item === pagination.page &&
-                                  "border-[#00A9AA]/30 bg-[#00A9AA]/10 text-[#00A9AA]",
+                                  "border-[#00A9AA]/30 /10 text-[#00A9AA]",
                               )}
                               onClick={(event) => {
                                 event.preventDefault();
@@ -962,7 +962,7 @@ export default function AdminProductsPage() {
 
                       <div className="space-y-4 border-t border-slate-800 p-5">
                         <div className="flex flex-wrap gap-2">
-                          <span className="rounded-full border border-[#00A9AA]/30 bg-[#00A9AA]/10 px-3 py-1 text-xs font-medium text-[#00A9AA]">
+                          <span className="rounded-full border border-[#00A9AA]/30 /10 px-3 py-1 text-xs font-medium text-[#00A9AA]">
                             {previewProduct.category || "Uncategorized"}
                           </span>
                           <span className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-medium text-slate-300">
@@ -1017,7 +1017,7 @@ export default function AdminProductsPage() {
               </Button>
               <Button
                 type="submit"
-                className="bg-[#00A9AA] text-slate-950 hover:bg-[#00b8b9]"
+                className=" text-slate-950 "
                 disabled={submitting}
               >
                 {submitting
@@ -1059,7 +1059,7 @@ export default function AdminProductsPage() {
 
                 <div className="space-y-3 border-t border-slate-800 p-5">
                   <div className="flex flex-wrap gap-2">
-                    <span className="rounded-full border border-[#00A9AA]/30 bg-[#00A9AA]/10 px-3 py-1 text-xs font-medium text-[#00A9AA]">
+                    <span className="rounded-full border border-[#00A9AA]/30 /10 px-3 py-1 text-xs font-medium text-[#00A9AA]">
                       {detailsProduct.category || "Uncategorized"}
                     </span>
                     <span className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-medium text-slate-300">

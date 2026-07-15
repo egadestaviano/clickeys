@@ -500,7 +500,7 @@ export default function AdminCustomersPage() {
           <div className="flex gap-2">
             <Button
               onClick={openCreateDialog}
-              className="bg-[#00A9AA] text-slate-950 hover:bg-[#00b8b9]"
+              className="text-slate-950"
             >
               <Plus className="h-4 w-4" />
               Create customer
@@ -739,7 +739,7 @@ export default function AdminCustomersPage() {
                               className={cn(
                                 "border-slate-700 bg-transparent text-white hover:bg-white/5",
                                 item === pagination.page &&
-                                  "border-[#00A9AA]/30 bg-[#00A9AA]/10 text-[#00A9AA]",
+                                  "border-[#00A9AA]/30 /10 text-[#00A9AA]",
                               )}
                               onClick={(event) => {
                                 event.preventDefault();

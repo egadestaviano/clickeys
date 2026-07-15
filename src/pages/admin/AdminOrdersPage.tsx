@@ -65,7 +65,7 @@ const DEFAULT_PER_PAGE = 10;
 
 const statusClass: Record<DisplayOrder["status"], string> = {
   pending: "bg-amber-500/10 text-amber-300 ring-1 ring-amber-500/20",
-  paid: "bg-[#00A9AA]/10 text-[#00A9AA] ring-1 ring-[#00A9AA]/20",
+  paid: "/10 text-[#00A9AA] ring-1 ring-[#00A9AA]/20",
   shipped: "bg-sky-500/10 text-sky-300 ring-1 ring-sky-500/20",
   completed: "bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-500/20",
   cancelled: "bg-rose-500/10 text-rose-300 ring-1 ring-rose-500/20",
@@ -944,7 +944,7 @@ export default function AdminOrdersPage(): JSX.Element {
                               className={cn(
                                 "border-slate-700 bg-transparent text-white hover:bg-white/5",
                                 item === pagination.page &&
-                                  "border-[#00A9AA]/30 bg-[#00A9AA]/10 text-[#00A9AA]",
+                                  "border-[#00A9AA]/30 /10 text-[#00A9AA]",
                               )}
                               onClick={(event) => {
                                 event.preventDefault();

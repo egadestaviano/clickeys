@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async'
 
-const SITE_URL = 'https://keysthetix.trianandafajar.com'
-const SITE_NAME = 'Keysthetix'
+const SITE_URL = 'https://clickeys.trianandafajar.com'
+const SITE_NAME = 'Clickeys'
 const DEFAULT_IMAGE = `${SITE_URL}/og-image.jpg`
-const DEFAULT_DESCRIPTION = 'Discover Keysthetix — your destination for premium mechanical keyboards, keycaps, switches, and accessories. Elevate your typing experience.'
+const DEFAULT_DESCRIPTION = 'Discover Clickeys — your destination for premium mechanical keyboards, keycaps, switches, and accessories. Elevate your typing experience.'
 
 interface SEOProps {
   title?: string

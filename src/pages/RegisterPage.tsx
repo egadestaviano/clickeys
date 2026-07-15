@@ -62,13 +62,13 @@ export default function RegisterPage() {
             <UserPlus className="h-7 w-7" />
           </div>
           <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
-            Keysthetix access
+            Clickeys access
           </p>
           <h1 className="text-3xl font-semibold tracking-tight text-foreground">
             Create account
           </h1>
           <p className="text-sm leading-6 text-muted-foreground">
-            Join Keysthetix and keep your orders in one place.
+            Join Clickeys and keep your orders in one place.
           </p>
         </div>
 

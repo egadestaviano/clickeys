@@ -57,8 +57,8 @@ export default function ProductsPage() {
 
   const seoTitle = `${titlePrefix}`;
   const seoDesc = searchQuery
-    ? `Search results for ${searchQuery} active at Keysthetix.`
-    : `Browse our ${categoryFilter || "complete"} collection of products at Keysthetix.`;
+    ? `Search results for ${searchQuery} active at Clickeys.`
+    : `Browse our ${categoryFilter || "complete"} collection of products at Clickeys.`;
 
   return (
     <main className="min-h-screen pt-24 pb-16">

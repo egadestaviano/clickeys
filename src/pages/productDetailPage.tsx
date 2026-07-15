@@ -23,7 +23,7 @@ export default function ProductPage() {
             price: product.price,
             image: product.image_url ?? "",
             availability: "InStock",
-            brand: "Keysthetix",
+            brand: "Clickeys",
             category: product.category ?? "Mechanical Keyboards",
           }}
         />

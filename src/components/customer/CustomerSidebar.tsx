@@ -26,10 +26,10 @@ export default function CustomerSidebar() {
     >
       <div className={`flex items-center gap-3 py-4 ${!isExpanded && !isHovered ? "justify-center" : "justify-start"}`}>
         <Link to="/" className="flex items-center gap-3">
-          <img src="/icon.svg" alt="Keysthetix logo" className="h-11 w-11 shrink-0" />
+          <img src="/icon.svg" alt="Clickeys logo" className="h-11 w-11 shrink-0" />
           {(isExpanded || isHovered || isMobileOpen) && (
             <div className="min-w-0">
-              <p className="truncate text-base font-semibold text-foreground">Keysthetix</p>
+              <p className="truncate text-base font-semibold text-foreground">Clickeys</p>
             </div>
           )}
         </Link>

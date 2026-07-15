@@ -43,7 +43,7 @@ export default function HomePage() {
 
   const seoTitle = categoryFilter ? `${categoryFilter} Collection` : undefined;
   const seoDesc = categoryFilter
-    ? `Browse our premium ${categoryFilter} collection - mechanical keyboards, keycaps & accessories at Keysthetix.`
+    ? `Browse our premium ${categoryFilter} collection - mechanical keyboards, keycaps & accessories at Clickeys.`
     : undefined;
 
   return (

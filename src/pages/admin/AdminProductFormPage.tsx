@@ -374,7 +374,7 @@ export default function AdminProductFormPage() {
               </Button>
               <Button
                 type="submit"
-                className="bg-[#00A9AA] text-slate-950 hover:bg-[#00b8b9]"
+                className=" text-slate-950 "
                 disabled={saving}
               >
                 {saving ? "Saving..." : mode === "edit" ? "Save changes" : "Create product"}

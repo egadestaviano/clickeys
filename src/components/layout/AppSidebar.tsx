@@ -287,7 +287,7 @@ const AppSidebar: React.FC = () => {
                 height={44}
               />
               <span className="font-bold tracking-tighter text-transparent animate-gradient-x text-lg sm:tracking-widest bg-gradient-to-r from-primary via-cyan-400 to-primary bg-clip-text uppercase">
-                Keysthetix
+                Clickeys
               </span>
             </div>
           ) : (

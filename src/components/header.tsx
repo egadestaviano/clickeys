@@ -215,11 +215,11 @@ export function Header() {
           <div className="shrink-0">
             <Link
               to="/"
-              aria-label="Keysthetix Home"
+              aria-label="Clickeys Home"
               className="cursor-pointer transition-opacity duration-200 hover:opacity-75"
             >
               <span className="text-lg font-semibold tracking-[0.18em] text-foreground sm:text-2xl">
-                KEYSTHETIX
+                CLICKEYS
               </span>
             </Link>
           </div>

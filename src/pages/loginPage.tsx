@@ -62,7 +62,7 @@ export default function LoginPage() {
       <div className="w-full max-w-md overflow-hidden rounded-3xl border border-border bg-card shadow-sm animate-in fade-in slide-in-from-bottom-6 duration-500">
         <div className="border-b border-border bg-muted/30 px-8 py-6">
           <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
-            Keysthetix access
+            Clickeys access
           </p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
             Welcome back
