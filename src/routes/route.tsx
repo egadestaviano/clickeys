@@ -1,6 +1,5 @@
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter, Navigate, Outlet } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import ErrorBoundary from "@/components/ErrorBoundary";
 
 const HomePage = lazy(() => import("@/pages/homePage"));
 const LoginPage = lazy(() => import("@/pages/loginPage"));
@@ -13,12 +12,24 @@ const ResetPasswordPage = lazy(() => import("@/pages/ResetPasswordPage"));
 const ForgotPasswordPage = lazy(() => import("@/pages/ForgotPasswordPage"));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage"));
 const VerifyOtpPage = lazy(() => import("@/pages/VerifyOtpPage"));
-const CreateProductPage = lazy(() => import("@/pages/CreateProductPage"));
 const ProductsPage = lazy(() => import("@/pages/ProductsPage"));
+const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
+const CustomerDashboardPage = lazy(() => import("@/pages/customer/CustomerDashboardPage"));
+const CustomerOrdersPage = lazy(() => import("@/pages/customer/CustomerOrdersPage"));
+const CustomerHistoryPage = lazy(() => import("@/pages/customer/CustomerHistoryPage"));
+const CustomerOrderTrackPage = lazy(() => import("@/pages/customer/CustomerOrderTrackPage"));
+const AdminOverviewPage = lazy(() => import("@/pages/admin/AdminOverviewPage"));
+const AdminOrdersPage = lazy(() => import("@/pages/admin/AdminOrdersPage"));
+const AdminCustomersPage = lazy(() => import("@/pages/admin/AdminCustomersPage"));
+const AdminProductsPage = lazy(() => import("@/pages/admin/AdminProductsPage"));
+const AdminProductFormPage = lazy(() => import("@/pages/admin/AdminProductFormPage"));
+const AdminReportsPage = lazy(() => import("@/pages/admin/AdminReportsPage"));
 
 import { productDetailLoader } from "@/routes/productLoader";
 import ProtectedRoute from "@/routes/ProtectedRoute";
 import PublicRoute from "@/routes/PublicRoute";
+import AdminRoute from "@/routes/AdminRoute";
+import CustomerRoute from "@/routes/CustomerRoute";
 import MainLayout from "@/components/MainLayout";
 
 const LoadingScreen = () => (
@@ -30,7 +41,6 @@ const LoadingScreen = () => (
 export const router = createBrowserRouter([
   {
     element: <MainLayout />,
-    errorElement: <ErrorBoundary />,
     children: [
       {
         element: (
@@ -46,10 +56,6 @@ export const router = createBrowserRouter([
           {
             path: "/products",
             element: <ProductsPage />,
-          },
-          {
-            path: "/admin/product/create",
-            element: <CreateProductPage />,
           },
           {
             element: <PublicRoute />,
@@ -72,6 +78,36 @@ export const router = createBrowserRouter([
               { path: "/cart", element: <CartPage /> },
               { path: "/checkout", element: <CheckoutPage /> },
               { path: "/bookmarks", element: <BookmarksPage /> },
+            ],
+          },
+          {
+            path: "/my",
+            element: <CustomerRoute />,
+            children: [
+              { index: true, element: <Navigate to="dashboard" replace /> },
+              { path: "dashboard", element: <CustomerDashboardPage /> },
+              { path: "orders", element: <CustomerOrdersPage /> },
+              { path: "history", element: <CustomerHistoryPage /> },
+              { path: "orders/:orderId", element: <CustomerOrderTrackPage /> },
+              { path: "profile", element: <ProfilePage /> },
+              { path: "cart", element: <Navigate to="/cart" replace /> },
+              { path: "products", element: <Navigate to="/products" replace /> },
+            ],
+          },
+          {
+            path: "/admin",
+            element: <AdminRoute />,
+            children: [
+              { index: true, element: <Navigate to="dashboard" replace /> },
+              { path: "dashboard", element: <AdminOverviewPage /> },
+              { path: "profile", element: <ProfilePage /> },
+              { path: "orders", element: <AdminOrdersPage /> },
+              { path: "customers", element: <AdminCustomersPage /> },
+              { path: "products", element: <AdminProductsPage /> },
+              { path: "products/new", element: <AdminProductFormPage /> },
+              { path: "products/:productId/edit", element: <AdminProductFormPage /> },
+              { path: "reports", element: <AdminReportsPage /> },
+              { path: "product/create", element: <Navigate to="/admin/products/new" replace /> },
             ],
           },
           {
