@@ -36,7 +36,7 @@ export default function BookmarksPage() {
               <Heart className="w-24 h-24 text-primary fill-primary/10 animate-pulse" />
             </div>
           </div>
-
+          
           <div className="space-y-3">
             <h1 className="text-3xl font-extrabold text-foreground tracking-tight">Your Wishlist is Empty</h1>
             <p className="text-muted-foreground text-lg">
@@ -85,8 +85,8 @@ export default function BookmarksPage() {
         {/* Content Section */}
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
           {bookmarkedItems.map((product, index) => (
-            <div
-              key={product.id}
+            <div 
+              key={product.id} 
               className="animate-in fade-in slide-in-from-bottom-8 duration-500 fill-mode-both"
               style={{ animationDelay: `${index * 100}ms` }}
             >

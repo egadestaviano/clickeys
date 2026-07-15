@@ -8,7 +8,6 @@ import ProductCard from "@/features/product/components/productCard";
 import ProductContainer from "@/features/product/components/productContainer";
 import {
   selectHomeListLoading,
-  selectHomeProductError,
   selectHomeProducts,
 } from "@/features/product/productSlice";
 import { fetchProducts } from "@/features/product/productThunks";
@@ -32,7 +31,6 @@ export default function HomePage() {
   const dispatch = useAppDispatch();
   const products = useAppSelector(selectHomeProducts);
   const loading = useAppSelector(selectHomeListLoading);
-  const error = useAppSelector(selectHomeProductError);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryFilter = searchParams.get("category") || "";
@@ -66,38 +64,38 @@ export default function HomePage() {
 
       <div
         id="popular"
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 scroll-mt-24"
+        className="mx-auto max-w-7xl scroll-mt-24 px-4 py-14 sm:px-6 lg:px-8 lg:py-16"
       >
-        <div className="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4">
-          <h2 className="text-3xl font-bold text-foreground capitalize text-center sm:text-left">
+        <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <h2 className="text-center text-3xl font-semibold capitalize text-foreground sm:text-left">
             {categoryFilter ? `${categoryFilter} Collection` : "Popular Products"}
           </h2>
+
           {categoryFilter ? (
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-5">
               <button
                 onClick={() => setSearchParams({})}
-                className="text-sm font-medium text-red-500 hover:text-red-400 transition-colors"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
               >
-                Clear Filter
+                Clear filter
               </button>
+
               <Link
                 to={`/products?category=${categoryFilter}`}
-                className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+                className="text-sm font-medium text-foreground transition-colors hover:text-primary"
               >
-                View All {categoryFilter}
+                View all {categoryFilter}
               </Link>
             </div>
           ) : (
             <Link
               to="/products"
-              className="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+              className="text-sm font-medium text-foreground transition-colors hover:text-primary"
             >
-              View All
+              View all
             </Link>
           )}
         </div>
-
-        {error && <p className="text-red-500">Failed to load products: {error}</p>}
 
         <ProductContainer loading={loading && products.length === 0}>
           <ProductGrid products={visibleProducts} />
