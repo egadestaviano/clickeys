@@ -48,7 +48,7 @@ import {
 } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
-import { GET, PUT } from "@/lib/api";
+import { GET, PUT, POST } from "@/lib/api";
 import type { StandardResponse } from "@/types/api";
 
 type ApiCustomer = {
@@ -78,6 +78,7 @@ type CustomerFormState = {
   name: string;
   email: string;
   phone: string;
+  password: string;
   status: Exclude<CustomerStatus, "all">;
 };
 
@@ -105,6 +106,7 @@ const initialForm: CustomerFormState = {
   name: "",
   email: "",
   phone: "",
+  password: "",
   status: "Active",
 };
 
@@ -116,7 +118,9 @@ const statusClass: Record<Exclude<CustomerStatus, "all">, string> = {
   Inactive: "bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20",
 };
 
+// === PERBAIKAN: handle undefined name ===
 function getInitials(name: string) {
+  if (!name) return "?";
   return name
     .split(" ")
     .filter(Boolean)
@@ -138,7 +142,7 @@ function formatJoinedAt(value: string) {
 function mapCustomer(customer: ApiCustomer): DisplayCustomer {
   return {
     id: customer.id,
-    name: customer.name,
+    name: customer.name || "Unknown", // fallback
     email: customer.email,
     phone: customer.phone || "-",
     role: customer.role || "customer",
@@ -369,6 +373,7 @@ export default function AdminCustomersPage() {
       name: customer.name,
       email: customer.email,
       phone: customer.phone === "-" ? "" : customer.phone,
+      password: "",
       status: customer.status,
     });
     setDialogMode("edit");
@@ -440,16 +445,27 @@ export default function AdminCustomersPage() {
         return;
       }
 
-      const nextCustomer: DisplayCustomer = {
-        id: `CUS-${String(customers.length + 201).padStart(3, "0")}`,
-        name: form.name,
-        email: form.email,
-        phone: form.phone || "-",
-        role: "customer",
-        status: form.status,
-        joinedAt: "Just now",
-      };
-      setCustomers((prev) => [nextCustomer, ...prev]);
+      if (!form.password.trim()) {
+        throw new Error("Password is required to create a customer");
+      }
+
+      const response = await POST<StandardResponse<ApiCustomer>>(
+        "/admin/customers",
+        {
+          name: form.name,
+          email: form.email,
+          phone: form.phone || null,
+          password: form.password,
+          is_active: form.status === "Active",
+        },
+      );
+
+      if (response.status !== "success") {
+        throw new Error(response.message || "Failed to create customer");
+      }
+
+      const newCustomer = mapCustomer(response.data);
+      setCustomers((prev) => [newCustomer, ...prev]);
       closeFormDialog();
     } catch (submitError) {
       setFormError(
@@ -493,14 +509,13 @@ export default function AdminCustomersPage() {
             </h3>
             <p className="mt-1 text-sm text-slate-400">
               Monitor customer activity and manage account details.
-
             </p>
           </div>
 
           <div className="flex gap-2">
             <Button
               onClick={openCreateDialog}
-              className="text-slate-950"
+              className="bg-emerald-500 text-white hover:bg-emerald-600"
             >
               <Plus className="h-4 w-4" />
               Create customer
@@ -519,7 +534,7 @@ export default function AdminCustomersPage() {
                   value={searchInput}
                   onChange={(event) => setSearchInput(event.target.value)}
                   placeholder="Name, email, or phone..."
-                  className="h-11 min-h-11 border-slate-700 bg-[#0b1322] pr-10 text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
+                  className="h-11 min-h-11 border-slate-700 bg-[#0b1322] pr-10 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
                 />
                 {searchInput.trim() ? (
                   <Button
@@ -550,7 +565,7 @@ export default function AdminCustomersPage() {
                   setSearchParams(nextParams, { replace: true });
                 }}
               >
-                <SelectTrigger className="h-11 min-h-11 w-full border-slate-700 bg-[#0b1322] text-sm text-white data-[size=default]:!h-11 data-[size=sm]:!h-11 focus:ring-[#00A9AA]/30">
+                <SelectTrigger className="h-11 min-h-11 w-full border-slate-700 bg-[#0b1322] text-sm text-white data-[size=default]:!h-11 data-[size=sm]:!h-11 focus:ring-emerald-500/30">
                   <SelectValue placeholder="All statuses" />
                 </SelectTrigger>
                 <SelectContent className="border-slate-700 bg-[#0b1322] text-white">
@@ -574,7 +589,7 @@ export default function AdminCustomersPage() {
                   setSearchParams(nextParams, { replace: true });
                 }}
               >
-                <SelectTrigger className="h-11 min-h-11 w-full border-slate-700 bg-[#0b1322] text-sm text-white data-[size=default]:!h-11 data-[size=sm]:!h-11 focus:ring-[#00A9AA]/30">
+                <SelectTrigger className="h-11 min-h-11 w-full border-slate-700 bg-[#0b1322] text-sm text-white data-[size=default]:!h-11 data-[size=sm]:!h-11 focus:ring-emerald-500/30">
                   <SelectValue placeholder="10" />
                 </SelectTrigger>
                 <SelectContent className="border-slate-700 bg-[#0b1322] text-white">
@@ -598,7 +613,6 @@ export default function AdminCustomersPage() {
               </Button>
             </div>
           </div>
-
         </div>
 
         {showSkeleton ? (
@@ -739,7 +753,7 @@ export default function AdminCustomersPage() {
                               className={cn(
                                 "border-slate-700 bg-transparent text-white hover:bg-white/5",
                                 item === pagination.page &&
-                                  "border-[#00A9AA]/30 /10 text-[#00A9AA]",
+                                  "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
                               )}
                               onClick={(event) => {
                                 event.preventDefault();
@@ -788,7 +802,7 @@ export default function AdminCustomersPage() {
       >
         <DialogContent className="max-w-[min(96vw,1040px)]">
           <DialogHeader className="pr-12">
-            <p className="text-xs uppercase tracking-[0.35em] text-[#00A9AA]">
+            <p className="text-xs uppercase tracking-[0.35em] text-emerald-400">
               Customer record
             </p>
             <DialogTitle>
@@ -817,7 +831,7 @@ export default function AdminCustomersPage() {
                       setForm((prev) => ({ ...prev, name: event.target.value }))
                     }
                     placeholder="Enter customer name"
-                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
+                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
                   />
                 </div>
 
@@ -830,7 +844,7 @@ export default function AdminCustomersPage() {
                       setForm((prev) => ({ ...prev, email: event.target.value }))
                     }
                     placeholder="name@example.com"
-                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
+                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
                   />
                 </div>
 
@@ -842,9 +856,27 @@ export default function AdminCustomersPage() {
                       setForm((prev) => ({ ...prev, phone: event.target.value }))
                     }
                     placeholder="+62 ..."
-                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
+                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
                   />
                 </div>
+
+                {dialogMode === "create" ? (
+                  <div className="space-y-2">
+                    <label className="text-sm text-slate-300">Password</label>
+                    <Input
+                      type="password"
+                      value={form.password}
+                      onChange={(event) =>
+                        setForm((prev) => ({
+                          ...prev,
+                          password: event.target.value,
+                        }))
+                      }
+                      placeholder="Set customer password"
+                      className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
+                    />
+                  </div>
+                ) : null}
 
                 <div className="space-y-2 sm:col-span-2">
                   <label className="text-sm text-slate-300">Status</label>
@@ -857,7 +889,7 @@ export default function AdminCustomersPage() {
                       }))
                     }
                   >
-                    <SelectTrigger className="h-11 min-h-11 w-full border-slate-800 bg-slate-950 text-sm text-white data-[size=default]:!h-11 data-[size=sm]:!h-11 focus:ring-[#00A9AA]/30">
+                    <SelectTrigger className="h-11 min-h-11 w-full border-slate-800 bg-slate-950 text-sm text-white data-[size=default]:!h-11 data-[size=sm]:!h-11 focus:ring-emerald-500/30">
                       <SelectValue placeholder="Select status" />
                     </SelectTrigger>
                     <SelectContent className="border-slate-800 bg-[#0b1322] text-white z-[999999]">
@@ -880,7 +912,7 @@ export default function AdminCustomersPage() {
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-slate-100 text-slate-950 hover:bg-white"
+                  className="bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-emerald-500/50"
                   disabled={submitting}
                 >
                   {submitting

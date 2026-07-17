@@ -174,7 +174,7 @@ export default function CheckoutPage() {
     return (
       <main className="min-h-screen bg-background text-foreground flex items-center justify-center p-6">
         <div className="max-w-md w-full text-center space-y-8 animate-in fade-in duration-300">
-          <div className="w-24 h-24 bg-cyan-500/10 text-cyan-400 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="w-24 h-24 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6">
             <ShieldCheck className="w-12 h-12" />
           </div>
           <div className="space-y-4">
@@ -186,7 +186,7 @@ export default function CheckoutPage() {
           </div>
           <div className="pt-8">
             <div className="h-2 w-full overflow-hidden rounded-full bg-border">
-              <div className="h-full w-1/2 rounded-full bg-cyan-400 animate-pulse" />
+              <div className="h-full w-1/2 rounded-full bg-emerald-400 animate-pulse" />
             </div>
           </div>
         </div>

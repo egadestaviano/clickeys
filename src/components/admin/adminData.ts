@@ -217,7 +217,7 @@ export const adminProducts: AdminProductRow[] = [
 
 export const orderStages = [
   { label: "Pending", value: 14, accent: "bg-amber-500" },
-  { label: "Paid", value: 78, accent: "bg-cyan-500" },
-  { label: "Shipped", value: 63, accent: "bg-sky-500" },
+  { label: "Paid", value: 78, accent: "bg-emerald-500" },
+  { label: "Shipped", value: 63, accent: "bg-emerald-600" },
   { label: "Completed", value: 89, accent: "bg-emerald-500" },
 ];

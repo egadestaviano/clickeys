@@ -17,7 +17,7 @@ export default function CustomerRoute() {
     return (
       <div className="grid min-h-screen place-items-center bg-slate-950 text-white">
         <div className="flex items-center gap-3 rounded-md border border-slate-800 bg-slate-900 px-4 py-3 text-sm text-slate-300">
-          <div className="h-3 w-3 animate-pulse rounded-full bg-cyan-400" />
+          <div className="h-3 w-3 animate-pulse rounded-full bg-emerald-400" />
           Loading customer area
         </div>
       </div>

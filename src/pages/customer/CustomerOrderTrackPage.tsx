@@ -155,7 +155,7 @@ export default function CustomerOrderTrackPage() {
                       ? "bg-rose-500"
                       : order.status === "completed"
                         ? "bg-emerald-500"
-                        : "bg-cyan-400"
+                        : "bg-emerald-400"
                   }`}
                   style={{ width: `${progress}%` }}
                 />

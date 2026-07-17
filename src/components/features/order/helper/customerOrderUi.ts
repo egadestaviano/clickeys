@@ -18,8 +18,8 @@ const STATUS_LABELS: Record<Order["status"], string> = {
 
 const STATUS_TONES: Record<Order["status"], string> = {
   pending: "border-amber-400/20 bg-amber-400/10 text-amber-200",
-  paid: "border-cyan-400/20 bg-cyan-400/10 text-cyan-200",
-  shipped: "border-sky-400/20 bg-sky-400/10 text-sky-200",
+  paid: "border-emerald-400/20 bg-emerald-400/10 text-emerald-200",
+  shipped: "border-emerald-500/20 bg-emerald-500/10 text-emerald-200",
   completed: "border-emerald-400/20 bg-emerald-400/10 text-emerald-200",
   cancelled: "border-rose-400/20 bg-rose-400/10 text-rose-200",
 };

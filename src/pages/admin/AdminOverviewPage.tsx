@@ -87,19 +87,19 @@ type DashboardResponse = {
 
 const statusClass: Record<string, string> = {
   pending: "bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20",
-  paid: "bg-cyan-400/10 text-cyan-200 ring-1 ring-cyan-400/20",
-  shipped: "bg-sky-400/10 text-sky-200 ring-1 ring-sky-400/20",
+  paid: "bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20",
+  shipped: "bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-500/20",
   completed: "bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20",
   cancelled: "bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20",
 };
 
 const categoryPalette = [
-  "#06b6d4",
-  "#14b8a6",
   "#22c55e",
+  "#14b8a6",
+  "#10b981",
   "#f59e0b",
-  "#3b82f6",
-  "#a855f7",
+  "#84cc16",
+  "#a3e635",
 ];
 
 function formatRelativeTime(value: string | Date) {
@@ -500,7 +500,7 @@ export default function AdminOverviewPage() {
             <div className="mt-4 space-y-4">
               <div className="rounded-2xl border border-border bg-background p-4">
                 <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-                  <PackageCheck className="h-4 w-4 text-cyan-300" />
+                  <PackageCheck className="h-4 w-4 text-emerald-300" />
                   Fulfillment status
                 </div>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
