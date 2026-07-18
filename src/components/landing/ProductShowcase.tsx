@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import type { Product } from "@/features/product/types/product";
-import { HomeProductCard } from "@/features/product/components/HomeProductCard";
+import HomeProductCard from "@/features/product/components/HomeProductCard";
 
 type ProductShowcaseProps = {
   products: Product[];
@@ -13,7 +13,7 @@ export function ProductShowcase({ products }: ProductShowcaseProps) {
 
   return (
     <div className="mx-auto w-full max-w-[1440px] px-4 pb-12 pt-4 md:px-12">
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         {products.map((product, index) => (
           <HomeProductCard
             key={product.id}

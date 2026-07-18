@@ -3,6 +3,7 @@ import { MaterialIcon } from "@/components/materialIcon";
 
 const showcase = {
   name: "Pro Series",
+  title: "Champion Your Pro Series",
   tag: "Tournament-grade",
   image:
     "https://images.unsplash.com/photo-1595225476474-87563907a212?q=80&w=1400&auto=format&fit=crop",
@@ -19,6 +20,9 @@ export function NewsletterBar() {
           <h3 className="mt-2 font-geist text-3xl font-bold text-on-surface md:text-4xl">
             {showcase.name}
           </h3>
+          <p className="mt-2 max-w-[400px] font-geist text-sm text-on-surface-variant">
+            {showcase.title}
+          </p>
           <Link
             to="/products"
             className="mt-6 inline-flex w-fit items-center gap-2 bg-brand px-5 py-2.5 font-geist text-sm font-bold text-on-brand transition-colors hover:bg-brand-strong"

@@ -6,7 +6,7 @@ import { logoutThunk } from "@/features/auth/authThunks";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ChevronDown, LayoutDashboard, LogOut, Menu, PackageSearch, ShoppingCart, UserRound } from "lucide-react";
+import { MaterialIcon } from "@/components/materialIcon";
 
 export default function CustomerHeader() {
   const { toggleSidebar, toggleMobileSidebar } = useSidebar();
@@ -35,10 +35,10 @@ export default function CustomerHeader() {
           <button
             type="button"
             onClick={handleToggle}
-            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-border bg-card text-foreground shadow-sm transition-colors hover:bg-accent"
+            className="flex h-11 w-11 items-center justify-center rounded-sm border border-border bg-card text-foreground shadow-sm transition-colors hover:bg-accent"
             aria-label="Toggle customer sidebar"
           >
-            <Menu className="h-5 w-5" />
+            <MaterialIcon name="menu" className="text-[20px]" />
           </button>
         </div>
 
@@ -47,7 +47,7 @@ export default function CustomerHeader() {
             <Button asChild variant="ghost" className="h-10 rounded-md px-4 text-foreground hover:bg-background hover:text-foreground">
               <Link to="/products">
                 <span className="mr-2 flex h-7 w-7 items-center justify-center rounded-full bg-muted text-muted-foreground">
-                  <PackageSearch className="h-4 w-4" />
+                  <MaterialIcon name="search" className="text-[16px]" />
                 </span>
                 <span className="hidden sm:inline">Products</span>
               </Link>
@@ -55,7 +55,7 @@ export default function CustomerHeader() {
             <Button asChild variant="ghost" className="h-10 rounded-md px-4 text-foreground hover:bg-background hover:text-foreground">
               <Link to="/cart">
                 <span className="mr-2 flex h-7 w-7 items-center justify-center rounded-full bg-muted text-muted-foreground">
-                  <ShoppingCart className="h-4 w-4" />
+                  <MaterialIcon name="shopping_cart" className="text-[16px]" />
                 </span>
                 <span className="hidden sm:inline">Cart</span>
               </Link>
@@ -77,7 +77,7 @@ export default function CustomerHeader() {
                 <div className="hidden min-w-0 lg:block">
                   <p className="truncate text-sm font-medium text-foreground">{user?.name ?? "User"}</p>
                 </div>
-                <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                <MaterialIcon name="expand_more" className="text-[16px] text-muted-foreground" />
               </button>
             </PopoverTrigger>
 
@@ -104,9 +104,9 @@ export default function CustomerHeader() {
               </div>
 
               <div className="p-2">
-                <Link to={dashboardPath} className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted text-muted-foreground">
-                    <LayoutDashboard className="h-4 w-4" />
+                <Link to={dashboardPath} className="flex w-full items-center gap-3 rounded-sm px-3 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-sm bg-muted text-muted-foreground">
+                    <MaterialIcon name="dashboard" className="text-[16px]" />
                   </span>
                   <div>
                     <p className="text-sm font-semibold text-foreground">Dashboard</p>
@@ -114,9 +114,9 @@ export default function CustomerHeader() {
                   </div>
                 </Link>
 
-                <Link to={profilePath} className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-muted text-muted-foreground">
-                    <UserRound className="h-4 w-4" />
+                <Link to={profilePath} className="mt-1 flex w-full items-center gap-3 rounded-sm px-3 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-sm bg-muted text-muted-foreground">
+                    <MaterialIcon name="person" className="text-[16px]" />
                   </span>
                   <div>
                     <p className="text-sm font-semibold text-foreground">Profile</p>
@@ -129,10 +129,10 @@ export default function CustomerHeader() {
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-rose-600 transition-colors hover:bg-rose-500/10 hover:text-rose-500"
+                  className="flex w-full items-center gap-3 rounded-sm px-3 py-3 text-sm font-semibold text-rose-600 transition-colors hover:bg-rose-500/10 hover:text-rose-500"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500">
-                    <LogOut className="h-4 w-4" />
+                  <span className="flex h-9 w-9 items-center justify-center rounded-sm bg-rose-500/10 text-rose-500">
+                    <MaterialIcon name="logout" className="text-[16px]" />
                   </span>
                   <div>
                     <p className="text-sm font-semibold">Logout</p>

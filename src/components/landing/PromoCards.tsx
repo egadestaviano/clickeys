@@ -24,7 +24,7 @@ export function PromoCards() {
         </div>
 
         {/* Pro Series */}
-        <div className="relative flex min-h-[220px] flex-col items-center justify-center overflow-hidden bg-surface-container">
+        <div className="relative flex min-h-[220px] flex-col items-center justify-center gap-3 overflow-hidden bg-surface-container">
           <div className="absolute inset-0 z-10 bg-black/50" />
           <img
             alt="Pro Series promo"
