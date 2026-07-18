@@ -60,6 +60,7 @@ export default bookmarkSlice.reducer;
 
 export const selectBookmarkedItems = (state: RootState) => state.bookmark.bookmarkedItems;
 export const selectBookmarkCount = (state: RootState) => state.bookmark.bookmarkedItems.length;
-export const selectBookmarkedIds = (state: RootState) => state.bookmark.bookmarkedIds;
+export const selectBookmarkedIds = (state: RootState) =>
+  state.bookmark.bookmarkedItems.map((item) => item.id);
 export const selectIsBookmarked = (id: string) => (state: RootState) =>
-  Boolean(state.bookmark.bookmarkedIds[id]);
+  state.bookmark.bookmarkedItems.some((item) => item.id === id);

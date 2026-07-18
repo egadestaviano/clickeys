@@ -1,11 +1,15 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { HeroBanner } from "@/components/heroBanner";
-import { CategoryNav } from "@/components/categoryNav";
+import { UtilityBar } from "@/components/landing/UtilityBar";
+import { PromoCards } from "@/components/landing/PromoCards";
+import { FilterBar } from "@/components/landing/FilterBar";
+import { ProductShowcase } from "@/components/landing/ProductShowcase";
+import { SwitchBanner } from "@/components/landing/SwitchBanner";
+import { FaqSection } from "@/components/landing/FaqSection";
+import { NewsletterBar } from "@/components/landing/NewsletterBar";
 import SEO from "@/components/SEO";
-import ProductCard from "@/features/product/components/productCard";
-import ProductContainer from "@/features/product/components/productContainer";
 import {
   selectHomeListLoading,
   selectHomeProducts,
@@ -13,19 +17,7 @@ import {
 import { fetchProducts } from "@/features/product/productThunks";
 import type { Product } from "@/features/product/types/product";
 
-const ProductGrid = memo(function ProductGrid({
-  products,
-}: {
-  products: Product[];
-}) {
-  return (
-    <>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
-      ))}
-    </>
-  );
-});
+const ProductShowcaseMemo = memo(ProductShowcase);
 
 export default function HomePage() {
   const dispatch = useAppDispatch();
@@ -39,7 +31,19 @@ export default function HomePage() {
     dispatch(fetchProducts({ page: 1, per_page: 8, search: categoryFilter }));
   }, [categoryFilter, dispatch]);
 
-  const visibleProducts = products.slice(0, 8);
+  const visibleProducts = useMemo<Product[]>(() => {
+    const list = products.slice(0, 6);
+    if (!categoryFilter) return list;
+
+    const needle = categoryFilter.toLowerCase();
+    const filtered = list.filter(
+      (product) =>
+        product.category?.toLowerCase() === needle ||
+        product.name.toLowerCase().includes(needle),
+    );
+
+    return filtered.length ? filtered : list;
+  }, [products, categoryFilter]);
 
   const seoTitle = categoryFilter ? `${categoryFilter} Collection` : undefined;
   const seoDesc = categoryFilter
@@ -47,7 +51,7 @@ export default function HomePage() {
     : undefined;
 
   return (
-    <main>
+    <main className="bg-surface-container-lowest">
       <SEO
         url={categoryFilter ? `/?category=${categoryFilter}` : "/"}
         title={seoTitle}
@@ -59,48 +63,56 @@ export default function HomePage() {
         }
       />
 
+      <UtilityBar />
       <HeroBanner />
-      <CategoryNav />
+      <PromoCards />
 
-      <div
-        id="popular"
-        className="mx-auto max-w-7xl scroll-mt-24 px-4 py-14 sm:px-6 lg:px-8 lg:py-16"
-      >
-        <div className="mb-8 flex flex-col items-center justify-between gap-4 sm:flex-row">
-          <h2 className="text-center text-3xl font-semibold capitalize text-foreground sm:text-left">
-            {categoryFilter ? `${categoryFilter} Collection` : "Popular Products"}
-          </h2>
+      <FilterBar />
 
-          {categoryFilter ? (
+      <section id="popular" className="scroll-mt-24">
+        <div className="mx-auto w-full max-w-[1440px] px-4 pb-4 pt-10 md:px-12">
+          <div className="mb-6 flex flex-col items-start justify-between gap-4 border-b border-outline-variant pb-4 sm:flex-row sm:items-end">
+            <div>
+              <p className="font-geist text-xs uppercase tracking-[0.3em] text-brand">
+                Collection
+              </p>
+              <h2 className="mt-2 font-geist text-3xl font-bold text-on-surface sm:text-left">
+                {categoryFilter ? `${categoryFilter} Collection` : "Popular Products"}
+              </h2>
+            </div>
+
             <div className="flex items-center gap-5">
-              <button
-                onClick={() => setSearchParams({})}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-              >
-                Clear filter
-              </button>
+              {categoryFilter ? (
+                <button
+                  onClick={() => setSearchParams({})}
+                  className="font-geist text-sm font-medium text-on-surface-variant transition-colors hover:text-on-surface"
+                >
+                  Clear filter
+                </button>
+              ) : null}
 
               <Link
-                to={`/products?category=${categoryFilter}`}
-                className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+                to={categoryFilter ? `/products?category=${categoryFilter}` : "/products"}
+                className="font-geist text-sm font-medium text-on-surface transition-colors hover:text-brand"
               >
-                View all {categoryFilter}
+                View all
               </Link>
             </div>
-          ) : (
-            <Link
-              to="/products"
-              className="text-sm font-medium text-foreground transition-colors hover:text-primary"
-            >
-              View all
-            </Link>
-          )}
+          </div>
         </div>
 
-        <ProductContainer loading={loading && products.length === 0}>
-          <ProductGrid products={visibleProducts} />
-        </ProductContainer>
-      </div>
+        {loading && products.length === 0 ? (
+          <div className="mx-auto max-w-[1440px] px-4 py-20 text-center font-geist text-on-surface-variant md:px-12">
+            Loading products...
+          </div>
+        ) : (
+          <ProductShowcaseMemo products={visibleProducts} />
+        )}
+      </section>
+
+      <SwitchBanner />
+      <FaqSection />
+      <NewsletterBar />
     </main>
   );
 }

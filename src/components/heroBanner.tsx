@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { ChevronLeft, ChevronRight, Zap, ArrowRight } from "lucide-react";
 import { HERO_SLIDES } from "@/constants/home";
-
+import { MaterialIcon } from "@/components/materialIcon";
 
 export function HeroBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -22,17 +21,13 @@ export function HeroBanner() {
   }, [goToNextSlide]);
 
   return (
-    <div className="relative w-full h-[520px] sm:h-[600px] lg:h-[650px] overflow-hidden bg-background border-b border-border">
+    <div className="relative w-full h-[520px] overflow-hidden bg-surface-container-lowest border-b border-outline-variant">
       {/* Background slider */}
       <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-0 z-10 bg-gradient-to-r from-surface-container-lowest via-surface-container-lowest/80 to-transparent" />
 
-        <div className="absolute bottom-1/4 right-1/2 translate-x-1/2 sm:right-1/4 sm:translate-x-0 w-80 h-80 sm:w-[30rem] sm:h-[30rem] bg-emerald-400/10 rounded-full blur-[120px] animate-float-delayed"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[30rem] h-[30rem] rounded-full bg-brand/10 blur-[120px]" />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent z-10"></div>
-
-        {/* slider container */}
         <div
           className="absolute inset-0 flex transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
           style={{
@@ -57,7 +52,7 @@ export function HeroBanner() {
                   height={1200}
                   loading={slide.id === 1 ? "eager" : "lazy"}
                   decoding="async"
-                  fetchPriority={slide.id === 1 ? "high" : "auto"}
+                  className="h-full w-full object-cover"
                 />
               </div>
             );
@@ -70,24 +65,24 @@ export function HeroBanner() {
         <button
           onClick={goToPreviousSlide}
           aria-label="Previous slide"
-          className="group cursor-pointer pointer-events-auto absolute left-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-black/30 border border-white/20 hover:bg-emerald-400/90 hover:border-emerald-300 transition-all duration-300"
+          className="group pointer-events-auto absolute left-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white transition-all duration-300 hover:border-brand hover:bg-brand"
         >
-          <ChevronLeft className="h-6 w-6 text-white transition-transform duration-200 group-hover:-translate-x-0.5" />
+          <MaterialIcon className="text-[26px] transition-transform group-hover:-translate-x-0.5" name="chevron_left" />
         </button>
 
         <button
           onClick={goToNextSlide}
           aria-label="Next slide"
-          className="group cursor-pointer pointer-events-auto absolute right-4 top-1/2 -translate-y-1/2 flex h-12 w-12 items-center justify-center rounded-full bg-black/30 border border-white/20 hover:bg-emerald-400/90 hover:border-emerald-300 transition-all duration-300"
+          className="group pointer-events-auto absolute right-4 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/30 text-white transition-all duration-300 hover:border-brand hover:bg-brand"
         >
-          <ChevronRight className="h-6 w-6 text-white transition-transform duration-200 group-hover:translate-x-0.5" />
+          <MaterialIcon className="text-[26px] transition-transform group-hover:translate-x-0.5" name="chevron_right" />
         </button>
       </div>
 
       {/* Content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32 flex flex-col items-center sm:items-start text-center sm:text-left gap-6 h-full justify-center">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium">
-          <Zap className="w-4 h-4 fill-current animate-pulse" />
+      <div className="relative z-20 mx-auto flex h-full max-w-[1440px] flex-col items-center justify-center gap-6 px-4 py-20 text-center sm:items-start sm:px-12 sm:text-left md:py-32">
+        <div className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-3 py-1 font-geist text-sm font-medium text-brand">
+          <MaterialIcon className="text-[16px]" name="bolt" />
           <span key={`badge-${currentSlide}`}>
             {HERO_SLIDES[currentSlide].badge}
           </span>
@@ -95,36 +90,42 @@ export function HeroBanner() {
 
         <h1
           key={`title-${currentSlide}`}
-          className={`text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground max-w-3xl ${currentSlide === 0 ? '' : 'animate-in fade-in slide-in-from-bottom-4 duration-500'
-            }`}
+          className={`max-w-3xl font-geist text-4xl font-bold tracking-tight text-on-surface md:text-6xl lg:text-7xl ${
+            currentSlide === 0
+              ? ""
+              : "animate-in fade-in slide-in-from-bottom-4 duration-500"
+          }`}
         >
           {HERO_SLIDES[currentSlide].title}
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">
+          <span className="text-brand">
             {HERO_SLIDES[currentSlide].highlight}
           </span>
         </h1>
 
         <p
           key={`desc-${currentSlide}`}
-          className={`text-lg md:text-xl text-muted-foreground max-w-2xl mt-2 leading-relaxed line-clamp-3 ${currentSlide === 0 ? '' : 'animate-in fade-in slide-in-from-bottom-6 duration-700'
-            }`}
+          className={`mt-2 max-w-2xl font-geist text-lg leading-relaxed text-on-surface-variant line-clamp-3 md:text-xl ${
+            currentSlide === 0
+              ? ""
+              : "animate-in fade-in slide-in-from-bottom-6 duration-700"
+          }`}
         >
           {HERO_SLIDES[currentSlide].description}
         </p>
 
-        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 mt-6">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-4 sm:justify-start">
           <a
             href="#popular"
-            className="inline-flex items-center justify-center bg-primary text-primary-foreground hover:bg-primary/90 h-14 px-8 text-lg font-medium cursor-pointer rounded-xl transition-all shadow-lg shadow-primary/20 active:scale-95 duration-200"
+            className="inline-flex h-14 cursor-pointer items-center justify-center gap-2 rounded-lg bg-brand px-8 font-geist text-lg font-bold text-on-brand transition-all duration-200 hover:bg-brand-strong active:scale-95"
           >
-            Shop Collection
-            <ArrowRight className="ml-2 w-5 h-5" aria-hidden="true" />
+            Belanja Koleksi
+            <MaterialIcon className="text-[20px]" name="arrow_forward" />
           </a>
         </div>
 
         {/* Pagination */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 sm:left-4 sm:translate-x-0 lg:left-8 flex gap-2">
+        <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 gap-2 sm:left-12 sm:translate-x-0 lg:left-12">
           {HERO_SLIDES.map((_, index) => (
             <button
               key={HERO_SLIDES[index].id}
@@ -132,10 +133,11 @@ export function HeroBanner() {
               aria-selected={currentSlide === index}
               aria-label={`Go to slide ${index + 1}: ${HERO_SLIDES[index].highlight}`}
               onClick={() => setCurrentSlide(index)}
-              className={`h-1.5 rounded-full cursor-pointer transition-all duration-300 ${currentSlide === index
-                ? "w-8 bg-primary"
-                : "w-4 bg-muted hover:bg-muted-foreground"
-                }`}
+              className={`h-1.5 cursor-pointer rounded-full transition-all duration-300 ${
+                currentSlide === index
+                  ? "w-8 bg-brand"
+                  : "w-4 bg-on-surface-variant hover:bg-on-surface"
+              }`}
             />
           ))}
         </div>
@@ -143,3 +145,5 @@ export function HeroBanner() {
     </div>
   );
 }
+
+export default HeroBanner;
