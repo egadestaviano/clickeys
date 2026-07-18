@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
-import { Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MaterialIcon } from "@/components/materialIcon";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
   setQuery,
@@ -183,7 +183,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="flex items-center border-b border-border bg-background">
-          <Search className="w-6 h-6 text-primary ml-6" />
+          <MaterialIcon name="search" className="text-[24px] text-primary ml-6" />
           <input
             ref={inputRef}
             type="text"
@@ -208,7 +208,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               className="mr-3 hover:bg-muted text-muted-foreground hover:text-foreground cursor-pointer rounded-full h-10 w-10 p-0 flex items-center justify-center transition-colors"
               aria-label="Clear search"
             >
-              <X className="w-5 h-5" />
+              <MaterialIcon name="close" className="text-[20px]" />
             </Button>
           )}
         </div>
@@ -246,8 +246,9 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       handleClickSuggestion(idx);
                     }}
                   >
-                    <Search
-                      className={`w-4 h-4 ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}
+                    <MaterialIcon
+                      name="search"
+                      className={`text-[16px] ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}
                     />
                     {item}
                   </div>

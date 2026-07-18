@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { ChevronDown, LogOut, UserRound } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { MaterialIcon } from "@/components/materialIcon";
 import { logoutThunk } from "@/features/auth/authThunks";
 import {
   selectAuthLoading,
@@ -86,7 +86,7 @@ export default function UserDropdown() {
             </p>
           </div>
 
-          <ChevronDown className="hidden h-4 w-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-180 sm:block" />
+          <MaterialIcon name="expand_more" className="hidden text-[16px] text-muted-foreground transition-transform group-data-[state=open]:rotate-180 sm:block" />
         </button>
       </PopoverTrigger>
 
@@ -135,7 +135,7 @@ export default function UserDropdown() {
             className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-none"
           >
             <span className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
-              <UserRound className="h-4 w-4" />
+              <MaterialIcon name="person" className="text-[16px]" />
             </span>
 
             <div>
@@ -152,7 +152,7 @@ export default function UserDropdown() {
             className="mt-1 flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm font-medium text-muted-foreground transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-none"
           >
             <span className="flex h-9 w-9 items-center justify-center rounded-md bg-muted text-muted-foreground">
-              <UserRound className="h-4 w-4" />
+              <MaterialIcon name="person" className="text-[16px]" />
             </span>
 
             <div>
@@ -174,7 +174,7 @@ export default function UserDropdown() {
             }}
           >
             <span className="flex h-9 w-9 items-center justify-center rounded-md bg-red-500/10 text-red-400">
-              <LogOut className="h-4 w-4" />
+              <MaterialIcon name="logout" className="text-[16px]" />
             </span>
 
             <div>

@@ -24,7 +24,7 @@
   --border: oklch(0.9 0 0);
   --input: oklch(0.9 0 0);
   --ring: oklch(0.55 0.18 145 / 40%);
-  --radius: 0.75rem;
+  --radius: 0rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.55 0.18 145);
@@ -118,18 +118,18 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --color-brand-25: #f2f7ff;   /* opsional, bisa disesuaikan dengan hijau jika perlu */
-  --color-brand-50: #ecf3ff;
-  --color-brand-100: #dde9ff;
-  --color-brand-200: #c2d6ff;
-  --color-brand-300: #9cb9ff;
-  --color-brand-400: #7592ff;
-  --color-brand-500: #465fff;
-  --color-brand-600: #3641f5;
-  --color-brand-700: #2a31d8;
-  --color-brand-800: #252dae;
-  --color-brand-900: #262e89;
-  --color-brand-950: #161950;
+  --color-brand-25: #f2fdf5;
+  --color-brand-50: #e8fbf0;
+  --color-brand-100: #c8f6d8;
+  --color-brand-200: #9ee9b8;
+  --color-brand-300: #6ad693;
+  --color-brand-400: #3fbf76;
+  --color-brand-500: #22c55e;
+  --color-brand-600: #18a64b;
+  --color-brand-700: #13823c;
+  --color-brand-800: #105f2f;
+  --color-brand-900: #0d4a26;
+  --color-brand-950: #062a16;
 
   --animate-float: float 10s infinite ease-in-out;
   --animate-float-delayed: float 12s infinite ease-in-out -5s;
@@ -292,6 +292,15 @@
 
 .admin-theme [class*="bg-white/5"] {
   background-color: color-mix(in srgb, var(--accent) 55%, transparent);
+}
+
+.admin-theme [class*="bg-white/10"] {
+  background-color: var(--muted);
+}
+
+.admin-theme [class*="file:bg-slate-700"],
+.admin-theme [class*="file:bg-slate-600"] {
+  background-color: var(--muted);
 }
 
 .admin-theme [class*="hover:bg-white/5"]:hover {

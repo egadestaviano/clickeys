@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { MaterialIcon } from "@/components/materialIcon";
 
 interface BreadcrumbProps {
   pageTitle: string;
@@ -9,7 +9,7 @@ interface BreadcrumbProps {
 const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-      <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+      <h2 className="text-xl font-semibold text-foreground">
         {pageTitle}
       </h2>
 
@@ -18,14 +18,14 @@ const PageBreadcrumb: React.FC<BreadcrumbProps> = ({ pageTitle }) => {
           <li>
             <Link
               to="/"
-              className="flex items-center gap-2 text-gray-500 transition-colors hover:text-[#00A9AA] dark:text-slate-400 dark:hover:text-[#00A9AA]"
+              className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-brand"
             >
               Home
-              <ChevronRight className="h-4 w-4" />
+              <MaterialIcon name="chevron_right" className="text-[16px]" />
             </Link>
           </li>
 
-          <li className="font-medium text-gray-800 dark:text-white">
+          <li className="font-medium text-foreground">
             {pageTitle}
           </li>
         </ol>

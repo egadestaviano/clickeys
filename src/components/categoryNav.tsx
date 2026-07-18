@@ -1,15 +1,15 @@
-import { Keyboard, Cpu, Layers, SwitchCamera, Palette, Hammer, Cable, Wrench } from "lucide-react"
 import { Link } from "react-router-dom"
+import { MaterialIcon } from "@/components/materialIcon"
 
 const categories = [
-  { name: "Barebones", icon: Keyboard },
-  { name: "Keycaps", icon: Palette },
-  { name: "Switches", icon: SwitchCamera },
-  { name: "PCBs", icon: Cpu },
-  { name: "Plates", icon: Layers },
-  { name: "Cables", icon: Cable },
-  { name: "Mods", icon: Hammer },
-  { name: "Tools", icon: Wrench },
+  { name: "Barebones", icon: "keyboard" },
+  { name: "Keycaps", icon: "palette" },
+  { name: "Switches", icon: "toggle_on" },
+  { name: "PCBs", icon: "memory" },
+  { name: "Plates", icon: "layers" },
+  { name: "Cables", icon: "cable" },
+  { name: "Mods", icon: "build" },
+  { name: "Tools", icon: "handyman" },
 ]
 
 export function CategoryNav() {
@@ -43,8 +43,9 @@ export function CategoryNav() {
                   className="group relative flex flex-col items-center justify-center p-6 rounded-3xl border border-border bg-card hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 cursor-pointer"
                 >
                   <div className="w-16 h-16 rounded-2xl bg-primary/5 border border-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/10 group-hover:border-primary/20 transition-all duration-500 ease-out">
-                    <category.icon
-                      className="w-8 h-8 text-primary transition-transform duration-500 group-hover:rotate-12"
+                    <MaterialIcon
+                      name={category.icon}
+                      className="text-[32px] text-primary transition-transform duration-500 group-hover:rotate-12"
                       aria-hidden="true"
                     />
                   </div>
