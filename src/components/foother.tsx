@@ -10,8 +10,9 @@ const catalogue = [
 ];
 
 const support = [
-  { name: "FAQ", to: "/#faq" },
-  { name: "Order Tracking", to: "/my/orders" },
+  { name: "Support", to: "/support" },
+  { name: "FAQ", to: "/faq" },
+  { name: "Order Tracking", to: "/order-tracking" },
 ];
 
 export function Footer() {

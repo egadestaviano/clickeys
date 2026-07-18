@@ -99,9 +99,9 @@ export default function ProfilePage() {
             </div>
           ) : null}
           {message ? (
-            <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-700 dark:text-emerald-200">
-              {message}
-            </div>
+              <div className="rounded-2xl border border-brand/20 bg-brand/10 px-4 py-3 text-sm text-brand">
+                {message}
+              </div>
           ) : null}
 
           <div className="grid gap-4 md:grid-cols-2">

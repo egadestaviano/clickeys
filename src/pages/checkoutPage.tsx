@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowLeft, CreditCard, Truck, ChevronRight, ShieldCheck } from "lucide-react";
+import { MaterialIcon } from "@/components/materialIcon";
 
 import * as cartSlice from "@/features/cart/cartSlice";
 import { selectIsAuthenticated } from "@/features/auth/authSlice";
@@ -145,8 +145,8 @@ export default function CheckoutPage() {
     return (
       <main className="min-h-screen bg-background text-foreground flex items-center justify-center p-6">
         <div className="max-w-md w-full text-center space-y-8 animate-in zoom-in duration-500">
-          <div className="w-24 h-24 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6 scale-110">
-            <CreditCard className="w-12 h-12" />
+          <div className="w-24 h-24 bg-brand/10 text-brand rounded-full flex items-center justify-center mx-auto mb-6 scale-110">
+            <MaterialIcon name="credit_card" className="text-[48px]" />
           </div>
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight">Order Confirmed!</h1>
@@ -174,8 +174,8 @@ export default function CheckoutPage() {
     return (
       <main className="min-h-screen bg-background text-foreground flex items-center justify-center p-6">
         <div className="max-w-md w-full text-center space-y-8 animate-in fade-in duration-300">
-          <div className="w-24 h-24 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-6">
-            <ShieldCheck className="w-12 h-12" />
+          <div className="w-24 h-24 bg-brand/10 text-brand rounded-full flex items-center justify-center mx-auto mb-6">
+            <MaterialIcon name="verified" className="text-[48px]" />
           </div>
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight">Redirecting to Stripe</h1>
@@ -186,7 +186,7 @@ export default function CheckoutPage() {
           </div>
           <div className="pt-8">
             <div className="h-2 w-full overflow-hidden rounded-full bg-border">
-              <div className="h-full w-1/2 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="h-full w-1/2 rounded-full bg-brand animate-pulse" />
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@ export default function CheckoutPage() {
         {/* Header */}
         <div className="mb-12">
           <Link to="/cart" className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-all mb-6">
-            <ArrowLeft className="w-4 h-4" /> Back to cart
+            <MaterialIcon name="arrow_back" className="text-[16px]" /> Back to cart
           </Link>
           <h1 className="text-4xl font-bold tracking-tight">Checkout</h1>
         </div>
@@ -313,7 +313,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 font-bold">
-                      <Truck className="w-5 h-5 text-primary" />
+                      <MaterialIcon name="local_shipping" className="text-[20px] text-primary" />
                       <span>Delivery</span>
                     </div>
                     <p className="text-sm text-muted-foreground">Pay on delivery after the order arrives at your address.</p>
@@ -330,7 +330,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 font-bold">
-                      <ShieldCheck className="w-5 h-5 text-primary" />
+                      <MaterialIcon name="verified" className="text-[20px] text-primary" />
                       <span>Stripe</span>
                     </div>
                     <p className="text-sm text-muted-foreground">Pay now with Stripe. The order stays pending until payment succeeds.</p>
@@ -385,7 +385,7 @@ export default function CheckoutPage() {
                 className="w-full h-14 rounded-xl text-lg font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/10 transition-all active:scale-95"
               >
                 {loading ? "Processing..." : formData.paymentMethod === "stripe" ? "Pay with Stripe" : "Place Order"}
-                <ChevronRight className="w-5 h-5" />
+                <MaterialIcon name="chevron_right" className="text-[20px]" />
               </Button>
 
               <div className="flex flex-col items-center gap-3 pt-2">

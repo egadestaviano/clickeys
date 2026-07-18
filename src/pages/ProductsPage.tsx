@@ -74,12 +74,12 @@ export default function ProductsPage() {
             {titlePrefix}
           </h1>
           {(categoryFilter || searchQuery) && (
-            <button
-              onClick={() => setSearchParams({})}
-              className="text-sm font-medium text-red-500 hover:text-red-400 transition-colors cursor-pointer"
-            >
-              Clear Filter
-            </button>
+              <button
+                onClick={() => setSearchParams({})}
+                className="text-sm font-medium text-destructive hover:text-destructive/80 transition-colors cursor-pointer"
+              >
+                Clear Filter
+              </button>
           )}
         </div>
 

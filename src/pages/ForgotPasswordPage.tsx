@@ -5,7 +5,7 @@ import { selectAuthError, selectAuthLoading } from "@/features/auth/authSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { requestPasswordResetThunk } from "@/features/auth/authThunks";
-import { KeyRound, ArrowLeft, Send } from "lucide-react";
+import { MaterialIcon } from "@/components/materialIcon";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -30,7 +30,7 @@ export default function ForgotPasswordPage() {
       <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
         <div className="text-center space-y-2">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-4">
-            <KeyRound className="w-8 h-8" />
+            <MaterialIcon name="key" className="text-[32px]" />
           </div>
           <h1 className="text-3xl font-bold tracking-tight">Forgot Password</h1>
           <p className="text-muted-foreground">
@@ -64,7 +64,7 @@ export default function ForgotPasswordPage() {
               className="w-full h-12 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               {isLoading ? "Sending..." : "Send Reset Code"}
-              <Send className="w-4 h-4 ml-1" />
+              <MaterialIcon name="send" className="text-[16px] ml-1" />
             </Button>
           </form>
 
@@ -73,7 +73,7 @@ export default function ForgotPasswordPage() {
               to="/auth/login"
               className="text-sm font-bold text-muted-foreground hover:text-primary transition-all flex items-center justify-center gap-2"
             >
-              <ArrowLeft className="w-4 h-4" /> Back to Sign In
+              <MaterialIcon name="arrow_back" className="text-[16px]" /> Back to Sign In
             </Link>
           </div>
         </div>

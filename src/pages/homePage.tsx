@@ -30,7 +30,7 @@ export default function HomePage() {
   }, [categoryFilter, dispatch]);
 
   const visibleProducts = useMemo<Product[]>(() => {
-    const list = products.slice(0, 6);
+    const list = products.slice(0, 8);
     if (!categoryFilter) return list;
 
     const needle = categoryFilter.toLowerCase();

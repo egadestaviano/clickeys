@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import { useAppSelector } from "@/app/hooks"
 import { useNavigate, Link } from "react-router-dom"
-import { Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { MaterialIcon } from "@/components/materialIcon"
 import { selectBookmarkedItems } from "@/features/bookmark/bookmarkSlice"
 import { selectIsAuthenticated } from "@/features/auth/authSlice"
 import ProductCard from "@/features/product/components/productCard"
@@ -21,7 +21,7 @@ export default function BookmarksPage() {
   if (!isAuthenticated) {
     return (
       <div className="flex items-center justify-center py-16">
-        <p className="text-gray-600">Redirecting to login...</p>
+        <p className="text-muted-foreground">Redirecting to login...</p>
       </div>
     )
   }
@@ -33,7 +33,7 @@ export default function BookmarksPage() {
           <div className="relative inline-block mx-auto">
             <div className="absolute inset-0 bg-primary/20 blur-3xl rounded-full translate-y-4"></div>
             <div className="relative bg-card border border-border rounded-3xl p-10 shadow-2xl shadow-primary/10">
-              <Heart className="w-24 h-24 text-primary fill-primary/10 animate-pulse" />
+              <MaterialIcon name="favorite" className="text-[96px] text-primary animate-pulse" />
             </div>
           </div>
           

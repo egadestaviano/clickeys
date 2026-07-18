@@ -59,7 +59,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center px-4 py-20">
-      <div className="w-full max-w-md overflow-hidden rounded-3xl border border-border bg-card shadow-sm animate-in fade-in slide-in-from-bottom-6 duration-500">
+      <div className="w-full max-w-md overflow-hidden border border-border bg-card shadow-sm animate-in fade-in slide-in-from-bottom-6 duration-500">
         <div className="border-b border-border bg-muted/30 px-8 py-6">
           <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
             Clickeys access
@@ -85,7 +85,7 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="h-12 w-full rounded-2xl border-border bg-background px-4 text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
+              className="h-12 w-full border-border bg-background px-4 text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
               placeholder="name@example.com"
               required
             />
@@ -103,14 +103,14 @@ export default function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="h-12 w-full rounded-2xl border-border bg-background px-4 text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
+              className="h-12 w-full border-border bg-background px-4 text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
               placeholder="••••••••"
               required
             />
           </div>
 
           {(error || localError) && (
-            <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 p-3 text-center text-sm text-rose-700 dark:text-rose-200">
+            <div className="border border-rose-500/20 bg-rose-500/10 p-3 text-center text-sm text-rose-700 dark:text-rose-200">
               {error || localError}
             </div>
           )}
@@ -118,7 +118,7 @@ export default function LoginPage() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="h-12 w-full rounded-2xl bg-primary font-semibold text-primary-foreground shadow-none transition-colors hover:bg-primary/90"
+            className="h-12 w-full bg-primary font-semibold text-primary-foreground shadow-none transition-colors hover:bg-primary/90"
           >
             {isLoading ? "Signing In..." : "Sign In"}
           </Button>
