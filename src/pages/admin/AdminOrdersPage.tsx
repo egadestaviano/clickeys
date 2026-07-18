@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type JSX } from "react";
-import { Filter, X } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import { MaterialIcon } from "@/components/materialIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -65,9 +65,9 @@ const DEFAULT_PER_PAGE = 10;
 
 const statusClass: Record<DisplayOrder["status"], string> = {
   pending: "bg-amber-500/10 text-amber-300 ring-1 ring-amber-500/20",
-  paid: "/10 text-[#00A9AA] ring-1 ring-[#00A9AA]/20",
-  shipped: "bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-500/20",
-  completed: "bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-500/20",
+  paid: "bg-brand/10 text-brand ring-1 ring-brand/20",
+  shipped: "bg-brand/10 text-brand ring-1 ring-brand/20",
+  completed: "bg-brand/10 text-brand ring-1 ring-brand/20",
   cancelled: "bg-rose-500/10 text-rose-300 ring-1 ring-rose-500/20",
 };
 
@@ -245,14 +245,14 @@ function DetailSkeleton() {
         {Array.from({ length: 4 }).map((_, index) => (
           <div
             key={index}
-            className="rounded-2xl border border-slate-800 bg-[#121d33] p-4"
+            className="rounded-sm border border-slate-800 bg-[#121d33] p-4"
           >
             <Skeleton className="h-3 w-20 bg-white/10" />
             <Skeleton className="mt-4 h-5 w-40 bg-white/10" />
           </div>
         ))}
       </div>
-      <div className="rounded-2xl border border-slate-800 bg-[#10192d]">
+      <div className="rounded-sm border border-slate-800 bg-[#10192d]">
         <div className="border-b border-slate-700 p-4">
           <Skeleton className="h-5 w-36 bg-white/10" />
         </div>
@@ -699,7 +699,7 @@ export default function AdminOrdersPage(): JSX.Element {
                     }}
                     aria-label="Clear search"
                   >
-                    <X className="h-4 w-4" />
+                    <MaterialIcon name="close" className="text-[16px]" />
                   </Button>
                 ) : null}
               </div>
@@ -811,7 +811,7 @@ export default function AdminOrdersPage(): JSX.Element {
                 onClick={resetFilters}
                 disabled={activeFilterCount === 0}
               >
-                <Filter className="h-4 w-4" />
+                <MaterialIcon name="filter_list" className="text-[16px]" />
                 Clear filters
               </Button>
             </div>
@@ -873,7 +873,7 @@ export default function AdminOrdersPage(): JSX.Element {
                           </Button>
                           <Button
                             size="sm"
-                            className="rounded-full bg-emerald-500 text-slate-950 hover:bg-emerald-400"
+                            className="rounded-full bg-brand text-primary-foreground hover:bg-brand-strong"
                             onClick={() => handleQuickOrderAction(row.id, "paid")}
                           >
                             Approve
@@ -944,7 +944,7 @@ export default function AdminOrdersPage(): JSX.Element {
                               className={cn(
                                 "border-slate-700 bg-transparent text-white hover:bg-white/5",
                                 item === pagination.page &&
-                                  "border-[#00A9AA]/30 /10 text-[#00A9AA]",
+                                  "border-brand/30 bg-brand/10 text-brand",
                               )}
                               onClick={(event) => {
                                 event.preventDefault();
@@ -1161,7 +1161,7 @@ export default function AdminOrdersPage(): JSX.Element {
                 <div className="flex flex-col gap-2 sm:flex-row">
                   <Button
                     type="button"
-                    className="rounded-md bg-emerald-500 text-slate-950 hover:bg-emerald-400"
+                    className="rounded-md bg-brand text-primary-foreground hover:bg-brand-strong"
                     disabled={!orderDetail || detailAction !== null}
                     onClick={() => handleOrderAction("paid")}
                   >

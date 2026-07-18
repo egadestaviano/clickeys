@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { ArrowLeft } from "lucide-react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { MaterialIcon } from "@/components/materialIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -278,7 +278,7 @@ export default function AdminProductFormPage() {
           asChild
         >
           <Link to="/admin/products">
-            <ArrowLeft className="h-4 w-4" />
+            <MaterialIcon name="arrow_back" className="text-[16px]" />
             Back
           </Link>
         </Button>
@@ -300,7 +300,7 @@ export default function AdminProductFormPage() {
                 value={form.name}
                 onChange={(event) => setForm((prev) => ({ ...prev, name: event.target.value }))}
                 placeholder="Enter product name"
-                className="h-11 rounded-md border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
+                className="h-11 rounded-md border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-brand/30"
               />
             </div>
 
@@ -314,7 +314,7 @@ export default function AdminProductFormPage() {
                   value={form.price}
                   onChange={(event) => setForm((prev) => ({ ...prev, price: event.target.value }))}
                   placeholder="0"
-                  className="h-11 rounded-md border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
+                  className="h-11 rounded-md border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-brand/30"
                 />
               </div>
 
@@ -324,7 +324,7 @@ export default function AdminProductFormPage() {
                   type="file"
                   accept="image/*"
                   onChange={(event) => setImageFile(event.target.files?.[0] ?? null)}
-                  className="h-11 rounded-md border-slate-700 bg-[#111b30] text-white file:mr-3 file:h-8 file:rounded-md file:border-0 file:bg-slate-700 file:px-3 file:text-xs file:font-medium file:text-white hover:file:bg-slate-600 focus-visible:ring-[#00A9AA]/30"
+                  className="h-11 rounded-md border-slate-700 bg-[#111b30] text-white file:mr-3 file:h-8 file:rounded-md file:border-0 file:bg-slate-700 file:px-3 file:text-xs file:font-medium file:text-white hover:file:bg-slate-600 focus-visible:ring-brand/30"
                 />
                 <p className="text-xs text-slate-500">
                   {imageFile
@@ -374,7 +374,7 @@ export default function AdminProductFormPage() {
               </Button>
               <Button
                 type="submit"
-                className=" text-slate-950 "
+                className="bg-brand text-primary-foreground hover:bg-brand-strong"
                 disabled={saving}
               >
                 {saving ? "Saving..." : mode === "edit" ? "Save changes" : "Create product"}

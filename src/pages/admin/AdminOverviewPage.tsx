@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { PackageCheck, TrendingUp, Users } from "lucide-react";
 import { Link } from "react-router-dom";
+import { MaterialIcon } from "@/components/materialIcon";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { GET } from "@/lib/api";
@@ -87,9 +87,9 @@ type DashboardResponse = {
 
 const statusClass: Record<string, string> = {
   pending: "bg-amber-400/10 text-amber-200 ring-1 ring-amber-400/20",
-  paid: "bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20",
-  shipped: "bg-emerald-500/10 text-emerald-300 ring-1 ring-emerald-500/20",
-  completed: "bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20",
+  paid: "bg-brand/10 text-brand ring-1 ring-brand/20",
+  shipped: "bg-brand/10 text-brand ring-1 ring-brand/20",
+  completed: "bg-brand/10 text-brand ring-1 ring-brand/20",
   cancelled: "bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20",
 };
 
@@ -125,7 +125,7 @@ function DashboardSkeleton() {
         {Array.from({ length: 4 }).map((_, index) => (
           <div
             key={index}
-            className="rounded-2xl border border-border bg-card p-5 shadow-sm"
+            className="rounded-sm border border-border bg-card p-5 shadow-sm"
           >
             <Skeleton className="h-4 w-32 bg-muted" />
             <Skeleton className="mt-3 h-10 w-24 bg-muted" />
@@ -199,7 +199,7 @@ export default function AdminOverviewPage() {
   return (
     <div className="space-y-6">
       {error ? (
-        <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-200">
+        <div className="rounded-sm border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-200">
           {error}
         </div>
       ) : null}
@@ -208,7 +208,7 @@ export default function AdminOverviewPage() {
         {metrics.map((metric) => (
           <article
             key={metric.label}
-            className="rounded-2xl border border-border bg-card p-5 shadow-sm"
+            className="rounded-sm border border-border bg-card p-5 shadow-sm"
           >
             <div className="flex items-start justify-between gap-4">
               <div>
@@ -220,8 +220,8 @@ export default function AdminOverviewPage() {
                 </h4>
                 {/* <p className="mt-2 text-sm text-muted-foreground">{metric.note}</p> */}
               </div>
-              <div className="rounded-2xl border border-border bg-muted p-3 text-muted-foreground">
-                <TrendingUp className="h-5 w-5" />
+              <div className="rounded-sm border border-border bg-muted p-3 text-muted-foreground">
+                <MaterialIcon name="trending_up" className="text-[20px]" />
               </div>
             </div>
             <div className="mt-5 inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground">
@@ -232,7 +232,7 @@ export default function AdminOverviewPage() {
       </section>
 
       <section className="grid gap-4 xl:grid-cols-4">
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm xl:col-span-3">
+        <div className="rounded-sm border border-border bg-card p-5 shadow-sm xl:col-span-3">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
@@ -244,7 +244,7 @@ export default function AdminOverviewPage() {
             </div>
           </div>
 
-          <div className="mt-6 h-72 rounded-2xl border border-border bg-background p-4">
+          <div className="mt-6 h-72 rounded-sm border border-border bg-background p-4">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
                 data={revenueSeries}
@@ -294,7 +294,7 @@ export default function AdminOverviewPage() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm xl:col-span-1">
+        <div className="rounded-sm border border-border bg-card p-5 shadow-sm xl:col-span-1">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
@@ -422,7 +422,7 @@ export default function AdminOverviewPage() {
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1.5fr_0.9fr]">
-        <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+        <div className="rounded-sm border border-border bg-card p-5 shadow-sm">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
@@ -442,7 +442,7 @@ export default function AdminOverviewPage() {
             </Link>
           </div>
 
-          <div className="mt-5 overflow-hidden rounded-2xl border border-border bg-background">
+          <div className="mt-5 overflow-hidden rounded-sm border border-border bg-background">
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-border">
                 <thead className="bg-muted text-left text-xs uppercase tracking-[0.25em] text-muted-foreground">
@@ -493,14 +493,14 @@ export default function AdminOverviewPage() {
         </div>
 
         <div className="space-y-6">
-          <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <section className="rounded-sm border border-border bg-card p-5 shadow-sm">
             <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
               Operations notes
             </p>
             <div className="mt-4 space-y-4">
-              <div className="rounded-2xl border border-border bg-background p-4">
+              <div className="rounded-sm border border-border bg-background p-4">
                 <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-                  <PackageCheck className="h-4 w-4 text-emerald-300" />
+                  <MaterialIcon name="inventory_2" className="text-[16px] text-brand" />
                   Fulfillment status
                 </div>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -509,9 +509,9 @@ export default function AdminOverviewPage() {
                     : "No pending orders right now."}
                 </p>
               </div>
-              <div className="rounded-2xl border border-border bg-background p-4">
+              <div className="rounded-sm border border-border bg-background p-4">
                 <div className="flex items-center gap-2 text-sm font-medium text-foreground">
-                  <Users className="h-4 w-4 text-amber-300" />
+                  <MaterialIcon name="group" className="text-[16px] text-amber-300" />
                   Dashboard snapshot
                 </div>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -523,7 +523,7 @@ export default function AdminOverviewPage() {
             </div>
           </section>
 
-          <section className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+          <section className="rounded-sm border border-border bg-card p-5 shadow-sm">
             <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
               Shortcut
             </p>

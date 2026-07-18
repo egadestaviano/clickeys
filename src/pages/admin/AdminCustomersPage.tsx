@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { PencilLine, Plus, Trash2, Filter, X } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
+import { MaterialIcon } from "@/components/materialIcon";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -114,7 +114,7 @@ const DEFAULT_PAGE = 1;
 const DEFAULT_PER_PAGE = 10;
 
 const statusClass: Record<Exclude<CustomerStatus, "all">, string> = {
-  Active: "bg-emerald-400/10 text-emerald-200 ring-1 ring-emerald-400/20",
+  Active: "bg-brand/10 text-brand ring-1 ring-brand/20",
   Inactive: "bg-rose-400/10 text-rose-200 ring-1 ring-rose-400/20",
 };
 
@@ -513,13 +513,13 @@ export default function AdminCustomersPage() {
           </div>
 
           <div className="flex gap-2">
-            <Button
-              onClick={openCreateDialog}
-              className="bg-emerald-500 text-white hover:bg-emerald-600"
-            >
-              <Plus className="h-4 w-4" />
-              Create customer
-            </Button>
+              <Button
+                onClick={openCreateDialog}
+                className="bg-brand text-primary-foreground hover:bg-brand-strong"
+              >
+                <MaterialIcon name="add" className="text-[16px]" />
+                Create customer
+              </Button>
           </div>
         </div>
 
@@ -534,7 +534,7 @@ export default function AdminCustomersPage() {
                   value={searchInput}
                   onChange={(event) => setSearchInput(event.target.value)}
                   placeholder="Name, email, or phone..."
-                  className="h-11 min-h-11 border-slate-700 bg-[#0b1322] pr-10 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
+                  className="h-11 min-h-11 border-slate-700 bg-[#0b1322] pr-10 text-white placeholder:text-slate-500 focus-visible:ring-brand/30"
                 />
                 {searchInput.trim() ? (
                   <Button
@@ -545,7 +545,7 @@ export default function AdminCustomersPage() {
                     onClick={() => setSearchInput("")}
                     aria-label="Clear search"
                   >
-                    <X className="h-4 w-4" />
+                    <MaterialIcon name="close" className="text-[16px]" />
                   </Button>
                 ) : null}
               </div>
@@ -608,7 +608,7 @@ export default function AdminCustomersPage() {
                 onClick={resetFilters}
                 disabled={activeFilterCount === 0}
               >
-                <Filter className="h-4 w-4" />
+                <MaterialIcon name="filter_list" className="text-[16px]" />
                 Clear filters
               </Button>
             </div>
@@ -696,7 +696,7 @@ export default function AdminCustomersPage() {
                             className="border-amber-500/30 bg-amber-500/10 text-amber-200 hover:bg-amber-500/20 hover:text-amber-100"
                             onClick={() => openEditDialog(customer)}
                           >
-                            <PencilLine className="h-4 w-4" />
+                             <MaterialIcon name="edit" className="text-[16px]" />
                             Edit
                           </Button>
                           <Button
@@ -705,7 +705,7 @@ export default function AdminCustomersPage() {
                             className="border-rose-500/30 bg-rose-500/10 text-rose-200 hover:bg-rose-500/20 hover:text-rose-100"
                             onClick={() => setDeleteTarget(customer)}
                           >
-                            <Trash2 className="h-4 w-4" />
+                             <MaterialIcon name="delete" className="text-[16px]" />
                             Delete
                           </Button>
                         </div>
@@ -752,8 +752,8 @@ export default function AdminCustomersPage() {
                               isActive={item === pagination.page}
                               className={cn(
                                 "border-slate-700 bg-transparent text-white hover:bg-white/5",
-                                item === pagination.page &&
-                                  "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
+                             item === pagination.page &&
+                              "border-brand/30 bg-brand/10 text-brand",
                               )}
                               onClick={(event) => {
                                 event.preventDefault();
@@ -802,7 +802,7 @@ export default function AdminCustomersPage() {
       >
         <DialogContent className="max-w-[min(96vw,1040px)]">
           <DialogHeader className="pr-12">
-            <p className="text-xs uppercase tracking-[0.35em] text-emerald-400">
+            <p className="text-xs uppercase tracking-[0.35em] text-brand">
               Customer record
             </p>
             <DialogTitle>
@@ -817,7 +817,7 @@ export default function AdminCustomersPage() {
           <form className="mt-6" onSubmit={handleSubmit}>
             <div className="space-y-5">
               {formError ? (
-                <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+                <div className="rounded-sm border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
                   {formError}
                 </div>
               ) : null}
@@ -831,7 +831,7 @@ export default function AdminCustomersPage() {
                       setForm((prev) => ({ ...prev, name: event.target.value }))
                     }
                     placeholder="Enter customer name"
-                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
+                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-brand/30"
                   />
                 </div>
 
@@ -844,7 +844,7 @@ export default function AdminCustomersPage() {
                       setForm((prev) => ({ ...prev, email: event.target.value }))
                     }
                     placeholder="name@example.com"
-                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
+                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-brand/30"
                   />
                 </div>
 
@@ -856,7 +856,7 @@ export default function AdminCustomersPage() {
                       setForm((prev) => ({ ...prev, phone: event.target.value }))
                     }
                     placeholder="+62 ..."
-                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
+                    className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-brand/30"
                   />
                 </div>
 
@@ -873,7 +873,7 @@ export default function AdminCustomersPage() {
                         }))
                       }
                       placeholder="Set customer password"
-                      className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-emerald-500/30"
+                      className="h-11 border-slate-800 bg-slate-950 text-white placeholder:text-slate-500 focus-visible:ring-brand/30"
                     />
                   </div>
                 ) : null}
@@ -912,7 +912,7 @@ export default function AdminCustomersPage() {
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-emerald-500 text-white hover:bg-emerald-600 disabled:bg-emerald-500/50"
+                  className="bg-brand text-primary-foreground hover:bg-brand-strong disabled:bg-brand/50"
                   disabled={submitting}
                 >
                   {submitting

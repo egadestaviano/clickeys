@@ -65,7 +65,7 @@ export default function VerifyOtpPage() {
           </div>
 
           {error && (
-            <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded-lg border border-red-100">
+            <div className="text-destructive text-sm text-center bg-destructive/10 p-3 rounded-lg border border-destructive/20">
               {error}
             </div>
           )}

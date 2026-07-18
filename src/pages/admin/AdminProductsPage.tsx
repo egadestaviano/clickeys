@@ -1,14 +1,6 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import {
-  Filter,
-  ImageIcon,
-  PencilLine,
-  Plus,
-  Sparkles,
-  Trash2,
-  X,
-} from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MaterialIcon } from "@/components/materialIcon";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
@@ -158,7 +150,7 @@ function buildPaginationItems(currentPage: number, totalPages: number) {
 
 function ProductTableSkeleton() {
   return (
-    <div className="overflow-hidden rounded-[1.5rem] border border-slate-800 bg-[#10192d]">
+    <div className="overflow-hidden rounded-sm border border-slate-800 bg-[#10192d]">
       <div className="border-b border-slate-800 p-5">
         <Skeleton className="h-6 w-52 bg-white/10" />
         <Skeleton className="mt-2 h-4 w-80 bg-white/10" />
@@ -179,7 +171,7 @@ function ProductTableSkeleton() {
               <tr key={index}>
                 <td className="px-5 py-5">
                   <div className="flex items-center gap-3">
-                    <Skeleton className="h-12 w-12 rounded-2xl bg-white/10" />
+                    <Skeleton className="h-12 w-12 rounded-sm bg-white/10" />
                     <div className="space-y-2">
                       <Skeleton className="h-4 w-44 bg-white/10" />
                       <Skeleton className="h-3 w-60 bg-white/10" />
@@ -209,7 +201,7 @@ function ProductTableSkeleton() {
 
 function EmptyState({ message }: { message: string }) {
   return (
-    <div className="overflow-hidden rounded-[1.5rem] border border-slate-800 bg-[#10192d]">
+    <div className="overflow-hidden rounded-sm border border-slate-800 bg-[#10192d]">
       <div className="border-b border-slate-800 p-5">
         <h4 className="text-lg font-semibold text-white">Catalog is quiet</h4>
         <p className="mt-2 text-sm text-slate-400">
@@ -561,7 +553,7 @@ export default function AdminProductsPage() {
               onClick={openCreateDialog}
               className="  text-slate-950 "
             >
-              <Plus className="h-4 w-4" />
+              <MaterialIcon name="add" className="text-[16px]" />
               Create product
             </Button>
           </div>
@@ -595,7 +587,7 @@ export default function AdminProductsPage() {
                     }}
                     aria-label="Clear search"
                   >
-                    <X className="h-4 w-4" />
+                    <MaterialIcon name="close" className="text-[16px]" />
                   </Button>
                 ) : null}
               </div>
@@ -656,7 +648,7 @@ export default function AdminProductsPage() {
                 onClick={resetFilters}
                 disabled={activeFilterCount === 0}
               >
-                <Filter className="h-4 w-4" />
+                <MaterialIcon name="filter_list" className="text-[16px]" />
                 Clear filters
               </Button>
             </div>
@@ -688,7 +680,7 @@ export default function AdminProductsPage() {
                     >
                       <TableCell className="font-medium text-white">
                         <div className="flex items-center gap-3">
-                          <div className="relative h-14 w-14 overflow-hidden rounded-2xl border border-slate-800 bg-slate-950">
+                          <div className="relative h-14 w-14 overflow-hidden rounded-sm border border-slate-800 bg-slate-950">
                             {product.image_url ? (
                               <img
                                 src={product.image_url}
@@ -697,7 +689,7 @@ export default function AdminProductsPage() {
                               />
                             ) : (
                               <div className="flex h-full w-full items-center justify-center text-slate-600">
-                                <ImageIcon className="h-5 w-5" />
+                                <MaterialIcon name="image" className="text-[20px]" />
                               </div>
                             )}
                           </div>
@@ -730,7 +722,7 @@ export default function AdminProductsPage() {
                             className="border-slate-700 bg-transparent text-white hover:bg-white/5"
                             onClick={() => setDetailsProduct(product)}
                           >
-                            <Sparkles className="h-4 w-4" />
+                            <MaterialIcon name="auto_awesome" className="text-[16px]" />
                             Details
                           </Button>
                           <Button
@@ -739,7 +731,7 @@ export default function AdminProductsPage() {
                             className="border-amber-500/30 bg-amber-500/10 text-amber-200 hover:bg-amber-500/20 hover:text-amber-100"
                             onClick={() => openEditDialog(product)}
                           >
-                            <PencilLine className="h-4 w-4" />
+                            <MaterialIcon name="edit" className="text-[16px]" />
                             Edit
                           </Button>
                           <Button
@@ -748,7 +740,7 @@ export default function AdminProductsPage() {
                             className="border-rose-500/30 bg-rose-500/10 text-rose-200 hover:bg-rose-500/20 hover:text-rose-100"
                             onClick={() => setDeleteTarget(product)}
                           >
-                            <Trash2 className="h-4 w-4" />
+                            <MaterialIcon name="delete" className="text-[16px]" />
                             Delete
                           </Button>
                         </div>
@@ -797,7 +789,7 @@ export default function AdminProductsPage() {
                               className={cn(
                                 "border-slate-700 bg-transparent text-white hover:bg-white/5",
                                 item === pagination.page &&
-                                  "border-[#00A9AA]/30 /10 text-[#00A9AA]",
+                                  "border-brand/30 bg-brand/10 text-brand",
                               )}
                               onClick={(event) => {
                                 event.preventDefault();
@@ -853,7 +845,7 @@ export default function AdminProductsPage() {
                 <div className="px-7 py-6 lg:border-r lg:border-slate-800">
                   <div className="space-y-6">
                     {formError ? (
-                      <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+                      <div className="rounded-sm border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
                         {formError}
                       </div>
                     ) : null}
@@ -874,7 +866,7 @@ export default function AdminProductsPage() {
                               setForm((prev) => ({ ...prev, name: event.target.value }))
                             }
                             placeholder="Enter product name"
-                            className="h-12 rounded-xl border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
+                            className="h-12 rounded-sm border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
                           />
                         </div>
 
@@ -889,7 +881,7 @@ export default function AdminProductsPage() {
                               setForm((prev) => ({ ...prev, price: event.target.value }))
                             }
                             placeholder="0"
-                            className="h-12 rounded-xl border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
+                            className="h-12 rounded-sm border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
                           />
                         </div>
 
@@ -902,7 +894,7 @@ export default function AdminProductsPage() {
                               setForm((prev) => ({ ...prev, imageUrl: event.target.value }))
                             }
                             placeholder="https://example.com/product.jpg"
-                            className="h-12 rounded-xl border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
+                            className="h-12 rounded-sm border-slate-700 bg-[#111b30] text-white placeholder:text-slate-500 focus-visible:ring-[#00A9AA]/30"
                           />
                         </div>
 
@@ -917,7 +909,7 @@ export default function AdminProductsPage() {
                               }));
                             }}
                           >
-                            <SelectTrigger className="h-12 min-h-12 w-full rounded-xl border-slate-700 bg-[#111b30] text-sm text-white data-[size=default]:!h-12 data-[size=sm]:!h-12 focus:ring-[#00A9AA]/30">
+                            <SelectTrigger className="h-12 min-h-12 w-full rounded-sm border-slate-700 bg-[#111b30] text-sm text-white data-[size=default]:!h-12 data-[size=sm]:!h-12 focus:ring-[#00A9AA]/30">
                               <SelectValue placeholder="Select category" />
                             </SelectTrigger>
                             <SelectContent className="border-slate-800 bg-[#0b1322] text-white">
@@ -955,14 +947,14 @@ export default function AdminProductsPage() {
                           />
                         ) : (
                           <div className="flex h-full items-center justify-center text-slate-600">
-                            <ImageIcon className="h-14 w-14" />
+                            <MaterialIcon name="image" className="text-[56px]" />
                           </div>
                         )}
                       </div>
 
                       <div className="space-y-4 border-t border-slate-800 p-5">
                         <div className="flex flex-wrap gap-2">
-                          <span className="rounded-full border border-[#00A9AA]/30 /10 px-3 py-1 text-xs font-medium text-[#00A9AA]">
+                          <span className="rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-medium text-[#00A9AA]">
                             {previewProduct.category || "Uncategorized"}
                           </span>
                           <span className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-medium text-slate-300">
@@ -1052,14 +1044,14 @@ export default function AdminProductsPage() {
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center text-slate-600">
-                      <ImageIcon className="h-12 w-12" />
+                      <MaterialIcon name="image" className="text-[48px]" />
                     </div>
                   )}
                 </div>
 
                 <div className="space-y-3 border-t border-slate-800 p-5">
                   <div className="flex flex-wrap gap-2">
-                    <span className="rounded-full border border-[#00A9AA]/30 /10 px-3 py-1 text-xs font-medium text-[#00A9AA]">
+                    <span className="rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-medium text-[#00A9AA]">
                       {detailsProduct.category || "Uncategorized"}
                     </span>
                     <span className="rounded-full border border-slate-700 bg-slate-950 px-3 py-1 text-xs font-medium text-slate-300">

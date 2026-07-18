@@ -5,7 +5,7 @@ import { registerThunk } from "@/features/auth/authThunks";
 import { selectAuthError, selectAuthLoading } from "@/features/auth/authSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { UserPlus, ArrowRight } from "lucide-react";
+import { MaterialIcon } from "@/components/materialIcon";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -59,7 +59,7 @@ export default function RegisterPage() {
       <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-500">
         <div className="text-center space-y-2">
           <div className="mb-2 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-primary shadow-sm">
-            <UserPlus className="h-7 w-7" />
+            <MaterialIcon name="person_add" className="text-[28px]" />
           </div>
           <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
             Clickeys access
@@ -139,7 +139,7 @@ export default function RegisterPage() {
               className="mt-4 h-12 w-full rounded-2xl bg-primary font-semibold text-primary-foreground shadow-none transition-colors hover:bg-primary/90"
             >
               {isLoading ? "Creating Account..." : "Create Account"}
-              <ArrowRight className="h-4 w-4" />
+              <MaterialIcon name="arrow_forward" className="text-[16px]" />
             </Button>
           </form>
 
