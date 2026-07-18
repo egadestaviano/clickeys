@@ -14,10 +14,10 @@ type HomeProductCardProps = {
 
 export function HomeProductCard({ product, badge }: HomeProductCardProps) {
   return (
-    <div className="group relative flex flex-col rounded-md bg-surface-container-low p-6">
+    <div className="group relative flex flex-col bg-surface-container-low p-6">
       <div className="relative z-10 mb-4 flex items-start justify-between">
         {badge ? (
-          <span className="rounded bg-surface px-3 py-1 text-[10px] font-bold text-on-surface shadow-sm">
+          <span className="bg-surface px-3 py-1 text-[10px] font-bold text-on-surface shadow-sm">
             {badge}
           </span>
         ) : (
@@ -47,7 +47,9 @@ export function HomeProductCard({ product, badge }: HomeProductCardProps) {
           {product.name}
         </h3>
         <p className="font-geist text-sm text-on-surface-variant">
-          {product.category || "Mechanical Keyboard"}
+          {product.description
+            ? product.description.slice(0, 60) + (product.description.length > 60 ? "…" : "")
+            : (product.category || "Mechanical Keyboard")}
         </p>
         <div className="mt-4 flex items-center justify-between">
           <span className="font-geist font-semibold text-on-surface">
@@ -55,7 +57,7 @@ export function HomeProductCard({ product, badge }: HomeProductCardProps) {
           </span>
           <Link
             to={`/product/${product.id}`}
-            className="rounded-md bg-surface px-3 py-1.5 font-geist text-xs font-semibold text-on-surface transition-colors hover:bg-surface-bright"
+            className="bg-surface px-3 py-1.5 font-geist text-xs font-semibold text-on-surface transition-colors hover:bg-surface-bright"
           >
             View
           </Link>

@@ -2,10 +2,10 @@ import { MaterialIcon } from "@/components/materialIcon";
 
 export function PromoCards() {
   return (
-    <div className="mx-auto w-full max-w-[1440px] px-4 pb-16 md:px-12">
+    <div className="mx-auto w-full max-w-[1440px] px-4 pb-16 pt-8 md:px-12">
       <div className="grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
         {/* Shipping */}
-        <div className="flex flex-col items-center justify-center gap-4 rounded-md bg-surface-container p-8 text-center">
+        <div className="flex flex-col items-center justify-center gap-4 bg-surface-container p-8 text-center">
           <MaterialIcon className="text-5xl text-brand" name="local_shipping" />
           <p className="font-geist font-semibold text-lg text-on-surface">
             Free shipping on every order.
@@ -13,7 +13,7 @@ export function PromoCards() {
         </div>
 
         {/* Pay later */}
-        <div className="flex flex-col items-center justify-center gap-4 rounded-md bg-surface-container-high p-8 text-center">
+        <div className="flex flex-col items-center justify-center gap-4 bg-surface-container-high p-8 text-center">
           <MaterialIcon className="text-5xl text-brand" name="payments" />
           <h3 className="font-geist text-2xl font-bold uppercase leading-tight text-on-surface">
             Buy Now, Pay Later
@@ -24,7 +24,7 @@ export function PromoCards() {
         </div>
 
         {/* Pro Series */}
-          <div className="relative flex min-h-[220px] flex-col items-center justify-center overflow-hidden rounded-md bg-surface-container">
+        <div className="relative flex min-h-[220px] flex-col items-center justify-center overflow-hidden bg-surface-container">
           <div className="absolute inset-0 z-10 bg-black/50" />
           <img
             alt="Pro Series promo"

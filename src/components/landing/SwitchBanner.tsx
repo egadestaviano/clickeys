@@ -4,7 +4,7 @@ import { MaterialIcon } from "@/components/materialIcon";
 export function SwitchBanner() {
   return (
     <div className="mx-auto w-full max-w-[1440px] px-4 pb-16 md:px-12">
-      <div className="relative overflow-hidden rounded-md bg-surface-container">
+      <div className="relative overflow-hidden bg-surface-container">
         <div className="grid grid-cols-1 items-center gap-6 md:grid-cols-2">
           <div className="p-8 md:p-12">
             <p className="font-geist text-xs uppercase tracking-[0.3em] text-brand">
@@ -21,7 +21,7 @@ export function SwitchBanner() {
             </p>
             <Link
               to="/?category=Switches"
-              className="mt-6 inline-flex items-center gap-2 rounded-full bg-brand px-6 py-3 font-geist text-sm font-bold text-on-brand transition-colors hover:bg-brand-strong"
+              className="mt-6 inline-flex items-center gap-2 bg-brand px-6 py-3 font-geist text-sm font-bold text-on-brand transition-colors hover:bg-brand-strong"
             >
               Shop Switches
               <MaterialIcon className="text-[18px]" name="arrow_forward" />

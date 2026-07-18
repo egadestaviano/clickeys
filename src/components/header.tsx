@@ -24,7 +24,7 @@ const SearchButtonLabel = memo(function SearchButtonLabel() {
   const searchQuery = useAppSelector(selectSearchQuery);
 
   if (!searchQuery.trim()) {
-    return <span className="hidden font-geist text-sm sm:inline">Cari</span>;
+    return <span className="hidden font-geist text-sm sm:inline">Search</span>;
   }
 
   return (
