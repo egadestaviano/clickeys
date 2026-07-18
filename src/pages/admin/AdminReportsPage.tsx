@@ -1,4 +1,4 @@
-import { BarChart3, Download } from "lucide-react";
+import { MaterialIcon } from "@/components/materialIcon";
 import { Button } from "@/components/ui/button";
 
 export default function AdminReportsPage() {
@@ -13,14 +13,14 @@ export default function AdminReportsPage() {
         </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <Button className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90">
-            <Download className="h-4 w-4" />
+            <MaterialIcon name="download" className="text-[16px]" />
             Export report
           </Button>
           <Button
             variant="outline"
             className="rounded-full border-border bg-background text-foreground hover:bg-accent"
           >
-            <BarChart3 className="h-4 w-4" />
+            <MaterialIcon name="bar_chart" className="text-[16px]" />
             Open analytics
           </Button>
         </div>

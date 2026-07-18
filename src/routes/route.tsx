@@ -24,6 +24,9 @@ const AdminCustomersPage = lazy(() => import("@/pages/admin/AdminCustomersPage")
 const AdminProductsPage = lazy(() => import("@/pages/admin/AdminProductsPage"));
 const AdminProductFormPage = lazy(() => import("@/pages/admin/AdminProductFormPage"));
 const AdminReportsPage = lazy(() => import("@/pages/admin/AdminReportsPage"));
+const FaqPage = lazy(() => import("@/pages/FaqPage"));
+const SupportPage = lazy(() => import("@/pages/SupportPage"));
+const OrderTrackingPage = lazy(() => import("@/pages/OrderTrackingPage"));
 
 import { productDetailLoader } from "@/routes/productLoader";
 import ProtectedRoute from "@/routes/ProtectedRoute";
@@ -56,6 +59,18 @@ export const router = createBrowserRouter([
           {
             path: "/products",
             element: <ProductsPage />,
+          },
+          {
+            path: "/faq",
+            element: <FaqPage />,
+          },
+          {
+            path: "/support",
+            element: <SupportPage />,
+          },
+          {
+            path: "/order-tracking",
+            element: <OrderTrackingPage />,
           },
           {
             element: <PublicRoute />,

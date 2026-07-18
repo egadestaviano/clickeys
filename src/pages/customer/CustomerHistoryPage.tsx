@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { ArrowRight, Filter, PackageSearch, Search, X } from "lucide-react";
+import { MaterialIcon } from "@/components/materialIcon";
 import { GET } from "@/lib/api";
 import type { StandardResponse, PaginationMeta } from "@/types/api";
 import type { Order } from "@/features/order/types/order";
@@ -48,7 +48,7 @@ function formatPaymentMethod(value?: string | null) {
 
 function HistoryTableSkeleton() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card">
+    <div className="overflow-hidden rounded-sm border border-border bg-card">
       <div className="border-b border-border p-5">
         <Skeleton className="h-6 w-44 bg-muted" />
         <Skeleton className="mt-2 h-4 w-72 bg-muted" />
@@ -222,7 +222,7 @@ export default function CustomerHistoryPage() {
 
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-border bg-card shadow-sm">
+      <section className="rounded-sm border border-border bg-card shadow-sm">
         <div className="flex flex-col gap-3 border-b border-border p-5 md:flex-row md:items-center md:justify-between">
           <div>
             <h3 className="text-lg font-semibold text-foreground">Order History</h3>
@@ -233,7 +233,7 @@ export default function CustomerHistoryPage() {
 
           <Link to="/products">
             <Button variant="outline" className="border-border bg-background text-foreground hover:bg-accent">
-              <PackageSearch className="h-4 w-4" />
+              <MaterialIcon name="search" className="text-[16px]" />
               Continue shopping
             </Button>
           </Link>
@@ -246,7 +246,7 @@ export default function CustomerHistoryPage() {
                 Search
               </label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <MaterialIcon name="search" className="absolute left-3 top-1/2 text-[16px] -translate-y-1/2 text-muted-foreground" />
                 <Input
                   value={searchInput}
                   onChange={(event) => setSearchInput(event.target.value)}
@@ -262,7 +262,7 @@ export default function CustomerHistoryPage() {
                     onClick={() => setSearchInput("")}
                     aria-label="Clear search"
                   >
-                    <X className="h-4 w-4" />
+                    <MaterialIcon name="close" className="text-[16px]" />
                   </Button>
                 ) : null}
               </div>
@@ -295,7 +295,7 @@ export default function CustomerHistoryPage() {
                 onClick={resetFilters}
                 disabled={activeFilterCount === 0}
               >
-                <Filter className="h-4 w-4" />
+                <MaterialIcon name="filter_list" className="text-[16px]" />
                 Clear filters
               </Button>
             </div>
@@ -358,7 +358,7 @@ export default function CustomerHistoryPage() {
                           className="inline-flex items-center rounded-full border border-border bg-background px-3 py-2 text-sm text-foreground transition-colors hover:bg-accent"
                         >
                           Track
-                          <ArrowRight className="ml-2 h-4 w-4" />
+                          <MaterialIcon name="arrow_forward" className="ml-2 text-[16px]" />
                         </Link>
                       </TableCell>
                     </TableRow>

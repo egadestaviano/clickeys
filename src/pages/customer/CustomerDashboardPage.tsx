@@ -49,7 +49,7 @@ type CustomerDashboardResponse = {
 function DashboardSkeleton() {
   return (
     <div className="space-y-6">
-      <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+      <section className="rounded-sm border border-border bg-card p-6 shadow-sm">
         <Skeleton className="h-4 w-32 bg-muted" />
         <Skeleton className="mt-3 h-10 w-80 bg-muted" />
         <Skeleton className="mt-3 h-4 w-full max-w-2xl bg-muted" />
@@ -155,7 +155,7 @@ export default function CustomerDashboardPage() {
   return (
     <div className="space-y-6">
       {error ? (
-        <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-200">
+        <div className="rounded-sm border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-200">
           {error}
         </div>
       ) : null}
@@ -244,7 +244,7 @@ export default function CustomerDashboardPage() {
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">
-                  <div className="rounded-2xl border border-border bg-background px-4 py-3">
+                  <div className="rounded-sm border border-border bg-background px-4 py-3">
                     <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
                       Payment method
                     </p>
@@ -252,7 +252,7 @@ export default function CustomerDashboardPage() {
                       {formatPaymentMethod(trackingOrder.payment_method)}
                     </p>
                   </div>
-                  <div className="rounded-2xl border border-border bg-background px-4 py-3">
+                  <div className="rounded-sm border border-border bg-background px-4 py-3">
                     <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
                       Total
                     </p>
@@ -263,7 +263,7 @@ export default function CustomerDashboardPage() {
                 </div>
               </div>
             ) : (
-              <div className="rounded-2xl border border-border bg-background p-5 text-sm text-muted-foreground">
+              <div className="rounded-sm border border-border bg-background p-5 text-sm text-muted-foreground">
                 No active orders to track yet.
               </div>
             )}
@@ -281,7 +281,7 @@ export default function CustomerDashboardPage() {
                 <Link to="/my/orders">
                   <Button
                     variant="outline"
-                    className="h-12 w-full justify-start rounded-xl border-border bg-background text-foreground hover:bg-accent"
+                    className="h-12 w-full justify-start rounded-sm border-border bg-background text-foreground hover:bg-accent"
                   >
                     <PackageSearch className="mr-2 h-4 w-4" />
                     Active orders
@@ -291,7 +291,7 @@ export default function CustomerDashboardPage() {
                 <Link to="/my/history">
                   <Button
                     variant="outline"
-                    className="h-12 w-full justify-start rounded-xl border-border bg-background text-foreground hover:bg-accent"
+                    className="h-12 w-full justify-start rounded-sm border-border bg-background text-foreground hover:bg-accent"
                   >
                     <History className="mr-2 h-4 w-4" />
                     History
@@ -301,7 +301,7 @@ export default function CustomerDashboardPage() {
                 <Link to="/my/profile">
                   <Button
                     variant="outline"
-                    className="h-12 w-full justify-start rounded-xl border-border bg-background text-foreground hover:bg-accent"
+                    className="h-12 w-full justify-start rounded-sm border-border bg-background text-foreground hover:bg-accent"
                   >
                     <UserRound className="mr-2 h-4 w-4" />
                     Profile
@@ -311,7 +311,7 @@ export default function CustomerDashboardPage() {
                 <Link to="/products">
                   <Button
                     variant="outline"
-                    className="h-12 w-full justify-start rounded-xl border-border bg-background text-foreground hover:bg-accent"
+                    className="h-12 w-full justify-start rounded-sm border-border bg-background text-foreground hover:bg-accent"
                   >
                     <PackageSearch className="mr-2 h-4 w-4" />
                     Browse products
@@ -324,7 +324,7 @@ export default function CustomerDashboardPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-border bg-card shadow-sm">
+      <section className="rounded-sm border border-border bg-card shadow-sm">
         <div className="flex flex-col gap-3 border-b border-border px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
@@ -344,9 +344,9 @@ export default function CustomerDashboardPage() {
             {(data?.featured_products ?? []).map((product) => (
               <div
                 key={product.id}
-                className="flex flex-col gap-4 rounded-2xl border border-border bg-background p-4 md:flex-row md:items-center"
+                className="flex flex-col gap-4 rounded-sm border border-border bg-background p-4 md:flex-row md:items-center"
               >
-                <div className="aspect-square w-full overflow-hidden rounded-xl border border-border bg-muted md:w-28 md:flex-none">
+                <div className="aspect-square w-full overflow-hidden rounded-sm border border-border bg-muted md:w-28 md:flex-none">
                   <img
                     src={product.image_url || "/placeholder.svg"}
                     alt={product.name}
@@ -389,7 +389,7 @@ export default function CustomerDashboardPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-border bg-card shadow-sm">
+      <section className="rounded-sm border border-border bg-card shadow-sm">
         <div className="flex flex-col gap-3 border-b border-border px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">

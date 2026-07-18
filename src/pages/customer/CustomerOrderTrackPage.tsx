@@ -16,17 +16,17 @@ import { Skeleton } from "@/components/ui/skeleton";
 function TrackSkeleton() {
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+      <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
         <Skeleton className="h-4 w-32 bg-muted" />
         <Skeleton className="mt-3 h-8 w-56 bg-muted" />
         <Skeleton className="mt-3 h-4 w-80 bg-muted" />
       </div>
       <div className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
           <Skeleton className="h-5 w-40 bg-muted" />
           <Skeleton className="mt-4 h-32 w-full bg-muted" />
         </div>
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
           <Skeleton className="h-5 w-32 bg-muted" />
           <Skeleton className="mt-4 h-44 w-full bg-muted" />
         </div>
@@ -84,7 +84,7 @@ export default function CustomerOrderTrackPage() {
 
   if (!order) {
     return (
-      <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+      <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
         <p className="text-sm text-rose-700 dark:text-rose-200">{error ?? "Order not found"}</p>
         <div className="mt-4">
           <Link to="/my/orders">
@@ -111,12 +111,12 @@ export default function CustomerOrderTrackPage() {
   return (
     <div className="space-y-6">
       {error ? (
-        <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-200">
+        <div className="rounded-sm border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm text-rose-700 dark:text-rose-200">
           {error}
         </div>
       ) : null}
 
-      <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+      <section className="rounded-sm border border-border bg-card p-6 shadow-sm">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Tracking</p>
@@ -131,7 +131,7 @@ export default function CustomerOrderTrackPage() {
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
-        <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+        <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Status</p>
@@ -183,7 +183,7 @@ export default function CustomerOrderTrackPage() {
         </div>
 
         <div className="space-y-6">
-          <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
             <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Order info</p>
             <div className="mt-4 space-y-3 text-sm text-foreground">
               <div className="flex items-center justify-between gap-4">
@@ -205,7 +205,7 @@ export default function CustomerOrderTrackPage() {
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+          <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
             <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Shipping</p>
             <div className="mt-4 space-y-2 text-sm text-foreground">
               <p>{[order.first_name, order.last_name].filter(Boolean).join(" ") || "Customer"}</p>
@@ -217,9 +217,9 @@ export default function CustomerOrderTrackPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+      <section className="rounded-sm border border-border bg-card p-6 shadow-sm">
         <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Items</p>
-        <div className="mt-5 overflow-hidden rounded-2xl border border-border">
+        <div className="mt-5 overflow-hidden rounded-sm border border-border">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-border">
               <thead className="bg-muted/50 text-left text-xs uppercase tracking-[0.25em] text-muted-foreground">
