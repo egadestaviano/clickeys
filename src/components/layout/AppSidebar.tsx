@@ -1,7 +1,14 @@
 import { useSidebar } from "@/context/SidebarContext";
+import {
+  CalendarHeartIcon,
+  ChevronDownIcon,
+  Ellipsis,
+  GridIcon,
+  TableIcon,
+  UserCircleIcon,
+} from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { MaterialIcon } from "@/components/materialIcon";
 
 type MenuType = "main" | "others";
 
@@ -26,22 +33,22 @@ type OpenSubmenu = {
 
 const navItems: NavItem[] = [
   {
-    icon: <MaterialIcon name="dashboard" />,
+    icon: <GridIcon />,
     name: "Dashboard",
     path: "/admin/dashboard",
   },
   {
-    icon: <MaterialIcon name="shopping_cart_checkout" />,
+    icon: <CalendarHeartIcon />,
     name: "Order Management",
     path: "/admin/orders",
   },
   {
-    icon: <MaterialIcon name="group" />,
+    icon: <UserCircleIcon />,
     name: "Customers",
     path: "/admin/customers",
   },
   {
-    icon: <MaterialIcon name="inventory_2" />,
+    icon: <TableIcon />,
     name: "Product List",
     path: "/admin/products",
   },
@@ -152,7 +159,7 @@ const AppSidebar: React.FC = () => {
               )}
 
               {(isExpanded || isHovered || isMobileOpen) && (
-                <MaterialIcon name="expand_more"
+                <ChevronDownIcon
                   className={`ml-auto w-5 h-5 transition-transform duration-200 ${
                     openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
@@ -272,14 +279,14 @@ const AppSidebar: React.FC = () => {
         <Link to="/admin/dashboard">
           {isExpanded || isHovered || isMobileOpen ? (
             <div className="flex items-center">
-              <img
+            <img
                 className=""
                 src="/logo.svg"
                 alt="App logo"
                 width={44}
                 height={44}
               />
-              <span className="font-bold tracking-tighter text-transparent animate-gradient-x text-lg sm:tracking-widest bg-gradient-to-r from-primary via-brand to-primary bg-clip-text uppercase">
+              <span className="font-bold tracking-tighter text-transparent animate-gradient-x text-lg sm:tracking-widest bg-gradient-to-r from-primary via-emerald-400 to-primary bg-clip-text uppercase">
                 Clickeys
               </span>
             </div>
@@ -308,7 +315,7 @@ const AppSidebar: React.FC = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Menu"
                 ) : (
-                  <MaterialIcon name="more_horiz" className="text-[20px]" />
+                  <Ellipsis className="w-5 h-5" />
                 )}
               </h2>
 

@@ -128,15 +128,22 @@ export default function CustomerHeader() {
 
                 <button
                   type="button"
-                  onClick={handleLogout}
-                  className="flex w-full items-center gap-3 rounded-sm px-3 py-3 text-sm font-semibold text-rose-600 transition-colors hover:bg-rose-500/10 hover:text-rose-500"
+                  onClick={() => {
+                    void handleLogout();
+                  }}
+                  className="mt-1 flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm font-medium text-red-400 transition-colors hover:bg-red-500/10 focus-visible:bg-red-500/10 focus-visible:outline-none"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-sm bg-rose-500/10 text-rose-500">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-md bg-red-500/10 text-red-400">
                     <MaterialIcon name="logout" className="text-[16px]" />
                   </span>
+
                   <div>
-                    <p className="text-sm font-semibold">Logout</p>
-                    <p className="text-xs font-normal text-rose-500/70">End current session</p>
+                    <p className="text-sm font-semibold text-red-400">
+                      Logout
+                    </p>
+                    <p className="text-xs text-red-500/70">
+                      End current session
+                    </p>
                   </div>
                 </button>
               </div>

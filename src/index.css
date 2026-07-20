@@ -43,40 +43,40 @@
 }
 
 .dark {
-  --background: #060e20;
-  --foreground: #f4f6fb;
-  --card: #1d2539;
-  --card-foreground: #f4f6fb;
-  --popover: #1d2539;
-  --popover-foreground: #f4f6fb;
-  /* Primary = brand hijau #22c55e */
-  --primary: #22c55e;
-  --primary-foreground: #ffffff;
-  --secondary: #272f44;
-  --secondary-foreground: #f4f6fb;
-  --muted: #131b2e;
-  --muted-foreground: #c4c6d0;
-  --accent: #272f44;
-  --accent-foreground: #f4f6fb;
+  --background: oklch(0.08 0 0);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.12 0 0);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0.12 0 0);
+  --popover-foreground: oklch(1 0 0);
+  /* Primary hijau untuk dark */
+  --primary: oklch(0.75 0.2 145);
+  --primary-foreground: oklch(0.08 0 0);
+  --secondary: oklch(0.18 0 0);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.18 0 0);
+  --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.2 0 0);
+  --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.6 0.2 25);
-  --destructive-foreground: #ffffff;
-  --border: #44474e;
-  --input: #44474e;
-  --ring: #22c55e80;
-  --sidebar: #0d1526;
-  --sidebar-foreground: #f4f6fb;
-  --sidebar-primary: #22c55e;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1d2539;
-  --sidebar-accent-foreground: #f4f6fb;
-  --sidebar-border: #44474e;
-  --sidebar-ring: #22c55e;
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.75 0.2 145 / 50%);
+  --sidebar: oklch(0.1 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.75 0.2 145);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.15 0 0);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.75 0.2 145);
 
-  --chart-1: #22c55e;
-  --chart-2: #2ea36a;
-  --chart-3: #3a8f8f;
-  --chart-4: #5c6270;
-  --chart-5: #31394d;
+  --chart-1: oklch(0.75 0.2 145);
+  --chart-2: oklch(0.65 0.18 160);
+  --chart-3: oklch(0.85 0.15 150);
+  --chart-4: oklch(0.55 0.16 130);
+  --chart-5: oklch(0.45 0.12 170);
 }
 
 @theme inline {

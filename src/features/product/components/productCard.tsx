@@ -1,7 +1,7 @@
 import { memo, useCallback } from "react";
 import type React from "react";
+import { Heart, Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { MaterialIcon } from "@/components/materialIcon";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import type { Product } from "@/features/product/types/product";
@@ -102,7 +102,7 @@ const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group relative block overflow-hidden border border-border bg-card transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5"
+      className="group relative block overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5"
     >
       <div className="relative aspect-square overflow-hidden bg-muted">
         <img
@@ -131,14 +131,12 @@ const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
           "
           onClick={handleHeartClick}
         >
-          <MaterialIcon
-            name="favorite"
-            fill={isBookmarked}
+          <Heart
             className={`
-              text-[16px]
+              w-4 h-4
               text-foreground
               transition-all duration-200
-              ${isBookmarked ? "text-red-500 scale-110" : ""}
+              ${isBookmarked ? "fill-red-500 text-red-500 scale-110" : ""}
             `}
           />
         </Button>
@@ -147,14 +145,14 @@ const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
         <h3 className="mb-1 line-clamp-1 font-medium text-foreground [text-overflow:clip] transition-colors group-hover:text-primary">
           {product.name}
         </h3>
-          <div className="mb-2 flex items-center gap-1 text-yellow-400">
-            <MaterialIcon name="star" fill className="text-[12px]" />
-            <MaterialIcon name="star" fill className="text-[12px]" />
-            <MaterialIcon name="star" fill className="text-[12px]" />
-            <MaterialIcon name="star" fill className="text-[12px]" />
-            <MaterialIcon name="star" className="text-[12px] text-on-surface-variant/30" />
-            <span className="text-xs text-muted-foreground ml-1">(4.0)</span>
-          </div>
+        <div className="mb-2 flex items-center gap-1 text-yellow-500">
+          <Star className="w-3 h-3 fill-current" />
+          <Star className="w-3 h-3 fill-current" />
+          <Star className="w-3 h-3 fill-current" />
+          <Star className="w-3 h-3 fill-current" />
+          <Star className="w-3 h-3 fill-current text-gray-500/30" />
+          <span className="text-xs text-muted-foreground ml-1">(4.0)</span>
+        </div>
         <div className="flex items-center justify-between mt-auto">
           <p className="text-foreground font-semibold">
             {priceFormatter.format(product.price)}
@@ -163,10 +161,10 @@ const ProductCard = memo(function ProductCard({ product }: ProductCardProps) {
             <Button
               size="icon"
               variant="secondary"
-              className="relative h-8 w-8 cursor-pointer bg-primary text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90 active:scale-[0.98]"
+              className="relative h-8 w-8 cursor-pointer rounded-full bg-primary text-primary-foreground shadow-sm transition-colors duration-200 hover:bg-primary/90 active:scale-[0.98]"
               onClick={handleCartClick}
             >
-              <MaterialIcon name="shopping_cart" className="text-[16px]" />
+              <ShoppingCart className="w-4 h-4" />
               {productCartItemCount > 0 && (
                 <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-[10px] text-background">
                   {productCartItemCount}

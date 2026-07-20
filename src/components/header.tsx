@@ -1,10 +1,18 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Search,
+  ShoppingBag,
+  User,
+  UserRound,
+} from "lucide-react";
 
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { MaterialIcon } from "@/components/materialIcon";
 import { NavigationSidebar } from "@/components/navigationSidebar";
 import {
   Popover,
@@ -24,11 +32,11 @@ const SearchButtonLabel = memo(function SearchButtonLabel() {
   const searchQuery = useAppSelector(selectSearchQuery);
 
   if (!searchQuery.trim()) {
-    return <span className="hidden font-geist text-sm sm:inline">Search</span>;
+    return <span className="hidden text-sm sm:inline">Search</span>;
   }
 
   return (
-    <span className="hidden font-geist text-sm sm:inline">
+    <span className="hidden text-sm sm:inline">
       {searchQuery.length > 20 ? `${searchQuery.slice(0, 20)}...` : searchQuery}
     </span>
   );
@@ -153,21 +161,21 @@ export function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-[background-color,border-color,box-shadow] duration-300 ${
+        className={`sticky top-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300 ${
           isScrolled
-            ? "border-b border-outline-variant bg-surface-container-lowest/90 backdrop-blur-xl"
-            : "border-b border-outline-variant bg-surface-container-lowest"
+            ? "border-b border-border/60 bg-background/88 shadow-sm shadow-black/5 backdrop-blur-xl"
+            : "border-b border-border/60 bg-background/88 shadow-sm shadow-black/5 backdrop-blur-xl sm:border-transparent sm:bg-transparent sm:shadow-none sm:backdrop-blur-none"
         }`}
       >
         <a
           href="#main-content"
-          className="sr-only rounded-md bg-brand px-4 py-2 font-geist text-sm font-medium text-on-brand focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[60]"
+          className="sr-only rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[60]"
         >
           Skip to content
         </a>
 
-        <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-3 px-4 md:px-12">
-          <div className="flex flex-1 items-center gap-1">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-3 px-3 py-4 sm:gap-4 sm:px-6 md:px-8">
+          <div className="flex flex-1 items-center gap-1 sm:gap-2">
             <Button
               type="button"
               variant="ghost"
@@ -176,13 +184,13 @@ export function Header() {
               aria-label="Open navigation menu"
               aria-expanded={isMenuOpen}
               aria-controls="navigation-sidebar"
-              className="relative flex h-10 cursor-pointer items-center gap-2 rounded-full px-2.5 text-on-surface hover:bg-surface-container-highest sm:px-3"
+              className="relative flex h-10 cursor-pointer items-center gap-2 rounded-full px-2.5 text-foreground hover:bg-accent/70 hover:text-accent-foreground sm:px-3"
             >
-              <MaterialIcon className="text-[22px]" name="menu" />
+              <Menu className="size-4 shrink-0" aria-hidden="true" />
 
               {bookmarkCount > 0 && (
                 <span
-                  className="absolute right-1 top-1 flex size-3 items-center justify-center rounded-full bg-brand text-[8px] font-semibold leading-none text-on-brand"
+                  className="absolute right-1 top-1 flex size-3 items-center justify-center rounded-full bg-red-500 text-[8px] font-semibold leading-none text-white"
                   aria-label={`${bookmarkCount} bookmarks`}
                 >
                   {bookmarkCount > 99 ? "99+" : bookmarkCount}
@@ -196,9 +204,9 @@ export function Header() {
               size="sm"
               onClick={openSearch}
               aria-label="Open search"
-              className="flex h-10 cursor-pointer items-center gap-2 rounded-full px-2.5 text-on-surface hover:bg-surface-container-highest sm:px-3"
+              className="flex h-10 cursor-pointer items-center gap-2 rounded-full px-2.5 text-foreground hover:bg-accent/70 hover:text-accent-foreground sm:px-3"
             >
-              <MaterialIcon className="text-[22px]" name="search" />
+              <Search className="size-4 shrink-0" aria-hidden="true" />
 
               <SearchButtonLabel />
             </Button>
@@ -210,7 +218,7 @@ export function Header() {
               aria-label="Clickeys Home"
               className="cursor-pointer transition-opacity duration-200 hover:opacity-75"
             >
-              <span className="font-geist text-2xl font-bold tracking-[0.18em] text-on-surface">
+              <span className="text-lg font-semibold tracking-[0.18em] text-foreground sm:text-2xl">
                 CLICKEYS
               </span>
             </Link>
@@ -221,7 +229,7 @@ export function Header() {
               type="button"
               variant="ghost"
               size="icon"
-              className="relative size-9 cursor-pointer rounded-full text-on-surface hover:bg-surface-container-highest"
+              className="relative size-9 cursor-pointer rounded-full text-foreground hover:bg-accent/70 hover:text-accent-foreground"
               asChild
             >
               <Link
@@ -229,11 +237,11 @@ export function Header() {
                 aria-label={`Shopping cart, ${cartItemCount} items`}
                 title="Shopping cart"
               >
-                <MaterialIcon className="text-[22px]" name="shopping_cart" />
+                <ShoppingBag className="size-5" aria-hidden="true" />
 
                 {cartItemCount > 0 && (
                   <span
-                    className="absolute right-1 top-1 flex size-3 items-center justify-center rounded-full bg-brand text-[10px] font-semibold text-on-brand"
+                    className="absolute right-1 top-1 flex size-3 items-center justify-center rounded-full bg-foreground text-[10px] font-semibold text-background"
                     aria-hidden="true"
                   >
                     {cartItemCount > 99 ? "99+" : cartItemCount}
@@ -247,12 +255,12 @@ export function Header() {
                 <PopoverTrigger asChild>
                   <button
                     type="button"
-                    className="flex h-10 items-center gap-2 rounded-full bg-transparent px-1.5 pr-3 text-left transition-colors hover:bg-surface-container-highest focus-visible:outline-none"
+                    className="flex h-10 items-center gap-2 rounded-full  bg-transparent  px-1.5 pr-3 text-left transition-colors  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     aria-label="Open account menu"
                     title={user?.name ?? "Account"}
                   >
-                    <Avatar className="size-8 border-2 border-brand/50">
-                      <AvatarFallback className="bg-brand/10 text-xs font-semibold text-brand">
+                    <Avatar className="size-8 border-2 border-primary/50">
+                      <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">
                         {getInitials(user?.name)}
                       </AvatarFallback>
                     </Avatar>
@@ -262,22 +270,22 @@ export function Header() {
                 <PopoverContent
                   align="end"
                   sideOffset={10}
-                  className="w-72 overflow-hidden rounded-lg border border-outline-variant bg-surface-container-low p-0 text-on-surface shadow-xl shadow-black/30"
+                  className="w-72 overflow-hidden rounded-2xl border border-border bg-card p-0 text-foreground shadow-xl shadow-black/10"
                 >
-                  <div className="border-b border-outline-variant p-4">
+                  <div className="border-b border-border p-4">
                     <div className="flex items-center gap-3">
-                      <Avatar className="size-11 border border-brand/25 bg-transparent">
-                        <AvatarFallback className="bg-brand/10 text-sm font-semibold text-brand">
+                      <Avatar className="size-11 border border-primary/25 bg-transparent">
+                        <AvatarFallback className="bg-primary/10 text-sm font-semibold text-primary">
                           {getInitials(user?.name)}
                         </AvatarFallback>
                       </Avatar>
 
                       <div className="min-w-0 flex-1">
-                        <p className="truncate font-geist text-sm font-medium text-on-surface">
+                        <p className="truncate text-sm font-medium text-foreground">
                           {user?.name ?? "User"}
                         </p>
 
-                        <p className="mt-1 truncate font-geist text-xs text-on-surface-variant">
+                        <p className="mt-1 truncate text-xs text-muted-foreground">
                           {user?.email ?? "account@store.local"}
                         </p>
                       </div>
@@ -288,41 +296,41 @@ export function Header() {
                     <button
                       type="button"
                       onClick={handleProfile}
-                      className="flex h-12 w-full items-center gap-3 rounded-lg px-3 text-left transition-colors hover:bg-surface-container-high focus-visible:bg-surface-container-high focus-visible:outline-none"
+                      className="flex h-12 w-full items-center gap-3 rounded-xl px-3 text-left transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-none"
                     >
-                      <span className="flex size-9 items-center justify-center rounded-lg bg-surface-container-highest text-on-surface-variant">
-                        <MaterialIcon className="text-[18px]" name="person" />
+                      <span className="flex size-9 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+                        <UserRound className="size-4" />
                       </span>
 
-                      <span className="font-geist text-sm font-medium text-on-surface">
-                        Profil
+                      <span className="text-sm font-medium text-foreground">
+                        Profile
                       </span>
                     </button>
 
                     <button
                       type="button"
                       onClick={handleDashboard}
-                      className="flex h-12 w-full items-center gap-3 rounded-lg px-3 text-left transition-colors hover:bg-surface-container-high focus-visible:bg-surface-container-high focus-visible:outline-none"
+                      className="flex h-12 w-full items-center gap-3 rounded-xl px-3 text-left transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:outline-none"
                     >
-                      <span className="flex size-9 items-center justify-center rounded-lg bg-surface-container-highest text-on-surface-variant">
-                        <MaterialIcon className="text-[18px]" name="dashboard" />
+                      <span className="flex size-9 items-center justify-center rounded-lg bg-muted text-muted-foreground">
+                        <LayoutDashboard className="size-4" />
                       </span>
 
-                      <span className="font-geist text-sm font-medium text-on-surface">
+                      <span className="text-sm font-medium text-foreground">
                         Dashboard
                       </span>
                     </button>
 
-                    <div className="my-2 h-px bg-outline-variant" />
+                    <div className="my-2 h-px bg-border" />
 
                     <Button
                       type="button"
                       variant="ghost"
-                      className="flex h-12 w-full justify-start gap-3 rounded-lg px-3 text-left font-geist text-sm font-semibold text-red-400 hover:bg-red-500/10 hover:text-red-400 focus-visible:bg-red-500/10 focus-visible:outline-none"
+                      className="flex h-12 w-full justify-start gap-3 rounded-xl px-3 text-left text-sm font-semibold text-red-500 hover:bg-red-500/10 hover:text-red-600 focus-visible:bg-red-500/10 focus-visible:outline-none"
                       onClick={handleLogout}
                     >
-                      <span className="flex size-9 items-center justify-center rounded-lg bg-red-500/10 text-red-400">
-                        <MaterialIcon className="text-[18px]" name="logout" />
+                      <span className="flex size-9 items-center justify-center rounded-lg bg-red-500/10 text-red-500">
+                        <LogOut className="size-4" />
                       </span>
 
                       <span>Logout</span>
@@ -335,10 +343,10 @@ export function Header() {
                 type="button"
                 variant="ghost"
                 size="sm"
-                className="cursor-pointer px-1 text-on-surface hover:bg-surface-container-highest sm:px-3"
+                className="cursor-pointer px-1 text-foreground hover:bg-accent hover:text-accent-foreground sm:px-3"
                 onClick={() => navigate("/auth/login")}
               >
-                <MaterialIcon className="text-[22px]" name="person" />
+                <User className="size-4" aria-hidden="true" />
               </Button>
             )}
           </div>
@@ -351,5 +359,3 @@ export function Header() {
     </>
   );
 }
-
-export default Header;

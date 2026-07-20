@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Heart, ChevronRight, ShoppingBag, Minus } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { MaterialIcon } from "@/components/materialIcon"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { selectIsBookmarked, addBookmark, removeBookmark } from "@/features/bookmark/bookmarkSlice"
 import { selectIsAuthenticated } from "@/features/auth/authSlice"
@@ -25,7 +25,7 @@ function AccordionItem({
   children: React.ReactNode
 }) {
   return (
-      <div className="border-t border-outline-variant pt-6">
+    <div className="border-t border-gray-200 pt-6">
       <button
         onClick={() => onToggle(id)}
         className="flex items-center justify-between w-full text-left"
@@ -33,9 +33,9 @@ function AccordionItem({
       >
         <span className="text-foreground">{label}</span>
         {expanded ? (
-          <MaterialIcon name="remove" className="text-[16px] text-on-surface-variant" />
+          <Minus className="w-4 h-4 text-gray-400" />
         ) : (
-          <MaterialIcon name="chevron_right" className="text-[16px] text-on-surface-variant" />
+          <ChevronRight className="w-4 h-4 text-gray-400" />
         )}
       </button>
       <div
@@ -129,7 +129,7 @@ export function ProductDetail() {
       <div className="px-4 py-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
-          <div className="bg-muted aspect-square overflow-hidden border border-border flex items-center justify-center p-8 group relative">
+          <div className="bg-muted aspect-square rounded-2xl overflow-hidden border border-border flex items-center justify-center p-8 group relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <img
               src={product.image_url || "/placeholder.svg"}
@@ -146,7 +146,7 @@ export function ProductDetail() {
           <div className="space-y-6 flex flex-col justify-center">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-on-surface-variant mb-2">
+                <p className="text-sm text-gray-600 mb-2">
                   {shortCodeFromUUID(product.id)}
                 </p>
                 <h1 className="text-2xl font-medium text-foreground mb-4">
@@ -155,31 +155,23 @@ export function ProductDetail() {
                 <p className="text-lg text-foreground">
                   ${product.price.toLocaleString("en-US", { minimumFractionDigits: 2 })}
                 </p>
-                <div className="flex items-center gap-0.5 mt-1">
-                  <MaterialIcon name="star" fill className="text-[14px] text-yellow-500" />
-                  <MaterialIcon name="star" fill className="text-[14px] text-yellow-500" />
-                  <MaterialIcon name="star" fill className="text-[14px] text-yellow-500" />
-                  <MaterialIcon name="star" fill className="text-[14px] text-yellow-500" />
-                  <MaterialIcon name="star" className="text-[14px] text-yellow-500/30" />
-                  <span className="text-xs text-muted-foreground ml-1">(4.0)</span>
-                </div>
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
-                className={`hover:bg-surface-bright ${isBookmarked ? "text-red-500" : "text-foreground"}`}
+                className={`hover:bg-gray-50 ${isBookmarked ? "text-red-500" : "text-foreground"}`}
                 onClick={handleHeartClick}
               >
-                <MaterialIcon name="favorite" fill={isBookmarked} className={`text-[20px] ${isBookmarked ? "text-red-500" : ""}`} />
+                <Heart className={`w-5 h-5 ${isBookmarked ? "fill-current" : ""}`} />
               </Button>
             </div>
 
-            <div className="flex items-center justify-between py-4 border-b border-outline-variant">
+            <div className="flex items-center justify-between py-4 border-b border-gray-200">
               <span className="text-foreground">Material</span>
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-yellow-600 rounded-full" />
-                <MaterialIcon name="chevron_right" className="text-[16px] text-on-surface-variant" />
+                <ChevronRight className="w-4 h-4 text-gray-400" />
               </div>
             </div>
 
@@ -188,14 +180,14 @@ export function ProductDetail() {
                 onClick={handleAddToCart}
                 disabled={cartLoading}
                 aria-label="Add to cart"
-                className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-[1.02] transform transition-all active:scale-[0.98] py-6 text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/25 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+                className="flex-1 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-[1.02] transform transition-all active:scale-[0.98] py-6 text-lg rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-primary/25 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               >
-                <MaterialIcon name="shopping_bag" className="text-[20px]" />
+                <ShoppingBag className="w-5 h-5" />
                 <span>{cartLoading ? "Adding..." : "Add to Cart"}</span>
               </Button>
             </div>
 
-            <div className="text-sm text-muted-foreground bg-muted/50 p-4 border border-border">
+            <div className="text-sm text-muted-foreground bg-muted/50 p-4 rounded-xl border border-border">
               <p>Our Digital Advisor is available if you have any question on this product.</p>
               <button className="underline text-foreground">Contact us</button>
             </div>

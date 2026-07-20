@@ -11,13 +11,6 @@ interface VirtualProductGridProps {
   onLoadMore: () => void;
 }
 
-const getColumnsForWidth = (width: number) => {
-  if (width >= 1280) return 4;
-  if (width >= 768) return 3;
-  if (width >= 480) return 2;
-  return 1;
-};
-
 const VirtualProductGrid: React.FC<VirtualProductGridProps> = ({
   products,
   loading,
@@ -26,21 +19,23 @@ const VirtualProductGrid: React.FC<VirtualProductGridProps> = ({
 }) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const [columns, setColumns] = useState(1);
-  const [scrollMargin, setScrollMargin] = useState(0);
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loaderRef = useRef<HTMLDivElement>(null);
 
-  // Responsive column count + scroll margin (measured after layout)
+  // Responsive column count logic
   useEffect(() => {
-    const updateMetrics = () => {
+    const updateColumns = () => {
       if (!parentRef.current) return;
-      setColumns(getColumnsForWidth(parentRef.current.offsetWidth));
-      setScrollMargin(parentRef.current.offsetTop);
+      const width = parentRef.current.offsetWidth;
+      if (width >= 1024) setColumns(4);
+      else if (width >= 768) setColumns(3);
+      else if (width >= 640) setColumns(2);
+      else setColumns(1);
     };
 
-    const resizeObserver = new ResizeObserver(updateMetrics);
+    const resizeObserver = new ResizeObserver(updateColumns);
     if (parentRef.current) resizeObserver.observe(parentRef.current);
-    updateMetrics();
+    updateColumns();
 
     return () => resizeObserver.disconnect();
   }, []);
@@ -58,7 +53,7 @@ const VirtualProductGrid: React.FC<VirtualProductGridProps> = ({
     count: rows.length,
     estimateSize: () => 450, // Estimate height of a row (card height + gap)
     overscan: 5,
-    scrollMargin,
+    scrollMargin: parentRef.current?.offsetTop ?? 0,
   });
 
   // Infinite Scroll Observer
@@ -104,14 +99,12 @@ const VirtualProductGrid: React.FC<VirtualProductGridProps> = ({
               left: 0,
               width: '100%',
               height: `${virtualRow.size}px`,
-              transform: `translateY(${virtualRow.start - scrollMargin}px)`,
+              transform: `translateY(${virtualRow.start - rowVirtualizer.options.scrollMargin}px)`,
             }}
           >
-            <div className={`grid min-w-0 gap-4 sm:gap-6 ${columnClassMap[columns] || 'grid-cols-1'}`}>
+            <div className={`grid gap-6 ${columnClassMap[columns] || 'grid-cols-1'}`}>
               {rows[virtualRow.index]?.map((product) => (
-                <div key={product.id} className="min-w-0">
-                  <ProductCard product={product} />
-                </div>
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           </div>
@@ -121,19 +114,19 @@ const VirtualProductGrid: React.FC<VirtualProductGridProps> = ({
       {/* Loading & Empty States */}
       <div ref={loaderRef} className="w-full mt-8 p-4 min-h-20 flex flex-col items-center">
         {loading && (
-          <div className={`grid min-w-0 gap-4 sm:gap-6 w-full ${columnClassMap[columns] || 'grid-cols-1'}`}>
-            {Array.from({ length: Math.max(columns, 2) }).map((_, i) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
+            {Array.from({ length: columns }).map((_, i) => (
               <ProductCardSkeleton key={`skeleton-${i}`} />
             ))}
           </div>
         )}
         
         {!loading && !hasNextPage && products.length > 0 && (
-          <p className="text-on-surface-variant">All products have been displayed.</p>
+          <p className="text-gray-400">All products have been displayed.</p>
         )}
         
         {!loading && products.length === 0 && (
-          <p className="text-on-surface-variant text-lg">No products found matching your criteria.</p>
+          <p className="text-gray-400 text-lg">No products found matching your criteria.</p>
         )}
       </div>
     </div>

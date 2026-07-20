@@ -51,8 +51,10 @@ export default function UserDropdown() {
   const profileRole = role ?? "admin";
   const profileStatus = user?.is_active === false ? "Inactive" : "Active";
   const isActive = profileStatus === "Active";
-  const dashboardPath = profileRole === "admin" ? "/admin/dashboard" : "/my/dashboard";
-  const profilePath = profileRole === "admin" ? "/admin/profile" : "/my/profile";
+  const dashboardPath =
+    profileRole === "admin" ? "/admin/dashboard" : "/my/dashboard";
+  const profilePath =
+    profileRole === "admin" ? "/admin/profile" : "/my/profile";
 
   const handleLogout = async (): Promise<void> => {
     await dispatch(logoutThunk());
@@ -86,7 +88,10 @@ export default function UserDropdown() {
             </p>
           </div>
 
-          <MaterialIcon name="expand_more" className="hidden text-[16px] text-muted-foreground transition-transform group-data-[state=open]:rotate-180 sm:block" />
+          <MaterialIcon
+            name="expand_more"
+            className="hidden text-[16px] text-muted-foreground transition-transform group-data-[state=open]:rotate-180 sm:block"
+          />
         </button>
       </PopoverTrigger>
 
@@ -107,7 +112,9 @@ export default function UserDropdown() {
               <p className="truncate text-sm font-semibold text-foreground">
                 {profileName}
               </p>
-              <p className="truncate text-xs text-muted-foreground">{profileEmail}</p>
+              <p className="truncate text-xs text-muted-foreground">
+                {profileEmail}
+              </p>
 
               <div className="mt-2 flex items-center gap-2">
                 <span className="rounded-md bg-primary/10 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
@@ -139,10 +146,10 @@ export default function UserDropdown() {
             </span>
 
             <div>
-              <p className="text-sm font-semibold text-foreground">
-                Dashboard
+              <p className="text-sm font-semibold text-foreground">Dashboard</p>
+              <p className="text-xs text-muted-foreground">
+                Open role dashboard
               </p>
-              <p className="text-xs text-muted-foreground">Open role dashboard</p>
             </div>
           </button>
 
@@ -156,34 +163,31 @@ export default function UserDropdown() {
             </span>
 
             <div>
-              <p className="text-sm font-semibold text-foreground">
-                Profile
+              <p className="text-sm font-semibold text-foreground">Profile</p>
+              <p className="text-xs text-muted-foreground">
+                Open account profile
               </p>
-              <p className="text-xs text-muted-foreground">Open account profile</p>
             </div>
           </button>
 
           <div className="my-2 h-px bg-border" />
 
-          <Button
+          <button
             type="button"
-            variant="ghost"
-            className="flex h-auto w-full justify-start gap-3 rounded-md px-3 py-3 text-left text-sm font-semibold text-red-400 hover:bg-red-500/10 hover:text-red-300 focus-visible:bg-red-500/10 focus-visible:outline-none"
             onClick={() => {
               void handleLogout();
             }}
+            className="mt-1 flex w-full items-center gap-3 rounded-md px-3 py-3 text-left text-sm font-medium text-red-400 transition-colors hover:bg-red-500/10 focus-visible:bg-red-500/10 focus-visible:outline-none"
           >
             <span className="flex h-9 w-9 items-center justify-center rounded-md bg-red-500/10 text-red-400">
               <MaterialIcon name="logout" className="text-[16px]" />
             </span>
 
             <div>
-              <p className="text-sm font-semibold">Logout</p>
-              <p className="text-xs font-normal text-red-500/70">
-                End current session
-              </p>
+              <p className="text-sm font-semibold text-red-400">Logout</p>
+              <p className="text-xs text-red-500/70">End current session</p>
             </div>
-          </Button>
+          </button>
         </div>
       </PopoverContent>
     </Popover>

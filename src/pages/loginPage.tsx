@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("admin@gmail.com");
+  const [email, setEmail] = useState("user@gmail.com");
   const [password, setPassword] = useState("password");
 
   const dispatch = useAppDispatch();
@@ -46,71 +46,77 @@ export default function LoginPage() {
 
     if (loginThunk.fulfilled.match(result)) {
       const currentUserResult = await dispatch(fetchCurrentUserThunk());
-      const role = loginThunk.fulfilled.match(result)
-        ? result.payload?.user?.role ??
-          (fetchCurrentUserThunk.fulfilled.match(currentUserResult)
-            ? currentUserResult.payload?.role
-            : undefined)
-        : undefined;
+      const role = result.payload?.user?.role ??
+        (fetchCurrentUserThunk.fulfilled.match(currentUserResult)
+          ? currentUserResult.payload?.role
+          : undefined);
 
-      navigate(role === "admin" ? "/admin" : "/my");
+      navigate(role === "admin" ? "/admin" : "/my/dashboard");
+    }
+  };
+
+  // FIX: langsung login tanpa setState + submit
+  const handleQuickLogin = async (emailValue: string, passwordValue: string) => {
+    setLocalError(null);
+
+    const result = await dispatch(
+      loginThunk({ email: emailValue, password: passwordValue })
+    );
+
+    if (loginThunk.fulfilled.match(result)) {
+      const currentUserResult = await dispatch(fetchCurrentUserThunk());
+      const role = result.payload?.user?.role ??
+        (fetchCurrentUserThunk.fulfilled.match(currentUserResult)
+          ? currentUserResult.payload?.role
+          : undefined);
+
+      navigate(role === "admin" ? "/admin" : "/my/dashboard");
+    } else {
+      setLocalError("Quick login failed");
     }
   };
 
   return (
-    <div className="flex items-center justify-center px-4 py-20">
-      <div className="w-full max-w-md overflow-hidden border border-border bg-card shadow-sm animate-in fade-in slide-in-from-bottom-6 duration-500">
-        <div className="border-b border-border bg-muted/30 px-8 py-6">
-          <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
-            Clickeys access
-          </p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-foreground">
-            Welcome back
+    <div className="flex items-center justify-center px-4 animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <div className="w-full max-w-md bg-card border border-border rounded-2xl p-8 shadow-2xl shadow-primary/10 relative overflow-hidden">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-foreground mb-2">
+            Welcome Back
           </h1>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">
-            Sign in to continue shopping and tracking your orders.
+          <p className="text-muted-foreground">
+            Sign in to your NeoKeys account
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5 p-8">
-          <div className="space-y-2">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-muted-foreground"
-            >
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-1.5">
               Email Address
             </label>
             <Input
-              id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="h-12 w-full border-border bg-background px-4 text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
+              className="w-full px-4 py-3 bg-background border border-border rounded-xl"
               placeholder="name@example.com"
-              required
             />
           </div>
 
-          <div className="space-y-2">
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-muted-foreground"
-            >
+          <div>
+            <label className="block text-sm font-medium text-foreground mb-1.5">
               Password
             </label>
             <Input
-              id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="h-12 w-full border-border bg-background px-4 text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
+              className="w-full px-4 py-3 bg-background border border-border rounded-xl"
               placeholder="••••••••"
-              required
             />
           </div>
 
           {(error || localError) && (
-            <div className="border border-rose-500/20 bg-rose-500/10 p-3 text-center text-sm text-rose-700 dark:text-rose-200">
+            <div className="text-red-600 text-sm text-center bg-red-50 p-3 rounded">
               {error || localError}
             </div>
           )}
@@ -118,33 +124,57 @@ export default function LoginPage() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="h-12 w-full bg-primary font-semibold text-primary-foreground shadow-none transition-colors hover:bg-primary/90"
+            className="w-full bg-primary text-primary-foreground py-6 rounded-xl font-bold text-lg"
           >
             {isLoading ? "Signing In..." : "Sign In"}
           </Button>
         </form>
 
-        <div className="border-t border-border px-8 py-6 text-center space-y-4">
-          <Link
-            to="/auth/forgot-password"
-            className="block text-sm font-medium text-primary transition-colors hover:text-primary/80"
-          >
+        {/* Quick Login */}
+        <div className="mt-6 space-y-3">
+          <p className="text-xs text-muted-foreground text-center">
+            Quick Login
+          </p>
+
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => handleQuickLogin("admin@gmail.com", "password")}
+              className="p-4 rounded-xl border border-border bg-background hover:bg-muted/50 transition text-left"
+            >
+              <div className="text-sm font-semibold text-foreground">Admin</div>
+              <div className="text-xs text-muted-foreground">
+                admin@gmail.com
+              </div>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleQuickLogin("user@gmail.com", "password")}
+              className="p-4 rounded-xl border border-border bg-background hover:bg-muted/50 transition text-left"
+            >
+              <div className="text-sm font-semibold text-foreground">User</div>
+              <div className="text-xs text-muted-foreground">
+                user@gmail.com
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-6 border-t border-border text-center space-y-4">
+          <Link to="/auth/forgot-password" className="block text-sm text-primary">
             Forgot your password?
           </Link>
+
           <div className="text-sm text-muted-foreground">
-            Don&apos;t have an account?{" "}
-            <Link
-              to="/auth/register"
-              className="font-medium text-primary transition-colors hover:text-primary/80"
-            >
+            Don’t have an account?{" "}
+            <Link to="/auth/register" className="text-primary">
               Register
             </Link>
           </div>
-          <Link
-            to="/"
-            className="inline-block mt-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
-          >
-            &larr; Back to Shop
+
+          <Link to="/" className="text-sm text-muted-foreground">
+            ← Back to Shop
           </Link>
         </div>
       </div>

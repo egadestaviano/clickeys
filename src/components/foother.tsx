@@ -1,98 +1,105 @@
 import { Link } from "react-router-dom";
-import { MaterialIcon } from "@/components/materialIcon";
-
-const catalogue = [
-  { name: "Barebones Kits", to: "/?category=keyboards#popular" },
-  { name: "Switches", to: "/?category=switches#popular" },
-  { name: "Keycaps", to: "/?category=keycaps#popular" },
-  { name: "Accessories", to: "/?category=accessories#popular" },
-  { name: "Desk Mats", to: "/?category=deskmat#popular" },
-];
-
-const support = [
-  { name: "Support", to: "/support" },
-  { name: "FAQ", to: "/faq" },
-  { name: "Order Tracking", to: "/order-tracking" },
-];
+import { MapPin, Mail } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-outline-variant bg-surface-container-lowest">
-      <div className="mx-auto max-w-[1440px] px-4 py-14 sm:px-6 md:px-12">
-        <div className="grid grid-cols-2 gap-10 md:grid-cols-12">
-          {/* Brand */}
-          <div className="col-span-2 md:col-span-5">
-            <h3 className="font-geist text-2xl font-bold text-brand">CLICKEYS</h3>
-            <p className="mt-1 font-geist text-xs uppercase tracking-[0.2em] text-on-surface-variant">
-              Mechanical Excellence
+    <footer className="bg-background border-t-2 border-foreground/10 pt-16 pb-8 relative overflow-hidden">
+      {/* Structural Background Pattern (Bukan Default GLow) */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{ backgroundImage: 'radial-gradient(circle, currentColor 1px, transparent 1px)', backgroundSize: '24px 24px' }}>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-24 mb-12">
+
+          {/* Posisi 1: Shop (Moved here) */}
+          <div className="space-y-6 order-2 md:order-1">
+            <h4 className="text-xs font-black uppercase tracking-[0.3em] text-primary/80 border-b border-primary/20 pb-2 inline-block">
+              Catalogue
+            </h4>
+            <ul className="space-y-3">
+              {[
+                { name: "Barebones Kits", to: "/?category=keyboards#popular" },
+                { name: "Switches", to: "/?category=switches#popular" },
+                { name: "Keycaps", to: "/?category=keycaps#popular" },
+                { name: "Accessories", to: "/?category=accessories#popular" },
+                { name: "Desk Mats", to: "/?category=deskmat#popular" }
+              ].map((item) => (
+                <li key={item.name}>
+                  <Link
+                    to={item.to}
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground hover:translate-x-1 transition-all duration-200 flex items-center gap-2 group"
+                  >
+                    <div className="w-1 h-1 bg-primary scale-0 group-hover:scale-100 transition-transform rounded-full" />
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Posisi 2: Brand Info (Center focus now) */}
+          <div className="flex flex-col items-center text-center space-y-6 order-1 md:order-2">
+            <div className="space-y-2">
+              <h3 className="text-3xl font-bold italic border-x-4 border-primary px-4 inline-block text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-400 to-primary">
+                CLICKEYS
+              </h3>
+              <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest pt-2">
+                Mechanical Excellence
+              </p>
+            </div>
+
+            <p className="text-sm leading-relaxed text-muted-foreground max-w-xs">
+              Crafting the ultimate typing experience. Premium enthusiast tools for those who demand excellence.
             </p>
-            <p className="mt-4 max-w-sm font-geist text-sm leading-relaxed text-on-surface-variant">
-              Crafting the ultimate typing experience. Premium enthusiast tools
-              for those who demand excellence.
-            </p>
-            <div className="mt-6 flex flex-col gap-2">
-              <div className="flex items-center gap-2 font-geist text-xs text-on-surface-variant">
-                <MaterialIcon className="text-[16px] text-brand" name="location_on" />
+
+            <div className="flex flex-col items-center gap-3 pt-4 border-t border-dashed border-border w-full max-w-[200px]">
+              <div className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground/80">
+                <MapPin className="w-3 h-3 text-primary" />
                 <span>SILICON VALLEY, CA</span>
               </div>
-              <div className="flex items-center gap-2 font-geist text-xs text-on-surface-variant">
-                <MaterialIcon className="text-[16px] text-brand" name="mail" />
+              <div className="flex items-center gap-2 text-[11px] font-mono text-muted-foreground/80">
+                <Mail className="w-3 h-3 text-primary" />
                 <span>SUPPORT@CLICKEYS.COM</span>
               </div>
             </div>
           </div>
 
-          {/* Catalogue */}
-          <div className="md:col-span-3 md:col-start-8">
-            <h4 className="mb-4 font-geist text-xs font-semibold uppercase tracking-[0.2em] text-on-surface">
-              Catalogue
-            </h4>
-            <ul className="space-y-2.5">
-              {catalogue.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.to}
-                    className="font-geist text-sm text-on-surface-variant transition-colors hover:text-brand"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div className="md:col-span-2">
-            <h4 className="mb-4 font-geist text-xs font-semibold uppercase tracking-[0.2em] text-on-surface">
+          {/* Posisi 3: Support */}
+          <div className="space-y-6 order-3 text-left md:text-right">
+            <h4 className="text-xs font-black uppercase tracking-[0.3em] text-primary/80 border-b border-primary/20 pb-2 inline-block md:ml-auto">
               Support
             </h4>
-            <ul className="space-y-2.5">
-              {support.map((item) => (
+            <ul className="space-y-3">
+              {[
+                { name: "Build Guides", to: "#" },
+                { name: "Shipping Config", to: "#" },
+                { name: "Returns & Refunds", to: "#" },
+                { name: "FAQ", to: "#" },
+                { name: "Order Tracking", to: "#" }
+              ].map((item) => (
                 <li key={item.name}>
                   <Link
                     to={item.to}
-                    className="font-geist text-sm text-on-surface-variant transition-colors hover:text-brand"
+                    className="text-sm font-medium text-muted-foreground hover:text-foreground hover:-translate-x-1 transition-all duration-200 flex items-center justify-start md:justify-end gap-2 group text-right"
                   >
+                    <div className="w-1 h-1 bg-primary scale-0 group-hover:scale-100 transition-transform rounded-full" />
                     {item.name}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
+
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-outline-variant pt-6 sm:flex-row">
-          <p className="font-geist text-xs text-on-surface-variant">
+        {/* Bottom Bar */}
+        <div className="border-t border-border pt-8 flex items-center justify-center">
+          <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} CLICKEYS // ALL RIGHTS RESERVED
           </p>
-          <div className="flex items-center gap-1 font-geist text-xs text-brand">
-            <MaterialIcon className="text-[14px]" name="keyboard" />
-            <span>Built for enthusiasts</span>
-          </div>
         </div>
       </div>
     </footer>
   );
 }
-
-export default Footer;

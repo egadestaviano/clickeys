@@ -5,7 +5,7 @@ import { registerThunk } from "@/features/auth/authThunks";
 import { selectAuthError, selectAuthLoading } from "@/features/auth/authSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MaterialIcon } from "@/components/materialIcon";
+import { UserPlus, ArrowRight } from "lucide-react";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -18,6 +18,7 @@ export default function RegisterPage() {
 
   const isLoading = useAppSelector(selectAuthLoading);
   const error = useAppSelector(selectAuthError);
+
   const [localError, setLocalError] = useState<string | null>(null);
 
   const validate = () => {
@@ -55,80 +56,65 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="flex min-h-[80vh] items-center justify-center px-4 py-12">
-      <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-500">
+    <main className="min-h-[80vh] flex items-center justify-center px-4 transition-colors duration-300">
+      <div className="w-full max-w-md space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
         <div className="text-center space-y-2">
-          <div className="mb-2 inline-flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-primary shadow-sm">
-            <MaterialIcon name="person_add" className="text-[28px]" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 text-primary mb-4">
+            <UserPlus className="w-8 h-8" />
           </div>
-          <p className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
-            Clickeys access
-          </p>
-          <h1 className="text-3xl font-semibold tracking-tight text-foreground">
-            Create account
-          </h1>
-          <p className="text-sm leading-6 text-muted-foreground">
-            Join Clickeys and keep your orders in one place.
-          </p>
+          <h1 className="text-3xl font-bold tracking-tight">Create Account</h1>
+          <p className="text-muted-foreground">Join Clickeys and start your typing journey</p>
         </div>
 
-        <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
-          <form onSubmit={handleSubmit} className="space-y-5 p-8">
+        <div className="bg-card border rounded-2xl p-8 shadow-xl shadow-primary/5 relative overflow-hidden">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
-              <label className="ml-1 text-sm font-medium text-muted-foreground">
-                Full Name
-              </label>
+              <label className="text-sm font-semibold ml-1">Full Name</label>
               <Input
                 placeholder="John Doe"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="h-12 rounded-2xl border-border bg-background text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
+                className="h-12 rounded-xl"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <label className="ml-1 text-sm font-medium text-muted-foreground">
-                Email Address
-              </label>
+              <label className="text-sm font-semibold ml-1">Email Address</label>
               <Input
                 placeholder="john@example.com"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="h-12 rounded-2xl border-border bg-background text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
+                className="h-12 rounded-xl"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <label className="ml-1 text-sm font-medium text-muted-foreground">
-                Phone Number (Optional)
-              </label>
+              <label className="text-sm font-semibold ml-1">Phone Number (Optional)</label>
               <Input
                 placeholder="+1 (555) 000-0000"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="h-12 rounded-2xl border-border bg-background text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
+                className="h-12 rounded-xl"
               />
             </div>
 
             <div className="space-y-2">
-              <label className="ml-1 text-sm font-medium text-muted-foreground">
-                Password
-              </label>
+              <label className="text-sm font-semibold ml-1">Password</label>
               <Input
                 placeholder="••••••••"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="h-12 rounded-2xl border-border bg-background text-foreground shadow-none placeholder:text-muted-foreground focus-visible:ring-primary/30"
+                className="h-12 rounded-xl"
                 required
               />
             </div>
 
             {(error || localError) && (
-              <div className="rounded-2xl border border-rose-500/20 bg-rose-500/10 p-3 text-center text-sm text-rose-700 dark:text-rose-200">
+              <div className="text-destructive text-sm text-center bg-destructive/10 p-3 rounded-xl border border-destructive/20">
                 {error || localError}
               </div>
             )}
@@ -136,20 +122,17 @@ export default function RegisterPage() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="mt-4 h-12 w-full rounded-2xl bg-primary font-semibold text-primary-foreground shadow-none transition-colors hover:bg-primary/90"
+              className="w-full h-12 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all mt-4"
             >
               {isLoading ? "Creating Account..." : "Create Account"}
-              <MaterialIcon name="arrow_forward" className="text-[16px]" />
+              <ArrowRight className="w-5 h-5" />
             </Button>
           </form>
 
-          <div className="border-t border-border px-8 py-6 text-center">
+          <div className="mt-8 pt-6 border-t text-center">
             <p className="text-sm text-muted-foreground">
               Already have an account?{" "}
-              <Link
-                to="/auth/login"
-                className="font-medium text-primary transition-colors hover:text-primary/80"
-              >
+              <Link to="/auth/login" className="font-bold text-primary hover:underline">
                 Sign In
               </Link>
             </p>
@@ -159,3 +142,4 @@ export default function RegisterPage() {
     </main>
   );
 }
+

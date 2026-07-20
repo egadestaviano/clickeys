@@ -7,7 +7,7 @@ export default function PublicRoute() {
   const isAdmin = useAppSelector(selectIsAdmin);
 
   if (isAuthenticated) {
-    return <Navigate to={isAdmin ? "/admin/dashboard" : "/my/dashboardq"} replace />;
+    return <Navigate to={isAdmin ? "/admin/dashboard" : "/my/dashboard"} replace />;
   }
 
   return <Outlet />;
