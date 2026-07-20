@@ -160,7 +160,7 @@ export function ProductDetail() {
                 variant="ghost"
                 size="sm"
                 aria-label={isBookmarked ? "Remove bookmark" : "Add bookmark"}
-                className={`hover:bg-gray-50 ${isBookmarked ? "text-red-500" : "text-foreground"}`}
+                className={`${isBookmarked ? "text-red-500 hover:text-red-600" : "text-foreground hover:text-foreground/80"}`}
                 onClick={handleHeartClick}
               >
                 <Heart className={`w-5 h-5 ${isBookmarked ? "fill-current" : ""}`} />
